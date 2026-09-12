@@ -362,26 +362,86 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
 /* 1 · concept */
 .cx-concept {
   min-height: 100vh; display: grid; place-items: center; text-align: center;
-  padding: 120px 24px 90px; overflow: hidden;
+  padding: clamp(96px, 16vh, 150px) 22px clamp(104px, 17vh, 150px); overflow: hidden;
 }
 .cx-concept__body { position: relative; z-index: 2; max-width: 980px; display: flex; flex-direction: column; align-items: center; }
 .cx-concept__body .cx-label { margin-bottom: 26px; }
+/* The statement is set left while everything under it centres, which is how
+   the reference lays this block out. */
 .cx-statement {
-  margin: 0; color: var(--cx-ink); font-family: var(--cx-serif); font-weight: 500;
-  text-transform: uppercase; letter-spacing: -.012em; line-height: 1.02;
-  /* the reference sets its statements large enough to own the screen; that
-     only works with a short line, so the copy above was trimmed to match */
-  font-size: clamp(2.9rem, 10.4vw, 5.4rem);
+  margin: 0; align-self: stretch; text-align: left;
+  color: var(--cx-ink); font-family: var(--cx-serif); font-weight: 700;
+  text-transform: uppercase; letter-spacing: -.015em; line-height: 1.0;
+  font-size: clamp(2.6rem, 12vw, 4.6rem);
 }
-.cx-concept__body .cx-small { max-width: 34ch; margin: clamp(30px, 6vh, 64px) 0 26px; }
-.cx-concept__mark { width: 34px; height: auto; }
-.cx-concept__img {
-  position: absolute; margin: 0; overflow: hidden; z-index: 1;
-  box-shadow: 0 30px 60px -30px rgba(0, 35, 82, .45);
+.cx-concept__body .cx-chapter { align-self: flex-start; }
+
+/* the hand-drawn orange stroke, used under the statement and the sign-off */
+.cx-brush { display: block; width: 100%; height: 100%; fill: var(--orange-600); }
+.cx-concept__rule { display: block; width: clamp(74px, 19vw, 120px); height: 9px; margin: clamp(16px, 2.6vh, 26px) 0 0; }
+
+.cx-concept__body .cx-small { max-width: 36ch; margin: clamp(20px, 3.4vh, 34px) 0 0; }
+
+/* ---- the three things we ask for ---- */
+.cx-ask {
+  list-style: none; margin: clamp(26px, 4.6vh, 48px) 0 0; padding: 0; width: 100%;
+  display: grid; grid-template-columns: repeat(3, 1fr);
 }
-.cx-concept__img img { width: 100%; height: 100%; object-fit: cover; }
-.cx-concept__img--a { right: -2vw; top: 6vh; width: clamp(150px, 17vw, 290px); aspect-ratio: 4 / 5; border-radius: 0 0 999px 999px; }
-.cx-concept__img--b { left: -1vw; bottom: 4vh; width: clamp(140px, 15vw, 250px); aspect-ratio: 3 / 4; border-radius: 999px 999px 0 0; }
+.cx-ask > li {
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  padding: 0 clamp(4px, 1.6vw, 18px); text-align: center;
+}
+.cx-ask > li + li { border-left: 1px solid var(--cx-hair); }
+.cx-ask__chip {
+  display: grid; place-items: center; width: clamp(46px, 13vw, 72px); aspect-ratio: 1;
+  border-radius: 50%; color: var(--cx-ink);
+}
+.cx-ask__chip svg { width: 46%; height: auto; fill: currentColor; }
+.cx-ask__chip--place  { background: #DCE8F5; }
+.cx-ask__chip--month  { background: #F8E4D4; }
+.cx-ask__chip--people { background: #DDE9D8; color: #1F3D22; }
+.cx-ask b {
+  font-family: var(--font-head); font-weight: 700; font-size: clamp(.62rem, 2.4vw, .78rem);
+  letter-spacing: .14em; text-transform: uppercase; color: var(--cx-ink);
+}
+.cx-ask > li > span:last-child { font-size: clamp(.74rem, 2.9vw, .88rem); line-height: 1.5; color: var(--cx-soft); }
+
+/* ---- and we'll take it from there ---- */
+.cx-sign {
+  position: relative; margin: clamp(30px, 5.4vh, 60px) 0 0; width: 100%;
+  display: flex; flex-direction: column; align-items: center;
+}
+.cx-sign__hand {
+  position: relative; margin: 0; color: var(--cx-ink);
+  font-family: "Kaushan Script", var(--cx-script); font-weight: 400;
+  font-size: clamp(1.4rem, 6.2vw, 2.1rem); line-height: 1.25;
+}
+.cx-sign__mark { position: absolute; left: 8%; right: 26%; bottom: -.34em; height: 8px; }
+.cx-sign__flight { display: block; width: clamp(180px, 62vw, 300px); height: auto; margin-top: 6px; }
+.cx-sign__trail { fill: none; stroke: var(--cx-soft); stroke-width: 1.6; stroke-dasharray: 5 7; stroke-linecap: round; opacity: .7; }
+.cx-sign__plane { fill: var(--cx-soft); }
+.cx-sign__meta { margin: clamp(10px, 1.8vh, 18px) 0 0; font-size: .6rem; letter-spacing: .3em; color: var(--cx-soft); }
+
+/* ---- the two photographs, each a disc the panel edge crops ---- */
+.cx-concept__photo {
+  position: absolute; margin: 0; z-index: 1; overflow: hidden; border-radius: 50%;
+  aspect-ratio: 1; box-shadow: 0 34px 70px -40px rgba(0, 35, 82, .5);
+}
+.cx-concept__photo img { width: 100%; height: 100%; object-fit: cover; }
+.cx-concept__photo--a { width: 72vw; top: -22vw; right: -24vw; }
+.cx-concept__photo--b { width: 62vw; bottom: -26vw; left: -30vw; }
+
+/* ---- leaves, from the uploaded collection, used as a sprite sheet ---- */
+.cx-leaf {
+  position: absolute; z-index: 0; display: block; pointer-events: none;
+  width: var(--leaf, clamp(150px, 40vw, 300px)); aspect-ratio: 1;
+  background: url("../img/deco/leaves.svg") 33.33% 100% / 400% 200% no-repeat;
+  filter: grayscale(1); opacity: var(--leaf-op, .5);
+}
+.cx-leaf--br { right: -8%; bottom: -1%; rotate: -8deg; --leaf-op: .4; }
+/* the hand-written sign in the far corner, desk only — the phone mockup has
+   no room for it */
+.cx-concept__hand { display: none; }
 
 /* 2 · big lines + photo */
 .cx-intro { display: flex; flex-direction: column; gap: 40px; padding: 60px 24px 80px; overflow: hidden; }
@@ -479,14 +539,49 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
 .cx-route__hint svg { width: 14px; height: 14px; }
 .cx-route__hint b { font-weight: inherit; }
 
+/* ---- the block at desk width, laid out from the supplied prototype ----
+   Text in a left column, the coastal disc filling the right, the overwater
+   disc cutting the bottom-left corner, and the sign-off centred across the
+   whole panel rather than across the text column. */
+@media (min-width: 992px) {
+  .cx-concept { place-items: center; }
+  .cx-concept__body {
+    max-width: none; width: min(1240px, 90vw);
+    display: grid; grid-template-columns: minmax(0, 560px) 1fr;
+    align-items: start; text-align: left;
+  }
+  .cx-concept__body > * { grid-column: 1; }
+  .cx-concept__body .cx-chapter { justify-self: start; }
+  .cx-statement { font-size: clamp(2.2rem, 3.7vw, 3.7rem); }
+  .cx-concept__body .cx-small { max-width: 44ch; margin-top: 16px; }
+  .cx-concept__rule { width: 112px; margin-top: 16px; }
+  .cx-ask { margin-top: clamp(18px, 3vh, 34px); }
+  .cx-ask__chip { width: clamp(48px, 6vh, 62px); }
+  .cx-ask > li { align-items: flex-start; text-align: left; padding-left: 0; padding-right: 18px; }
+  .cx-ask > li + li { padding-left: 22px; }
+  /* the sign-off spans both columns so it centres on the panel */
+  .cx-sign, .cx-sign__meta { grid-column: 1 / -1; justify-self: center; }
+  .cx-sign { margin-top: clamp(16px, 3.2vh, 46px); }
+  .cx-sign__meta { text-align: center; }
+  .cx-concept__photo--a { width: min(720px, 50vw); top: -12%; right: -13%; }
+  .cx-concept__photo--b { width: min(380px, 26vw); bottom: -20%; left: -8%; }
+  .cx-leaf--br { --leaf: clamp(200px, 20vw, 340px); right: 13%; bottom: 3%; rotate: -6deg; }
+  .cx-concept__hand {
+    display: block; position: absolute; z-index: 1; margin: 0;
+    /* clear of the floating call buttons, which are fixed at the corner */
+    right: clamp(84px, 7vw, 120px); bottom: clamp(26px, 5vh, 62px); text-align: left;
+    color: var(--cx-ink); font-family: "Kaushan Script", var(--cx-script);
+    font-size: clamp(1.1rem, 1.8vw, 1.7rem); line-height: 1.2;
+  }
+  .cx-concept__hand-mark { display: block; width: 86px; height: 7px; margin-top: 4px; }
+}
+
 /* desktop: one long horizontal scene */
 @media (min-width: 992px) {
   .cx-journey__screen { position: sticky; top: 0; height: 100vh; overflow: hidden; }
   .cx-journey__track { flex-direction: row; height: 100vh; width: max-content; will-change: transform; }
   .cx-panel { height: 100vh; flex: none; }
   .cx-concept { width: 100vw; min-height: 0; padding: 0 12vw; }
-  .cx-concept__img--a { right: 3vw; top: 12vh; }
-  .cx-concept__img--b { left: 4vw; bottom: 8vh; }
 
   .cx-intro { width: 118vw; display: block; padding: 0; gap: 0; }
   .cx-intro__lines { position: absolute; left: 0; top: 50%; transform: translateY(-50%); font-size: 12.4vw; width: 76vw; z-index: 2; }
@@ -686,8 +781,6 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
   .cx-hero { height: 190vh; }
   .cx-hero__bg { height: 100vh; }
   .cx-hero__content .cx-label { font-size: .58rem; letter-spacing: .14em; }
-  .cx-concept__img--a { width: 34vw; top: 70px; right: -6vw; }
-  .cx-concept__img--b { width: 30vw; left: -6vw; bottom: 30px; }
   .cx-concept { padding-top: 45vw; padding-bottom: 42vw; }
   .cx-intro__lines { font-size: 21vw; }
   .cx-intro__photo { align-self: center; }
