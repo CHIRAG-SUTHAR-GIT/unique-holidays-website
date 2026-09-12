@@ -930,7 +930,6 @@ html.cx-lock .cx-badge { opacity: 0; }
 @media (prefers-reduced-motion: reduce) {
   .cx-mehndi { rotate: 0deg !important; }
 }
-}
 
 /* ---------------------------------------------------- chapter markers --- */
 .cx-chapter {
