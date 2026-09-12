@@ -467,6 +467,31 @@
     };
   }
 
+  /* ------------------------------------- mehndi flowers, turned by scroll -- */
+  function mehndiScene() {
+    var items = $$("[data-cx-spin]").map(function (el) {
+      return {
+        art: el,
+        turn: parseFloat(el.getAttribute("data-cx-spin")) || 140,
+        box: el.parentElement,
+        f: new Follow(.09)
+      };
+    });
+    if (!items.length) return null;
+    return {
+      measure: function () { items.forEach(function (it) { it.f.snap(); }); },
+      update: function (dt) {
+        if (reduced) return;
+        items.forEach(function (it) {
+          var r = it.box.getBoundingClientRect();
+          if (r.bottom < -vh * .3 || r.top > vh * 1.3) return;
+          var p = it.f.step(clamp((vh - r.top) / (vh + r.height), 0, 1), dt);
+          it.art.style.rotate = (p * it.turn).toFixed(2) + "deg";
+        });
+      }
+    };
+  }
+
   /* ---------------------------------------- scroll meter and header tint -- */
   function chromeScene() {
     var meter = $("#uhMeter"), numEl = $("#uhMeterNum"), header = $("#siteHeader");
@@ -517,7 +542,8 @@
     $$(".cx-route__scroller").forEach(function (box) {
       var down = false, sx = 0, sl = 0;
       box.addEventListener("pointerdown", function (e) {
-        if (e.pointerType !== "mouse" || box.scrollWidth <= box.clientWidth) return;
+        if (e.pointerType !== "mouse" || box.classList.contains("is-scrubbed")) return;
+        if (box.scrollWidth <= box.clientWidth) return;
         down = true; sx = e.clientX; sl = box.scrollLeft; box.style.cursor = "grabbing";
       });
       window.addEventListener("pointermove", function (e) {
@@ -608,6 +634,41 @@
     if (!hero || hero.__cxShown) return;
     hero.__cxShown = true;
     showAll($$("[data-cx]", hero), .15);
+  }
+
+  /* --------------------------------------- route map, scrubbed on phones -- */
+  /* The desktop journey is one long horizontal track, so the route already
+     slides past on its own. Below the breakpoint the map is wider than the
+     screen and used to need a drag; here the vertical scroll moves it. */
+  function routeScene() {
+    var box = $(".cx-route__scroller");
+    if (!box) return null;
+    var map = $(".cx-route__map", box);
+    var label = $(".cx-route__hint b");
+    var top = 0, H = 1, travel = 0, live = false;
+    var f = new Follow(.09);
+    return {
+      measure: function () {
+        map.style.transform = "";
+        box.scrollLeft = 0;
+        live = !desk && !reduced;
+        box.classList.toggle("is-scrubbed", live);
+        if (label) label.textContent = live ? "Keep scrolling to see more" : "Drag to see more";
+        travel = live ? Math.max(0, map.scrollWidth - box.clientWidth) : 0;
+        top = absTop(box);
+        H = box.offsetHeight || 1;
+        f.snap();
+      },
+      update: function (dt) {
+        if (!live || !travel) return;
+        /* The strip is shorter than the screen, so pace the pan off its centre:
+           it starts as the strip comes up from the bottom and ends while it is
+           still in view near the top. */
+        var mid = top + H / 2, a = mid - vh * .88, b = mid - vh * .12;
+        var p = f.step(clamp((y - a) / Math.max(1, b - a), 0, 1), dt);
+        map.style.transform = "translate3d(" + (-travel * p).toFixed(1) + "px,0,0)";
+      }
+    };
   }
 
   /* ------------------------------------------- arch with curved text -- */
@@ -781,8 +842,8 @@
     fitText();
     $$("[data-cx-part]").forEach(prepare);
     initReveals();
-    [heroScene(), journeyScene(), vistaScene(), arcScene(), dayNightScene(), galleryScene(),
-     includedScene(), windowsScene(), finaleScene(), driftScene(), sealScene(), chromeScene()]
+    [heroScene(), journeyScene(), routeScene(), vistaScene(), arcScene(), dayNightScene(), galleryScene(),
+     includedScene(), windowsScene(), finaleScene(), driftScene(), mehndiScene(), sealScene(), chromeScene()]
       .forEach(function (s) { if (s) scenes.push(s); });
     measureAll();
     initDrag();

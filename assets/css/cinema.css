@@ -118,8 +118,12 @@ html.cx-lock, html.cx-lock body { overflow: hidden; }
 .cx .site-header.on-dark .brand-name,
 .cx .site-header.on-dark .brand-name span,
 .cx .site-header.on-dark .nav-list a,
-.cx .site-header.on-dark .header-phone { color: #fff; }
-.cx .site-header.on-dark .brand-tag { color: rgba(255, 255, 255, .7); }
+.cx .site-header.on-dark .header-phone {
+  color: #fff; text-shadow: 0 1px 3px rgba(0, 14, 36, .55), 0 2px 14px rgba(0, 14, 36, .4);
+}
+.cx .site-header.on-dark .brand-tag {
+  color: rgba(255, 255, 255, .82); text-shadow: 0 1px 3px rgba(0, 14, 36, .55);
+}
 .cx .site-header.on-dark .header-phone svg { background: rgba(255, 255, 255, .16); color: #fff; }
 .cx .site-header.on-dark .theme-toggle { background: transparent; border-color: rgba(255, 255, 255, .45); color: #fff; }
 .cx .site-header.on-dark .nav-toggle { background: transparent; border-color: rgba(255, 255, 255, .45); }
@@ -164,9 +168,12 @@ html.cx-lock .cx .site-header { transform: translateY(-120%); }
 
 /* =================================================================== intro */
 .cx-pre {
+  /* The U mark is drawn for a white ground — its plane and the foot of the U
+     are near-navy, so they vanish on a dark field. Keep the intro light. */
+  --cx-pre-bg: #FBFAF7; --cx-pre-ink: var(--navy); --cx-pre-hair: rgba(0, 35, 82, .14);
   --aw: 24vw; --ay: 104vh; --ah: calc(var(--aw) * 4.6);
   position: fixed; inset: 0; z-index: 1000; overflow: hidden;
-  background: var(--navy); color: #fff;
+  background: var(--cx-pre-bg); color: var(--cx-pre-ink);
   -webkit-mask:
     linear-gradient(#000 0 0) left top / calc(50% - var(--aw) / 2 + 1px) 100% no-repeat,
     linear-gradient(#000 0 0) right top / calc(50% - var(--aw) / 2 + 1px) 100% no-repeat,
@@ -180,22 +187,15 @@ html.cx-lock .cx .site-header { transform: translateY(-120%); }
 }
 .cx-pre::before {
   content: ""; position: absolute; inset: 0; pointer-events: none;
-  background: radial-gradient(70% 60% at 50% 115%, rgba(41, 207, 253, .2), transparent 70%);
+  background: radial-gradient(70% 60% at 50% 115%, rgba(41, 207, 253, .16), transparent 70%);
 }
 .cx-pre__frame {
   position: absolute; inset: clamp(12px, 1.7vw, 24px); border-radius: clamp(14px, 2vw, 28px);
-  border: 1px solid rgba(255, 255, 255, .1); pointer-events: none;
+  border: 1px solid var(--cx-pre-hair); pointer-events: none;
 }
-.cx-pre__globe {
-  position: absolute; left: 50%; top: 50%; width: 118vmax; height: 118vmax;
-  transform: translate(-50%, -50%); opacity: 0; pointer-events: none;
-  transition: opacity var(--cx-l) var(--cx-out);
-}
-.cx-pre__globe circle, .cx-pre__globe ellipse, .cx-pre__globe path { fill: none; stroke: #fff; stroke-width: .6; }
-.cx-pre.is-decor .cx-pre__globe { opacity: .07; }
 .cx-pre__ring {
   position: absolute; left: 50%; transform: translateX(-50%);
-  background: var(--navy); border: 1px solid rgba(255, 255, 255, .14); border-bottom: 0;
+  background: var(--cx-pre-bg); border: 1px solid var(--cx-pre-hair); border-bottom: 0;
   opacity: 0; transition: opacity var(--cx-l) var(--cx-out);
 }
 .cx-pre.is-decor .cx-pre__ring { opacity: 1; }
@@ -206,7 +206,7 @@ html.cx-lock .cx .site-header { transform: translateY(-120%); }
 .cx-pre__ring--2 {
   z-index: 1; width: calc(var(--aw) * 1.12); height: calc(var(--ah) * 1.03);
   top: calc(var(--ay) - var(--aw) * .1); border-radius: var(--aw) var(--aw) 0 0;
-  border-color: rgba(255, 255, 255, .08);
+  border-color: rgba(0, 35, 82, .07);
 }
 .cx-pre__top {
   position: absolute; z-index: 3; left: 0; right: 0; top: clamp(26px, 4vh, 44px);
@@ -214,22 +214,33 @@ html.cx-lock .cx .site-header { transform: translateY(-120%); }
 }
 .cx-pre__top img { width: 42px; height: auto; }
 .cx-pre__center {
-  position: absolute; z-index: 3; inset: 0; display: grid; place-items: center;
+  position: absolute; z-index: 3; inset: 0;
+  /* one centred stack: grid rows used to stretch and split the screen in half */
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: clamp(56px, 9vh, 88px) 6vw; box-sizing: border-box;
   text-align: center; pointer-events: none;
 }
-.cx-pre__title { display: flex; flex-direction: column; align-items: center; line-height: .92; }
-.cx-pre__title [data-cx-part="h"] {
-  font-family: var(--cx-serif); font-weight: 500; text-transform: uppercase;
-  font-size: clamp(2.3rem, 4.6vw, 4.6rem); letter-spacing: .02em;
+.cx-pre__script {
+  position: absolute; z-index: -1; margin: 0; display: flex; flex-direction: column;
+  align-items: center; text-align: center; pointer-events: none; user-select: none;
+  font-family: "Great Vibes", "Segoe Script", "Brush Script MT", cursive;
+  font-weight: 400; line-height: 1.45; color: var(--navy); opacity: .14;
+  /* wider than the mark on purpose: the two lines straddle it, so each word
+     still reads at its ends while the U sits over the middle */
+  font-size: clamp(4.2rem, 18vw, 14rem);
 }
-.cx-pre__title em {
-  font-family: var(--cx-serif); font-style: italic; font-weight: 400; color: var(--sand);
-  font-size: clamp(1rem, 1.5vw, 1.5rem); margin-top: .7em; letter-spacing: .01em;
+.cx-pre__script span:first-child { margin-right: .5em; }
+.cx-pre__script span:last-child { margin-left: .5em; }
+.cx-pre__tag {
+  margin: clamp(14px, 2.4vh, 26px) 0 0;
+  font-family: var(--cx-serif); font-style: italic; font-weight: 400;
+  font-size: clamp(1rem, 1.5vw, 1.5rem); letter-spacing: .01em;
+  color: var(--navy-600);
 }
 .cx-pre__meta {
-  position: absolute; z-index: 3; left: 0; right: 0; top: calc(50% + clamp(90px, 11vw, 150px));
+  position: absolute; z-index: 3; left: 0; right: 0; bottom: clamp(134px, 19vh, 178px);
   display: flex; justify-content: center; gap: clamp(18px, 3vw, 44px);
-  color: rgba(255, 255, 255, .62);
+  color: rgba(0, 35, 82, .5);
 }
 .cx-pre__meta .cx-spaced { font-size: .62rem; letter-spacing: .42em; }
 .cx-pre__bottom {
@@ -237,7 +248,7 @@ html.cx-lock .cx .site-header { transform: translateY(-120%); }
   display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center;
 }
 .cx-pre__progress {
-  width: 1px; height: clamp(46px, 7vh, 72px); background: rgba(255, 255, 255, .16);
+  width: 1px; height: clamp(46px, 7vh, 72px); background: rgba(0, 35, 82, .16);
   overflow: hidden; position: relative;
 }
 .cx-pre__progress i {
@@ -252,10 +263,10 @@ html.cx-lock .cx .site-header { transform: translateY(-120%); }
 }
 .cx-pre__bottom p {
   margin: 0; font-family: var(--font-head); font-weight: 600; font-size: .62rem;
-  letter-spacing: .2em; text-transform: uppercase; line-height: 1.7; color: #fff;
+  letter-spacing: .2em; text-transform: uppercase; line-height: 1.7; color: var(--navy);
 }
 /* The short intro still shows the logo — only the wordmark block below it goes. */
-.cx-pre.is-short .cx-pre__title,
+.cx-pre.is-short .cx-pre__tag,
 .cx-pre.is-short .cx-pre__meta,
 .cx-pre.is-short .cx-pre__bottom { display: none; }
 .cx-pre.is-short .cx-pre__logo {
@@ -277,37 +288,48 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
 .cx-hero__zoom img.is-settling { transition: transform calc(var(--cx-l) * 1.25) var(--cx-inout); transform: none; }
 .cx-hero__shade {
   position: absolute; inset: 0; z-index: -2; pointer-events: none;
+  /* Two scrims: a soft pool behind the headline so white type keeps its
+     contrast over the bright sky, plus the top/bottom bands for the header
+     and the scroll cue. */
   background:
-    linear-gradient(180deg, rgba(0, 20, 48, .58) 0%, rgba(0, 20, 48, .12) 38%, rgba(0, 20, 48, .1) 62%, rgba(0, 20, 48, .55) 100%);
+    radial-gradient(118% 72% at 50% 46%,
+      rgba(0, 16, 40, .60) 0%, rgba(0, 16, 40, .46) 44%, rgba(0, 16, 40, .14) 74%, rgba(0, 16, 40, 0) 100%),
+    linear-gradient(180deg, rgba(0, 20, 48, .72) 0%, rgba(0, 20, 48, .34) 30%, rgba(0, 20, 48, .32) 62%, rgba(0, 20, 48, .66) 100%);
 }
 .cx-hero__content {
   position: absolute; inset: 0; z-index: 2; color: #fff; text-align: center;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   padding: 110px 24px 80px; will-change: transform;
 }
-.cx-hero__content .cx-label { color: rgba(255, 255, 255, .85); margin-bottom: clamp(16px, 2.2vh, 28px); }
+.cx-hero__content .cx-label {
+  color: #fff; margin-bottom: clamp(16px, 2.2vh, 28px);
+  text-shadow: 0 1px 3px rgba(0, 14, 36, .6), 0 2px 16px rgba(0, 14, 36, .45);
+}
 .cx-hero__title {
   margin: 0; color: #fff; font-family: var(--cx-serif); font-weight: 500;
   text-transform: uppercase; letter-spacing: .01em; line-height: .9;
   font-size: clamp(3.2rem, 11.2vw, 11.5rem); display: flex; flex-direction: column; align-items: center;
-  text-shadow: 0 6px 40px rgba(0, 16, 40, .35);
+  text-shadow: 0 2px 10px rgba(0, 14, 36, .45), 0 8px 44px rgba(0, 14, 36, .5);
 }
 .cx-hero__script {
   font-family: var(--cx-serif); font-style: italic; font-weight: 400;
   font-size: clamp(1.25rem, 2.6vw, 2.5rem); color: var(--sand); margin: .35em 0 0;
+  text-shadow: 0 2px 8px rgba(0, 14, 36, .55), 0 6px 30px rgba(0, 14, 36, .4);
 }
 .cx-hero__row {
   display: flex; align-items: center; justify-content: center; gap: clamp(14px, 2.4vw, 36px);
   margin-top: clamp(20px, 3.4vh, 38px); color: #fff;
+  text-shadow: 0 1px 3px rgba(0, 14, 36, .6), 0 2px 16px rgba(0, 14, 36, .45);
 }
 .cx-hero__row .cx-spaced { font-size: .66rem; letter-spacing: .38em; }
-.cx-hero__rule { width: clamp(40px, 7vw, 110px); height: 1px; background: rgba(255, 255, 255, .7); }
+.cx-hero__rule { width: clamp(40px, 7vw, 110px); height: 1px; background: rgba(255, 255, 255, .85); }
 .cx-hero__rule[data-cx="line"] { clip-path: inset(0 100% 0 0); }
 .cx-hero__rule[data-cx="line"].is-in { clip-path: inset(0 0 0 0); }
 .cx-hero__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: clamp(24px, 4vh, 42px); }
 .cx-hero__cue {
   position: absolute; z-index: 2; left: 50%; bottom: clamp(18px, 3.4vh, 34px); transform: translateX(-50%);
-  display: flex; flex-direction: column; align-items: center; gap: 10px; color: rgba(255, 255, 255, .75);
+  display: flex; flex-direction: column; align-items: center; gap: 10px; color: #fff;
+  text-shadow: 0 1px 3px rgba(0, 14, 36, .6);
 }
 .cx-hero__cue.is-in { transform: translateX(-50%); }
 .cx-hero__cue span { font-family: var(--font-head); font-size: .58rem; letter-spacing: .3em; text-transform: uppercase; }
@@ -419,6 +441,9 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
   scrollbar-width: none; -webkit-overflow-scrolling: touch; cursor: grab;
 }
 .cx-route__scroller::-webkit-scrollbar { display: none; }
+/* While the vertical scroll drives the map, its own sideways scroll is off. */
+.cx-route__scroller.is-scrubbed { overflow-x: hidden; cursor: default; }
+.cx-route__scroller.is-scrubbed .cx-route__map { will-change: transform; }
 .cx-route__map { position: relative; width: 1180px; height: 230px; margin-inline: 24px; }
 .cx-route__line { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: visible; }
 .cx-route__line path { fill: none; stroke: var(--cx-ink); stroke-width: 2.2; stroke-linecap: round; vector-effect: non-scaling-stroke; }
@@ -447,6 +472,7 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
   font-family: var(--font-head); font-size: .6rem; letter-spacing: .24em; text-transform: uppercase; color: var(--cx-soft);
 }
 .cx-route__hint svg { width: 14px; height: 14px; }
+.cx-route__hint b { font-weight: inherit; }
 
 /* desktop: one long horizontal scene */
 @media (min-width: 992px) {
@@ -696,23 +722,21 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
 
 /* ------------------------------------------------- logo-first intro ----- */
 .cx-pre__logo {
-  width: min(420px, 62vw); height: auto; margin: 0 auto clamp(20px, 3.5vh, 40px);
+  width: min(340px, 52vw); height: auto; margin: 0 auto;
+  max-height: min(34vh, 330px); object-fit: contain;
   clip-path: inset(0 0 100% 0); transform: scale(1.06); transform-origin: 50% 100%;
   transition: clip-path calc(var(--cx-l) * 1.2) var(--cx-out), transform calc(var(--cx-l) * 1.4) var(--cx-out);
 }
 .cx-pre.is-logo .cx-pre__logo { clip-path: inset(0 0 0 0); transform: scale(1); }
-.cx-pre__seal {
-  position: absolute; left: 50%; top: 50%; width: min(560px, 86vw); aspect-ratio: 1;
-  transform: translate(-50%, -50%); opacity: 0; pointer-events: none;
-  transition: opacity calc(var(--cx-l) * 1.5) var(--cx-out);
+
+/* Short viewports: keep the centred stack clear of the intro furniture. */
+@media (max-height: 620px) {
+  .cx-pre__logo { width: min(300px, 48vw); max-height: 30vh; }
 }
-.cx-pre.is-logo .cx-pre__seal { opacity: .45; }
-.cx-pre__seal circle {
-  fill: none; stroke: rgba(255, 255, 255, .55); stroke-width: .4;
-  stroke-dasharray: 2 6; transform-origin: 50% 50%; animation: cx-spin 26s linear infinite;
+@media (max-height: 440px) {
+  .cx-pre__tag, .cx-pre__meta { display: none; }
+  .cx-pre__logo { margin-bottom: 0; }
 }
-.cx-pre__seal circle + circle { stroke-dasharray: 1 10; animation-duration: 40s; animation-direction: reverse; }
-.cx-pre__center { flex-direction: column; }
 
 /* ------------------------------------------------- header logo seal ----- */
 .cx-seal { position: relative; display: grid; place-items: center; flex: none; }
@@ -887,42 +911,40 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
   .cx-dn__stage, .cx-included__stage { position: static; height: auto; padding-block: 80px; }
   .cx-included__list span { color: #fff; }
   .cx-pre__logo { clip-path: none !important; transform: none !important; }
-  .cx-seal circle, .cx-pre__seal circle { animation: none !important; }
+  .cx-seal circle { animation: none !important; }
 }
 
 /* ==========================================================================
    Third pass — the told story (16%-44%): chapter markers and the corner
-   blooms that frame it. Artwork: assets/img/deco/bloom-*.svg
+   mehndi flower that frames it. Artwork: assets/img/deco/mehndi-flower.svg
    ========================================================================== */
 
-/* ------------------------------------------------------ corner blooms --- */
-.cx-bloom {
-  position: absolute; z-index: 3; pointer-events: none;
-  width: var(--bloom, clamp(160px, 22vw, 360px)); will-change: transform;
+/* ----------------------------------------------- mehndi corner flower --- */
+/* One mandala, cropped by the edge it sits on: put its centre on a corner and
+   a quarter shows, put it on an edge and a half shows. cinema.js turns it as
+   the section crosses the screen. */
+.cx-mehndi {
+  position: absolute; z-index: 0; display: block; pointer-events: none;
+  width: var(--mehndi, clamp(280px, 36vw, 560px)); aspect-ratio: 1;
+  opacity: var(--mehndi-op, .3);
 }
-.cx-bloom__art {
-  display: block; width: 100%; height: auto;
-  transform-origin: 26% 0%;
-  animation: cx-sway 11s ease-in-out infinite alternate;
-}
-@keyframes cx-sway {
-  from { rotate: -1.8deg; }
-  to   { rotate: 2deg; }
-}
-.cx-bloom--tl { top: calc(-1 * var(--bloom-out, 3%)); left: calc(-1 * var(--bloom-out, 3%)); }
-.cx-bloom--tr { top: calc(-1 * var(--bloom-out, 3%)); right: calc(-1 * var(--bloom-out, 3%)); }
-.cx-bloom--bl { bottom: calc(-1 * var(--bloom-out, 3%)); left: calc(-1 * var(--bloom-out, 3%)); }
-.cx-bloom--br { bottom: calc(-1 * var(--bloom-out, 3%)); right: calc(-1 * var(--bloom-out, 3%)); }
-.cx-bloom--tr .cx-bloom__art { transform: scaleX(-1); transform-origin: 74% 0%; }
-.cx-bloom--bl .cx-bloom__art { transform: scaleY(-1); transform-origin: 26% 100%; }
-.cx-bloom--br .cx-bloom__art { transform: scale(-1, -1); transform-origin: 74% 100%; }
-/* on the deep sections the blooms sit back a little so the photo still leads */
-.cx-bloom--quiet { opacity: .72; }
+.cx-mehndi__art { display: block; width: 100%; height: auto; will-change: rotate; }
+/* a quarter of it — centre on the corner */
+.cx-mehndi--corner-tl { top: 0; left: 0; translate: -50% -50%; }
+.cx-mehndi--corner-tr { top: 0; right: 0; translate: 50% -50%; }
+.cx-mehndi--corner-bl { bottom: 0; left: 0; translate: -50% 50%; }
+.cx-mehndi--corner-br { bottom: 0; right: 0; translate: 50% 50%; }
+/* half of it — centre on the edge, placed with --mehndi-y */
+.cx-mehndi--edge-r { right: 0; top: var(--mehndi-y, 58%); translate: 50% -50%; }
+.cx-mehndi--edge-l { left: 0; top: var(--mehndi-y, 58%); translate: -50% -50%; }
+/* on the deep sections it sits back so the photo still leads */
+.cx-mehndi--quiet { --mehndi-op: .16; }
 @media (max-width: 760px) {
-  .cx-bloom { width: var(--bloom-m, clamp(120px, 40vw, 220px)); }
+  .cx-mehndi { width: var(--mehndi-m, clamp(220px, 58vw, 340px)); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .cx-bloom__art { animation: none; rotate: 0deg; }
+  .cx-mehndi__art { rotate: 0deg !important; }
+}
 }
 
 /* ---------------------------------------------------- chapter markers --- */
@@ -958,6 +980,3 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
   .cx-route__chapter { margin-bottom: 14px; }
 }
 
-/* inside the arch the corners are cut away by the dome, so tuck the bloom in */
-.cx-arc__panel .cx-bloom--tl { top: 16%; left: 2%; }
-@media (max-width: 760px) { .cx-arc__panel .cx-bloom--tl { top: 10%; left: -4%; } }
