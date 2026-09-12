@@ -781,10 +781,41 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
   color: var(--cx-ink); font-size: clamp(.95rem, 1.4vw, 1.24rem); letter-spacing: .02em;
 }
 .cx-arc__list p { margin: 0; font-size: .85rem; line-height: 1.6; color: var(--cx-soft); max-width: 26ch; }
+/* The curve reads at desktop width and nowhere else: its font-size is in
+   viewBox units, so on a phone the SVG scales the line down to about 10px, and
+   forty characters will not fit the arc legibly at any size that narrow. Below
+   the breakpoint the line is set straight instead, the dome is opened out so
+   its top is not a dead zone, and the three reasons become a divided list. */
+.cx-arc__line { display: none; }
 @media (max-width: 760px) {
-  .cx-arc__panel { min-height: 0; }
-  .cx-arc__list { grid-template-columns: 1fr; gap: 24px; margin-top: 30px; }
-  .cx-arc__curve text { font-size: 30px; letter-spacing: .08em; }
+  .cx-arc { padding-bottom: 0; }
+  .cx-arc__panel {
+    min-height: 0;
+    border-radius: clamp(130px, 44vw, 260px) clamp(130px, 44vw, 260px) 0 0;
+    /* start the line below the dome's shoulder: at 34px in only ~209px of the
+       331px panel is usable, at 56px it is ~253px */
+    padding: clamp(52px, 15vw, 74px) 22px 42px;
+  }
+  .cx-arc__curve { display: none; }
+  .cx-arc__line {
+    display: block; margin: 0; max-width: 22ch; text-align: center;
+    font-family: var(--font-head); font-weight: 600; font-size: .82rem;
+    letter-spacing: .14em; text-transform: uppercase; line-height: 1.7;
+    color: var(--cx-ink);
+  }
+  .cx-arc__chapter { margin: 18px 0 0; }
+  .cx-arc__mark { width: 30px; margin: 20px auto 4px; }
+  .cx-arc__list { grid-template-columns: 1fr; gap: 0; margin-top: 18px; text-align: left; }
+  .cx-arc__list > div {
+    display: grid; grid-template-columns: auto 1fr; align-items: baseline;
+    column-gap: 14px; row-gap: 4px; padding: 18px 0;
+    border-top: 1px solid var(--cx-hair); text-align: left;
+  }
+  .cx-arc__list > div:first-child { border-top: 0; padding-top: 4px; }
+  .cx-arc__list > div:last-child { padding-bottom: 0; }
+  .cx-arc__num { grid-row: span 2; font-size: 1.35rem; }
+  .cx-arc__list h3 { font-size: 1rem; }
+  .cx-arc__list p { grid-column: 2; max-width: none; }
 }
 
 /* ================================================ day / night set-piece == */
