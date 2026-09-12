@@ -473,7 +473,7 @@
       return {
         art: el,
         turn: parseFloat(el.getAttribute("data-cx-spin")) || 140,
-        box: el.parentElement,
+        box: el.offsetParent || el.parentElement,
         f: new Follow(.09)
       };
     });
