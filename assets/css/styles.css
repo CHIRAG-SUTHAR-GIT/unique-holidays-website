@@ -5,6 +5,16 @@
    ========================================================================== */
 
 /* ---------------------------------------------------------------- tokens -- */
+/* Copperplate script, self-hosted. Used only as the accent word inside a
+   headline — the way the reference sites set one word of a serif statement in
+   calligraphy. A fallback serif italic would read as emphasis, not lettering. */
+@font-face {
+  font-family: "Pinyon Script";
+  src: url("../fonts/pinyon-script-latin.woff2") format("woff2");
+  font-weight: 400; font-style: normal; font-display: swap;
+  unicode-range: U+0000-00FF, U+2018-201E, U+2039-203A;
+}
+
 :root {
   --navy:        #002352;
   --navy-800:    #04264F;

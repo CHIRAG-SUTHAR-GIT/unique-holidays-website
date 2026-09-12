@@ -467,6 +467,28 @@
     };
   }
 
+  /* ------------------------------------------- panels that rise on scroll -- */
+  /* The reference's cream arch slides up over the section before it. Same move,
+     translate only, so nothing reflows while it runs. */
+  function riseScene() {
+    var items = $$("[data-cx-rise]").map(function (el) {
+      return { el: el, amt: parseFloat(el.getAttribute("data-cx-rise")) || 40, f: new Follow(.08) };
+    });
+    if (!items.length) return null;
+    return {
+      measure: function () { items.forEach(function (it) { it.f.snap(); }); },
+      update: function (dt) {
+        if (reduced) return;
+        items.forEach(function (it) {
+          var r = it.el.getBoundingClientRect();
+          if (r.bottom < -vh * .25 || r.top > vh * 1.25) return;
+          var p = it.f.step(clamp((vh - r.top) / (vh * .92), 0, 1), dt);
+          it.el.style.translate = "0 " + ((1 - ease.glide(p)) * it.amt).toFixed(1) + "px";
+        });
+      }
+    };
+  }
+
   /* ------------------------------------- mehndi flowers, turned by scroll -- */
   function mehndiScene() {
     var items = $$("[data-cx-spin]").map(function (el) {
@@ -564,6 +586,11 @@
       finished = true;
       if (pre && pre.parentNode) pre.parentNode.removeChild(pre);
       doc.classList.remove("cx-lock", "cx-intro");
+      /* Lines are split by measuring where words land, and document.fonts.ready
+         fires while the intro still owns the layout — so breaks got baked from
+         the wrong widths. Split again now the page is in its final state. */
+      fitText();
+      $$('[data-cx="p"], [data-cx-part="p"]').forEach(splitLines);
       measureAll();
       kick();
     }
@@ -843,7 +870,7 @@
     $$("[data-cx-part]").forEach(prepare);
     initReveals();
     [heroScene(), journeyScene(), routeScene(), vistaScene(), arcScene(), dayNightScene(), galleryScene(),
-     includedScene(), windowsScene(), finaleScene(), driftScene(), mehndiScene(), sealScene(), chromeScene()]
+     includedScene(), windowsScene(), finaleScene(), driftScene(), mehndiScene(), riseScene(), sealScene(), chromeScene()]
       .forEach(function (s) { if (s) scenes.push(s); });
     measureAll();
     initDrag();
