@@ -443,29 +443,103 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
    no room for it */
 .cx-concept__hand { display: none; }
 
-/* 2 · big lines + photo */
-.cx-intro { display: flex; flex-direction: column; gap: 40px; padding: 60px 24px 80px; overflow: hidden; }
-.cx-intro__lines {
-  margin: 0; font-family: var(--cx-serif); font-weight: 500; text-transform: uppercase;
-  color: var(--cx-ink); line-height: .86; letter-spacing: -.005em;
-  font-size: clamp(4rem, 17vw, 9rem); display: flex; flex-direction: column;
+/* 2 + 3 · finding your stay, and the price — one screen on the desktop */
+.cx-pair {
+  overflow: hidden; padding: clamp(64px, 9vh, 96px) 22px clamp(72px, 10vh, 110px);
+  display: grid; grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    "stay   photoA"
+    "cta    cta"
+    "photoB price"
+    "meta   meta";
+  align-items: start; column-gap: clamp(10px, 3vw, 26px);
 }
-.cx-intro__line { display: block; white-space: nowrap; will-change: transform; }
-.cx-intro__line:nth-child(1) { padding-left: 4%; }
-.cx-intro__line:nth-child(2) { padding-left: 30%; }
-.cx-intro__line:nth-child(3) { padding-left: 12%; }
-/* the accent here is a bare ampersand, and the script cuts one as a
-   decorative glyph that does not read — keep it in the serif italic */
-.cx-intro__line em { font-style: italic; color: var(--orange-600); text-transform: none; }
-.cx-intro__aside { color: var(--cx-soft); }
-.cx-intro__photo { margin: 0; overflow: hidden; aspect-ratio: 3 / 4; width: min(100%, 420px); }
-.cx-intro__photo img { width: 100%; height: 100%; object-fit: cover; }
-.cx-intro__text { max-width: 420px; }
-.cx-intro__text h3 {
-  font-family: var(--cx-serif); font-weight: 500; text-transform: uppercase; color: var(--cx-ink);
-  font-size: clamp(1.25rem, 1.9vw, 1.7rem); letter-spacing: .01em; margin: 0 0 12px;
+
+/* the numbered mark: a big oldstyle numeral, the beat beside it, a short
+   orange stroke ruled underneath */
+.cx-mark {
+  margin: 0 0 clamp(14px, 2.4vh, 22px); display: grid; gap: 2px 14px;
+  grid-template-columns: auto; justify-items: start;
 }
-.cx-intro__text p { color: var(--cx-soft); font-size: .92rem; line-height: 1.7; margin: 0; }
+.cx-mark b {
+  grid-area: 1 / 1; font-family: var(--cx-serif); font-weight: 400;
+  font-variant-numeric: oldstyle-num; letter-spacing: .06em;
+  font-size: clamp(1.25rem, 5.4vw, 1.6rem); line-height: 1; color: var(--orange-600);
+}
+.cx-mark span {
+  grid-area: 2 / 1; color: var(--cx-soft); font-size: clamp(.88rem, 3.6vw, 1rem);
+  line-height: 1.3;
+}
+.cx-mark i {
+  grid-area: 3 / 1; display: block; width: clamp(38px, 9vw, 54px); height: 2px;
+  margin-top: 8px; background: var(--orange-600); border-radius: 2px;
+}
+/* over a photograph the mark reads in white, with the sand accent */
+.cx-mark--light { justify-content: center; justify-items: center; }
+.cx-mark--light b { color: var(--sand); }
+.cx-mark--light span { color: rgba(255, 255, 255, .9); }
+
+/* ---- the photographs: organic shapes the panel edge runs off ---- */
+.cx-blob { position: relative; margin: 0; z-index: 1; }
+.cx-blob__clip {
+  display: block; width: 100%; height: 100%; overflow: hidden;
+}
+.cx-blob img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cx-blob--stay .cx-blob__clip { clip-path: url(#cxBlobStay); }
+.cx-blob--price .cx-blob__clip { clip-path: url(#cxBlobPrice); }
+.cx-blob--stay  { grid-area: photoA; aspect-ratio: 5 / 7; margin: calc(-1 * clamp(64px, 9vh, 96px)) -22px 0 0; }
+.cx-blob--price { grid-area: photoB; aspect-ratio: 5 / 7; margin: clamp(24px, 4vh, 48px) 0 0 -22px; }
+
+/* ---- the calligraphy, over a photo or under a block ---- */
+.cx-quill {
+  position: relative; margin: 0; color: var(--cx-ink);
+  font-family: "Kaushan Script", var(--cx-script); font-weight: 400;
+  font-size: clamp(1rem, 4.4vw, 1.35rem); line-height: 1.35; letter-spacing: .01em;
+}
+.cx-quill__mark { position: absolute; left: 6%; width: 52%; bottom: -.4em; height: 7px; }
+.cx-quill__heart { display: inline-block; width: 1em; height: 1em; vertical-align: -.1em; }
+.cx-quill--stay  { position: absolute; left: 16%; top: 9%; rotate: -6deg; z-index: 3; }
+.cx-quill--price { position: absolute; left: 2%; top: 34%; width: 80%; rotate: -7deg; z-index: 3; text-align: center; }
+.cx-quill--price .cx-quill__mark { left: 22%; width: 70%; }
+.cx-quill--sign {
+  margin: clamp(24px, 4.2vh, 44px) 0 0; align-self: center; text-align: center;
+  font-size: clamp(1rem, 4.2vw, 1.3rem);
+}
+.cx-quill--sign .cx-quill__mark { left: 26%; width: 56%; }
+
+/* ---- the flight line and the circular call to action ---- */
+.cx-pair__cta {
+  grid-area: cta; display: flex; align-items: center; justify-content: center;
+  gap: clamp(6px, 2vw, 22px); margin: clamp(8px, 1.6vh, 24px) 0 0; z-index: 2; position: relative;
+}
+@media (max-width: 991px) {
+  .cx-pair__cta > .cx-pair__flight { position: absolute; left: -14px; top: 50%; translate: 0 -50%; }
+}
+.cx-pair__flight { display: block; width: clamp(130px, 38vw, 240px); height: auto; flex: none; }
+.cx-circle__arrow { margin-top: 8px; opacity: .75; }
+
+/* ---- the two text columns ---- */
+.cx-pair__stay  { grid-area: stay; z-index: 2; }
+.cx-pair__price { grid-area: price; z-index: 2; display: flex; flex-direction: column; }
+.cx-pair .cx-statement { font-size: clamp(1.4rem, 6.6vw, 2.3rem); line-height: 1.05; }
+.cx-pair .cx-small { margin: clamp(12px, 2.2vh, 20px) 0 0; font-size: clamp(.8rem, 3.4vw, .92rem); }
+.cx-ask--price { grid-template-columns: repeat(3, 1fr); margin-top: clamp(20px, 3.6vh, 40px); }
+.cx-ask--price > li { gap: 8px; }
+/* these three are line drawings, so the chip must not flood them */
+.cx-ask--price .cx-ask__chip svg { fill: none; stroke: currentColor; width: 52%; }
+.cx-ask--price .cx-ask__chip { width: clamp(38px, 10vw, 56px); }
+.cx-ask--price b { text-align: center; line-height: 1.45; }
+
+/* ---- the closing line, ruled either side ---- */
+.cx-pair__meta {
+  grid-area: meta; margin: clamp(28px, 5vh, 56px) 0 0; display: flex; align-items: center;
+  justify-content: center; gap: clamp(10px, 3vw, 24px);
+  font-size: .58rem; letter-spacing: .26em; color: var(--cx-soft); text-align: center;
+}
+.cx-pair__meta i { display: block; width: clamp(24px, 8vw, 90px); height: 1px; background: var(--cx-hair); }
+.cx-pair__meta span { line-height: 1.9; }
+
+.cx-leaf--pair { right: -12%; bottom: 1%; rotate: -10deg; --leaf-op: .34; z-index: 0; }
 
 /* 3 · circle call to action */
 .cx-circle {
@@ -475,7 +549,7 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
   font-family: var(--font-head); font-weight: 600; font-size: .62rem; letter-spacing: .16em;
   text-transform: uppercase; line-height: 1.6;
 }
-.cx-circle svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.cx-circle > svg:not(.cx-circle__arrow) { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
 .cx-circle circle { fill: none; stroke: currentColor; stroke-width: .8; vector-effect: non-scaling-stroke; transform-box: fill-box; }
 .cx-circle .cx-circle__base { opacity: .18; }
 .cx-circle .cx-circle__arc {
@@ -487,57 +561,113 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
 @keyframes cx-spin { to { transform: rotate(360deg); } }
 .cx-circle--light { color: #fff; }
 .cx-circle--light:hover { color: var(--sand); }
-.cx-cta-panel { display: grid; place-items: center; padding: 20px 24px 70px; overflow: hidden; }
 
 /* 4 · route */
-.cx-route { padding: 60px 0 90px; overflow: hidden; }
-.cx-route__title {
-  margin: 0 auto; text-align: center; padding-inline: 24px; color: var(--cx-ink);
-  font-family: var(--cx-serif); font-weight: 500; text-transform: uppercase; line-height: .98;
-  font-size: clamp(2.2rem, 4.4vw, 4.4rem); letter-spacing: -.005em;
-  display: flex; flex-direction: column; align-items: center;
-}
+/* 4 · the route — five stops threaded on one line */
+.cx-route { overflow: hidden; padding: clamp(56px, 8vh, 90px) 22px clamp(56px, 8vh, 84px); }
+.cx-route__head { position: relative; z-index: 3; max-width: 50%; }
+.cx-route__title { margin: 0; display: flex; flex-direction: column; }
+.cx-route__title .cx-statement { align-self: auto; font-size: clamp(1.3rem, 6vw, 2.2rem); }
 .cx-route__title em {
-  display: block; font-family: var(--cx-script); text-transform: none; color: var(--orange-600);
-  font-size: 1.02em; line-height: .82; margin: -.04em 0 -.06em;
+  font-style: normal; color: var(--orange-600); text-transform: none;
+  font-family: "Kaushan Script", var(--cx-script); font-weight: 400;
+  font-size: clamp(1.2rem, 5.4vw, 2rem); line-height: 1.2; margin: .06em 0;
 }
-.cx-route__scroller {
-  margin-top: clamp(40px, 8vh, 90px); overflow-x: auto; overscroll-behavior-x: contain;
-  scrollbar-width: none; -webkit-overflow-scrolling: touch; cursor: grab;
+.cx-route__rule { display: block; width: clamp(56px, 14vw, 96px); height: 8px; margin: clamp(12px, 2vh, 20px) 0 0; }
+.cx-route__head .cx-small { margin: clamp(12px, 2.2vh, 20px) 0 0; max-width: 30ch; }
+.cx-route__flight { margin-top: clamp(12px, 2.4vh, 26px); }
+
+/* the big photograph, torn at the edges, running off the corner */
+.cx-blob--vista {
+  position: absolute; top: calc(-1 * clamp(6px, 1vh, 16px)); right: -13vw;
+  width: 58vw; aspect-ratio: 5 / 4; z-index: 1;
 }
-.cx-route__scroller::-webkit-scrollbar { display: none; }
-/* While the vertical scroll drives the map, its own sideways scroll is off. */
-.cx-route__scroller.is-scrubbed { overflow-x: hidden; cursor: default; }
-.cx-route__scroller.is-scrubbed .cx-route__map { will-change: transform; }
-.cx-route__map { position: relative; width: 1180px; height: 230px; margin-inline: 24px; }
-.cx-route__line { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: visible; }
-.cx-route__line path { fill: none; stroke: var(--cx-ink); stroke-width: 2.2; stroke-linecap: round; vector-effect: non-scaling-stroke; }
-.cx-route__line.is-ghost path { stroke: var(--cx-hair); stroke-width: 1; stroke-dasharray: 3 7; }
-.cx-route__draw { position: absolute; inset: -10px 0; clip-path: inset(0 100% 0 0); transition: clip-path calc(var(--cx-l) * 2.2) var(--cx-out) var(--cx-m); }
-.cx-route__draw .cx-route__line { top: 10px; height: calc(100% - 20px); }
-.cx-route__map.is-in .cx-route__draw { clip-path: inset(0 0 0 0); }
-.cx-pin {
-  position: absolute; transform: translate(-50%, -100%); display: flex; flex-direction: column;
-  align-items: center; text-align: center; gap: 2px; padding-bottom: 14px; white-space: nowrap;
-  opacity: 0; translate: 0 12px; transition: opacity var(--cx-l) var(--cx-out), translate var(--cx-l) var(--cx-out);
-  transition-delay: calc(var(--cx-m) + var(--i, 0) * .16s);
+.cx-blob--vista .cx-blob__clip { clip-path: url(#cxTornBig); }
+.cx-quill--vista { position: absolute; left: 7%; top: 18%; rotate: -6deg; z-index: 3; font-size: clamp(.9rem, 3.8vw, 1.2rem); }
+.cx-quill--vista .cx-quill__mark { left: 10%; width: 72%; bottom: -.62em; }
+
+/* ---- the line and its stops ---- */
+.cx-trail { position: relative; margin: clamp(34px, 6vh, 70px) 0 0; height: 1020px; z-index: 2; }
+.cx-trail__line { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.cx-trail__line path { fill: none; stroke: var(--cx-ink); stroke-width: 1.8; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.cx-trail__dash { stroke-dasharray: 4 7; opacity: .6; }
+.cx-trail__line--wide { display: none; }
+/* the line draws itself in as the block arrives */
+.cx-trail__line--tall { clip-path: inset(0 0 100% 0); transition: clip-path calc(var(--cx-l) * 2.4) var(--cx-out) var(--cx-s); }
+.cx-trail.is-in .cx-trail__line--tall { clip-path: inset(0 0 0 0); }
+
+.cx-stops { list-style: none; margin: 0; padding: 0; position: absolute; inset: 0; }
+.cx-stop { position: absolute; left: var(--x); top: var(--y); width: 0; height: 0; }
+/* the inline coordinates trace the wide line; on a phone the same five
+   stops run down the tall one instead */
+@media (max-width: 991px) {
+  .cx-stop { --pw: 42vw; }
+  .cx-stop:nth-child(1) { left: 26%; top: 8%; }
+  .cx-stop:nth-child(2) { left: 74%; top: 28%; }
+  .cx-stop:nth-child(3) { left: 26%; top: 48%; }
+  .cx-stop:nth-child(4) { left: 74%; top: 68%; }
+  .cx-stop:nth-child(5) { left: 26%; top: 88%; }
 }
-.cx-route__map.is-in .cx-pin { opacity: 1; translate: 0 0; }
-.cx-pin::after {
-  content: ""; position: absolute; left: 50%; bottom: -3.5px; width: 7px; height: 7px; margin-left: -3.5px;
-  border-radius: 50%; background: var(--cx-ink); box-shadow: 0 0 0 5px rgba(254, 157, 56, .22);
+.cx-stop__dot {
+  position: absolute; left: 0; top: 0; translate: -50% -50%;
+  width: 13px; height: 13px; border-radius: 50%; background: var(--cx-ink);
+  box-shadow: 0 0 0 5px #F8E4D4; opacity: 0; transition: opacity var(--cx-m) var(--cx-out) calc(.3s + var(--i, 0) * .14s);
 }
-.cx-pin b { font-family: var(--font-head); font-weight: 700; font-size: .66rem; letter-spacing: .12em; text-transform: uppercase; color: var(--cx-ink); }
-.cx-pin span { font-size: .66rem; color: var(--cx-soft); }
-.cx-pin--home { padding-bottom: 18px; }
-.cx-pin--home img { width: 30px; height: auto; margin-bottom: 4px; }
-.cx-pin--home::after { width: 9px; height: 9px; margin-left: -4.5px; background: var(--orange-600); }
-.cx-route__hint {
-  display: flex; align-items: center; justify-content: center; gap: 10px; margin: 18px 0 0;
-  font-family: var(--font-head); font-size: .6rem; letter-spacing: .24em; text-transform: uppercase; color: var(--cx-soft);
+.cx-trail.is-in .cx-stop__dot { opacity: 1; }
+.cx-stop__photo {
+  position: absolute; top: 50%; translate: 0 -50%; margin: 0;
+  width: var(--pw, 40vw); aspect-ratio: 4 / 3; overflow: hidden;
+  opacity: 0; transition: opacity var(--cx-l) var(--cx-out) calc(.2s + var(--i, 0) * .14s);
 }
-.cx-route__hint svg { width: 14px; height: 14px; }
-.cx-route__hint b { font-weight: inherit; }
+.cx-trail.is-in .cx-stop__photo { opacity: 1; }
+.cx-stop__photo img { width: 100%; height: 100%; object-fit: cover; }
+.cx-stop__photo--a { clip-path: url(#cxTornA); }
+.cx-stop__photo--b { clip-path: url(#cxTornB); }
+.cx-stop__photo--c { clip-path: url(#cxTornC); }
+.cx-stop__label {
+  position: absolute; top: 0; translate: 0 -96%; margin: 0; width: max-content;
+  opacity: 0; transition: opacity var(--cx-m) var(--cx-out) calc(.4s + var(--i, 0) * .14s);
+}
+.cx-trail.is-in .cx-stop__label { opacity: 1; }
+.cx-stop__label b {
+  display: block; font-family: var(--font-head); font-weight: 700;
+  font-size: clamp(.66rem, 2.8vw, .8rem); letter-spacing: .14em;
+  text-transform: uppercase; color: var(--cx-ink);
+}
+.cx-stop__label span { display: block; margin-top: 3px; font-size: clamp(.72rem, 3vw, .84rem); color: var(--cx-soft); }
+.cx-stop__label i { display: block; width: 38px; height: 2px; margin-top: 7px; background: var(--orange-600); border-radius: 2px; opacity: .85; }
+/* photo on the near side of the line, label on the far side */
+.cx-stop--l .cx-stop__photo { right: 14px; }
+.cx-stop--l .cx-stop__label { left: 20px; }
+.cx-stop--r .cx-stop__photo { left: 14px; }
+.cx-stop--r .cx-stop__label { right: 20px; text-align: right; translate: 0 4%; }
+.cx-stop--r .cx-stop__label i { margin-left: auto; }
+
+.cx-trail__more {
+  position: absolute; right: 4%; bottom: -8px; display: flex; align-items: center; gap: 10px;
+  color: var(--cx-ink); text-decoration: none; z-index: 3;
+}
+.cx-trail__more .cx-quill { font-size: clamp(1rem, 4.2vw, 1.25rem); }
+.cx-trail__more:hover { color: var(--orange-600); }
+.cx-trail__end {
+  position: absolute; right: 1.5%; bottom: 1px; width: 10px; height: 10px; border-radius: 50%;
+  border: 1.6px solid var(--cx-ink); opacity: .5;
+}
+
+.cx-compass { position: absolute; z-index: 0; width: clamp(88px, 22vw, 130px); height: auto; color: var(--cx-soft); opacity: .34; }
+.cx-compass text { fill: currentColor; font-family: var(--font-head); font-weight: 500; font-size: 11px; letter-spacing: .1em; }
+.cx-route .cx-compass { right: 3%; bottom: 15%; }
+
+.cx-route__cue {
+  margin: clamp(26px, 5vh, 54px) 0 0; display: flex; flex-direction: column; align-items: center; gap: 8px;
+  color: var(--cx-soft);
+}
+.cx-route__cue b {
+  font-family: var(--font-head); font-weight: 600; font-size: .6rem;
+  letter-spacing: .26em; text-transform: uppercase;
+}
+.cx-leaf--route-l { left: -22%; top: 34%; rotate: 14deg; --leaf-op: .3; --leaf: clamp(180px, 46vw, 320px); }
+.cx-leaf--route-r { right: -20%; bottom: 16%; rotate: -12deg; --leaf-op: .3; --leaf: clamp(180px, 46vw, 320px); }
 
 /* ---- the block at desk width, laid out from the supplied prototype ----
    Text in a left column, the coastal disc filling the right, the overwater
@@ -583,27 +713,88 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
   .cx-panel { height: 100vh; flex: none; }
   .cx-concept { width: 100vw; min-height: 0; padding: 0 12vw; }
 
-  .cx-intro { width: 118vw; display: block; padding: 0; gap: 0; }
-  .cx-intro__lines { position: absolute; left: 0; top: 50%; transform: translateY(-50%); font-size: 12.4vw; width: 76vw; z-index: 2; }
-  .cx-intro__aside { position: absolute; left: 7vw; top: calc(50% - .5em); z-index: 3; writing-mode: vertical-rl; transform: rotate(180deg); }
-  .cx-intro__photo { position: absolute; left: 64vw; top: 7vh; height: 86vh; width: auto; aspect-ratio: 3 / 4; z-index: 1; }
-  .cx-intro__text { position: absolute; left: calc(64vw + 64.5vh + 3vw); bottom: 9vh; width: 25vw; max-width: none; }
+  /* 02 + 03 share one screen: the copy pinwheels around two photographs
+     that interlock on the diagonal, exactly as the prototype does. */
+  .cx-pair {
+    /* the left gutter clears the spinning seal and the scroll rail */
+    width: 100vw; padding: clamp(74px, 10vh, 108px) clamp(34px, 4vw, 70px) clamp(14px, 2vh, 26px) clamp(120px, 11vw, 180px);
+    grid-template-columns: minmax(0, .86fr) minmax(0, 1.14fr);
+    grid-template-rows: auto auto 1fr auto;
+    grid-template-areas:
+      "stay   photoA"
+      "cta    photoA"
+      "photoB price"
+      "photoB meta";
+    column-gap: clamp(20px, 3vw, 54px);
+  }
+  .cx-blob--stay {
+    aspect-ratio: auto; align-self: stretch; min-height: 0;
+    margin: calc(-1 * clamp(74px, 10vh, 108px)) calc(-1 * clamp(34px, 4vw, 70px)) 0 0;
+  }
+  .cx-blob--price {
+    aspect-ratio: auto; align-self: stretch; min-height: 0; z-index: 2;
+    margin: 0 0 calc(-1 * clamp(14px, 2vh, 26px)) calc(-1 * clamp(120px, 11vw, 180px));
+  }
+  .cx-quill--stay  { left: 12%; top: 14%; font-size: clamp(1.2rem, 1.7vw, 1.7rem); }
+  .cx-quill--price { left: 8%; top: 20%; font-size: clamp(1.1rem, 1.6vw, 1.6rem); }
+  .cx-pair .cx-statement { font-size: clamp(1.6rem, 2.3vw, 2.4rem); }
+  .cx-pair .cx-small { max-width: 48ch; font-size: .88rem; }
+  .cx-mark { grid-template-columns: auto auto; justify-content: start; column-gap: 16px; }
+  .cx-mark b { font-size: clamp(1.3rem, 1.7vw, 1.7rem); }
+  .cx-mark span { grid-area: 1 / 2; align-self: baseline; }
+  .cx-mark i { grid-area: 2 / 1 / 3 / 3; margin-top: 10px; }
+  .cx-pair__cta { justify-content: flex-start; margin-top: clamp(14px, 3vh, 40px); }
+  .cx-pair__cta > .cx-pair__flight { position: static; translate: none; }
+  .cx-pair__price { justify-content: center; }
+  .cx-ask--price { max-width: 400px; margin-top: clamp(14px, 2.4vh, 28px); }
+  .cx-ask--price > li { align-items: center; text-align: center; padding: 0 clamp(6px, 1.2vw, 16px); }
+  .cx-ask--price > li + li { padding-left: clamp(10px, 1.6vw, 20px); }
+  /* the sign-off sits beside the icon row on the wide layout */
+  .cx-pair__price { position: relative; }
+  .cx-quill--sign {
+    position: absolute; right: 0; bottom: clamp(8px, 2vh, 30px); margin: 0;
+    width: max-content; max-width: 220px; rotate: -4deg; text-align: center;
+    font-size: clamp(.95rem, 1.2vw, 1.2rem);
+  }
+  .cx-pair__meta { justify-content: center; margin-top: clamp(4px, 1vh, 12px); }
+  .cx-leaf--pair { --leaf: clamp(170px, 15vw, 260px); right: -3%; bottom: -5%; }
 
-  .cx-cta-panel { width: 62vw; padding: 0; }
-  .cx-cta-panel .cx-circle { position: absolute; left: 14vw; top: 22vh; }
-  .cx-cta-panel .cx-cta-panel__note { position: absolute; left: 14vw; bottom: 12vh; width: 26vw; }
+  /* 04 unfolds sideways: the copy and the photograph share the top, the
+     line threads its five stops across the whole width beneath them. */
+  .cx-route {
+    width: 100vw; padding: clamp(72px, 10vh, 104px) clamp(34px, 4vw, 70px) clamp(20px, 3vh, 40px) clamp(120px, 9vw, 160px);
+    display: grid; grid-template-rows: auto 1fr auto; align-content: start;
+  }
+  .cx-route__head { max-width: min(620px, 34vw); }
+  .cx-route__title .cx-statement { font-size: clamp(1.7rem, 2.4vw, 2.5rem); }
+  .cx-route__title em { font-size: clamp(1.5rem, 2.1vw, 2.2rem); }
+  .cx-route__head .cx-small { max-width: 40ch; font-size: .88rem; }
+  .cx-blob--vista {
+    top: calc(-1 * clamp(72px, 10vh, 104px)); right: -3vw;
+    width: min(760px, 52vw); aspect-ratio: 7 / 5;
+  }
+  .cx-quill--vista { left: 8%; top: 26%; font-size: clamp(1.2rem, 1.7vw, 1.7rem); }
 
-  .cx-route { width: 112vw; padding: 13vh 0 0; }
-  .cx-route__title { font-size: 5.6vw; }
-  .cx-route__scroller { overflow: visible; margin-top: 11vh; cursor: default; }
-  .cx-route__map { width: 92vw; height: 26vh; margin-inline: auto; }
-  .cx-route__hint { display: none; }
-}
-.cx-cta-panel__note { margin: 26px 0 0; max-width: 360px; text-align: center; }
-@media (min-width: 992px) { .cx-cta-panel__note { text-align: left; } }
-.cx-cta-panel__note b {
-  display: block; font-family: var(--cx-serif); font-weight: 500; text-transform: uppercase; color: var(--cx-ink);
-  font-size: clamp(1.1rem, 1.6vw, 1.5rem); margin-bottom: 10px; letter-spacing: .01em;
+  /* the line runs the full width of the screen, edge to edge */
+  .cx-trail {
+    height: auto; min-height: 0; margin: clamp(10px, 2vh, 30px)
+      calc(-1 * clamp(34px, 4vw, 70px)) 0 calc(-1 * clamp(120px, 9vw, 160px));
+  }
+  .cx-trail__line--tall { display: none; }
+  .cx-trail__line--wide { display: block; clip-path: inset(0 100% 0 0); transition: clip-path calc(var(--cx-l) * 2.4) var(--cx-out) var(--cx-s); }
+  .cx-trail.is-in .cx-trail__line--wide { clip-path: inset(0 0 0 0); }
+  .cx-stop { --pw: clamp(132px, 11.5vw, 185px); }
+  .cx-stop--l .cx-stop__photo { right: 16px; top: 0; translate: 0 -84%; }
+  .cx-stop--l .cx-stop__label { left: 22px; }
+  .cx-stop--r .cx-stop__photo { left: 16px; top: 0; translate: 0 -16%; }
+  .cx-stop--r .cx-stop__label { right: 22px; translate: 0 4%; }
+  .cx-trail__more { right: 5%; bottom: 14%; }
+  .cx-trail__end { right: 1.4%; top: 72%; bottom: auto; }
+  .cx-route .cx-compass { left: 7%; bottom: 3%; right: auto; }
+  .cx-route__cue { margin-top: clamp(6px, 1.4vh, 20px); }
+
+  .cx-leaf--route-l { --leaf: clamp(200px, 15vw, 300px); left: -5%; top: 46%; }
+  .cx-leaf--route-r { --leaf: clamp(200px, 15vw, 300px); right: -3%; bottom: 6%; }
 }
 
 /* =================================================================== vista */
@@ -612,7 +803,7 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
   background: var(--cx-paper); color: #fff;
 }
 .cx-vista__media { position: absolute; inset: 0; z-index: -2; transform-origin: 50% 100%; will-change: transform; }
-.cx-vista__media img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 60%; }
+.cx-vista__media img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 38%; }
 .cx-vista__sky {
   position: absolute; left: 0; right: 0; top: 0; height: 44vh; z-index: -1; pointer-events: none;
   background: linear-gradient(180deg, var(--cx-paper) 0%, rgba(246, 242, 234, .82) 18%,
@@ -640,13 +831,15 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
 :root[data-theme="night"] .cx-vista__clouds span + span { opacity: .1; }
 .cx-vista__shade {
   position: absolute; inset: 0; z-index: -1; pointer-events: none;
-  background: linear-gradient(180deg, rgba(0, 20, 48, 0) 45%, rgba(0, 20, 48, .55) 100%);
+  background: linear-gradient(180deg, rgba(0, 20, 48, 0) 28%, rgba(0, 20, 48, .30) 58%,
+              rgba(0, 20, 48, .62) 82%, rgba(0, 20, 48, .74) 100%);
 }
 .cx-vista__card {
   position: absolute; left: 50%; bottom: 12vh; transform: translateX(-50%);
   width: min(560px, calc(100% - 48px)); text-align: center; will-change: transform, opacity;
 }
 .cx-vista__card .cx-label { color: #fff; opacity: .85; margin-bottom: 14px; }
+.cx-vista__card .cx-mark { justify-content: center; justify-items: center; margin-bottom: clamp(14px, 2.4vh, 22px); }
 .cx-vista__card h2 {
   margin: 0 0 20px; color: #fff; font-family: var(--cx-serif); font-weight: 500; text-transform: uppercase;
   font-size: clamp(1.9rem, 3.6vw, 3.4rem); line-height: 1; letter-spacing: .005em;
@@ -660,6 +853,14 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
 }
 .cx-underline:hover { color: inherit; background-size: 0 1px; background-position: 100% 100%; }
 .cx-underline svg { width: 14px; height: 14px; }
+
+/* 05 is the last screen of the sideways run, so it is a panel like the rest */
+@media (min-width: 992px) {
+  .cx-vista { width: 100vw; height: 100vh; }
+  .cx-vista__sky { height: 26vh; }
+  .cx-vista__clouds { top: -4vh; height: 46vh; }
+  .cx-vista__card { bottom: 16vh; }
+}
 
 /* ================================================================= windows */
 .cx-windows { position: relative; height: 150vh; background: var(--cx-paper); color: #fff; }
@@ -782,10 +983,6 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
   .cx-hero__bg { height: 100vh; }
   .cx-hero__content .cx-label { font-size: .58rem; letter-spacing: .14em; }
   .cx-concept { padding-top: 45vw; padding-bottom: 42vw; }
-  .cx-intro__lines { font-size: 21vw; }
-  .cx-intro__photo { align-self: center; }
-  .cx-intro__text { align-self: center; text-align: center; }
-  .cx-intro__aside { align-self: center; }
   .cx-vista { height: 110vh; }
   .cx-vista__card { bottom: 9vh; }
   .cx-windows__head { top: 10vh; }
@@ -802,7 +999,7 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
 /* ============================================================ fallbacks ==== */
 @media (prefers-reduced-motion: reduce) {
   .cx-pre { display: none !important; }
-  .cx [data-cx], .cx [data-cx] .cx-c, .cx [data-cx] .cx-li, .cx .cx-pin, .cx .cx-route__draw {
+  .cx [data-cx], .cx [data-cx] .cx-c, .cx [data-cx] .cx-li, .cx .cx-stop__dot, .cx .cx-stop__photo, .cx .cx-stop__label, .cx .cx-trail__line {
     opacity: 1 !important; transform: none !important; clip-path: none !important; translate: none !important; transition: none !important;
   }
   .cx [data-cx="slide"] img { transform: none !important; }
@@ -861,6 +1058,8 @@ html.cx-lock .cx-badge { opacity: 0; }
 .cx-badge.on-dark { color: #fff; }
 .cx-badge.on-light { color: var(--cx-ink); }
 @media (prefers-reduced-motion: reduce) { .cx-badge svg { animation: none; } }
+/* a phone has no side margin to spare, and the seal lands on the copy */
+@media (max-width: 991px) { .cx-badge { display: none; } }
 
 /* --------------------------------------------- magnetic + nav labels ---- */
 [data-cx-magnet] { will-change: transform; }
@@ -1047,12 +1246,7 @@ html.cx-lock .cx-badge { opacity: 0; }
 .cx-vista__card .cx-chapter i { color: rgba(255, 255, 255, .85); }
 
 
-/* the route beat centres its chapter mark above the headline */
-.cx-route__chapter { text-align: center; padding-inline: 24px; margin-bottom: 6px; }
 .cx-concept__body .cx-chapter { margin-bottom: 22px; }
-.cx-cta-panel__note .cx-chapter { margin-bottom: 12px; }
-.cx-intro__text .cx-chapter { margin-bottom: 10px; }
 @media (min-width: 992px) {
-  .cx-route__chapter { margin-bottom: 14px; }
 }
 
