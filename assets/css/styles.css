@@ -37,7 +37,12 @@
 
   --grad-brand:  linear-gradient(135deg, var(--blue) 0%, var(--sky) 100%);
   --grad-warm:   linear-gradient(135deg, var(--orange) 0%, var(--orange-600) 100%);
-  --grad-deep:   linear-gradient(150deg, var(--navy) 0%, var(--navy-600) 62%, #0B6FB8 100%);
+  /* The deep ground for flat dark sections. Sampled from the reference
+     recording: #330A24. Navy stays the ink colour for type and buttons. */
+  --deep:        #330A24;
+  --deep-600:    #4A122F;
+  --deep-400:    #5E1A3D;
+  --grad-deep:   linear-gradient(150deg, var(--deep) 0%, var(--deep-600) 58%, var(--deep-400) 100%);
 
   --r-sm: 10px;
   --r-md: 16px;
@@ -735,7 +740,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 
 /* ---------------------------------------------------------------- footer -- */
-.site-footer { background: var(--navy); color: rgba(255, 255, 255, .74); margin-top: 0; }
+.site-footer { background: var(--deep); color: rgba(255, 255, 255, .74); margin-top: 0; }
 .footer-top {
   display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.4fr; gap: 40px;
   padding-block: clamp(46px, 6vw, 72px) 44px;

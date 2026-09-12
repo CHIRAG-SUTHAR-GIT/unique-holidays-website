@@ -267,7 +267,7 @@ html.cx-lock .cx .site-header { transform: translateY(-120%); }
 }
 
 /* ==================================================================== hero */
-.cx-hero { position: relative; height: 270vh; background: var(--navy); }
+.cx-hero { position: relative; height: 270vh; background: var(--deep); }
 .cx-hero__stage { position: sticky; top: 0; height: 100vh; overflow: hidden; isolation: isolate; }
 .cx-hero__bg { position: absolute; left: 0; right: 0; top: 0; height: 150vh; z-index: -3; will-change: transform; }
 .cx-hero__zoom { position: absolute; inset: 0; transform-origin: 50% 75%; will-change: transform; }
@@ -359,8 +359,10 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
 .cx-concept__body .cx-label { margin-bottom: 26px; }
 .cx-statement {
   margin: 0; color: var(--cx-ink); font-family: var(--cx-serif); font-weight: 500;
-  text-transform: uppercase; letter-spacing: .005em; line-height: 1.14;
-  font-size: clamp(1.45rem, 2.55vw, 2.5rem);
+  text-transform: uppercase; letter-spacing: -.012em; line-height: 1.02;
+  /* the reference sets its statements large enough to own the screen; that
+     only works with a short line, so the copy above was trimmed to match */
+  font-size: clamp(2.9rem, 10.4vw, 5.4rem);
 }
 .cx-concept__body .cx-small { max-width: 34ch; margin: clamp(30px, 6vh, 64px) 0 26px; }
 .cx-concept__mark { width: 34px; height: auto; }
@@ -617,7 +619,7 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
 .cx-promise__img--b { right: auto; left: -8vw; top: auto; bottom: 6vh; width: clamp(160px, 16vw, 260px); }
 
 /* ========================================================== views + footer */
-.cx-views { position: relative; min-height: 170vh; color: #fff; background: var(--navy); isolation: isolate; }
+.cx-views { position: relative; min-height: 170vh; color: #fff; background: var(--deep); isolation: isolate; }
 .cx-views__clip { position: absolute; inset: 0; z-index: -1; overflow: hidden; clip-path: inset(0 0 0 0); will-change: clip-path; }
 .cx-views__media { position: absolute; inset: -6% 0 -14%; will-change: transform; }
 .cx-views__media img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 58%; }
@@ -637,7 +639,7 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
 .cx-views .cx-circle { margin-top: 12vh; }
 
 .cx .site-footer.cx-footer {
-  background: var(--navy); min-height: 100vh; display: flex; flex-direction: column;
+  background: var(--deep); min-height: 100vh; display: flex; flex-direction: column;
   position: relative; z-index: 2;
 }
 .cx .site-footer.cx-footer::before, .cx .site-footer.cx-footer::after { display: none; }
@@ -735,6 +737,28 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
   .cx-pre__tag, .cx-pre__meta { display: none; }
   .cx-pre__logo { margin-bottom: 0; }
 }
+
+/* --------------------------------------------------- rotating seal badge -- */
+/* The reference keeps a spinning circular seal pinned top-left through the
+   whole page. It lives inside the header so it picks up the on-dark/on-light
+   tone the header already switches, and sits just below it. */
+.cx-badge {
+  position: fixed; left: clamp(8px, 2.2vw, 26px); top: clamp(74px, 9vh, 96px);
+  z-index: 60; display: block; width: clamp(78px, 11vw, 108px); aspect-ratio: 1;
+  pointer-events: none; opacity: 0; transition: opacity var(--cx-m) var(--cx-out);
+}
+.is-ready .cx-badge { opacity: 1; }
+html.cx-lock .cx-badge { opacity: 0; }
+.cx-badge svg { position: absolute; inset: 0; width: 100%; height: 100%; animation: cx-spin 30s linear infinite; }
+.cx-badge text {
+  fill: currentColor; font-family: var(--font-head); font-weight: 600;
+  font-size: 9px; letter-spacing: .16em; text-transform: uppercase;
+}
+.cx-badge img { position: absolute; left: 50%; top: 50%; width: 38%; height: auto; translate: -50% -50%; }
+.cx-badge { color: var(--cx-ink); }
+.cx .site-header.on-dark .cx-badge { color: #fff; }
+.cx .site-header.on-light .cx-badge { color: var(--cx-ink); }
+@media (prefers-reduced-motion: reduce) { .cx-badge svg { animation: none; } }
 
 /* ------------------------------------------------- header logo seal ----- */
 .cx-seal { position: relative; display: grid; place-items: center; flex: none; }
@@ -835,7 +859,7 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
 }
 
 /* ================================================ day / night set-piece == */
-.cx-dn { position: relative; height: 260vh; background: var(--navy); color: #fff; }
+.cx-dn { position: relative; height: 260vh; background: var(--deep); color: #fff; }
 .cx-dn__stage { position: sticky; top: 0; height: 100vh; overflow: hidden; display: grid; place-items: center; isolation: isolate; }
 .cx-dn__bg { position: absolute; inset: 0; z-index: -2; }
 .cx-dn__bg img { width: 100%; height: 100%; object-fit: cover; filter: blur(26px) saturate(1.1); transform: scale(1.14); }
@@ -898,7 +922,7 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
 }
 
 /* ====================================================== photo gallery === */
-.cx-gallery { position: relative; background: var(--navy); color: #fff; overflow: hidden; padding-block: clamp(66px, 12vh, 150px); }
+.cx-gallery { position: relative; background: var(--deep); color: #fff; overflow: hidden; padding-block: clamp(66px, 12vh, 150px); }
 .cx-gallery__head { text-align: center; padding-inline: 24px; margin-bottom: clamp(30px, 6vh, 70px); }
 .cx-gallery__head .cx-label { color: rgba(255, 255, 255, .75); margin-bottom: 16px; }
 .cx-gallery__head h2 {
@@ -925,7 +949,7 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
 }
 
 /* ============================================ zoom-out all-included ===== */
-.cx-included { position: relative; height: 240vh; background: var(--navy); color: #fff; }
+.cx-included { position: relative; height: 240vh; background: var(--deep); color: #fff; }
 .cx-included__stage { position: sticky; top: 0; height: 100vh; overflow: hidden; display: grid; place-items: center; isolation: isolate; }
 .cx-included__bg { position: absolute; inset: 0; z-index: -2; will-change: transform; }
 .cx-included__bg img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 55%; }
