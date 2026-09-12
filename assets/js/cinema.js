@@ -564,6 +564,11 @@
       finished = true;
       if (pre && pre.parentNode) pre.parentNode.removeChild(pre);
       doc.classList.remove("cx-lock", "cx-intro");
+      /* Lines are split by measuring where words land, and document.fonts.ready
+         fires while the intro still owns the layout — so breaks got baked from
+         the wrong widths. Split again now the page is in its final state. */
+      fitText();
+      $$('[data-cx="p"], [data-cx-part="p"]').forEach(splitLines);
       measureAll();
       kick();
     }
