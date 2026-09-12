@@ -786,6 +786,16 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
   color: var(--cx-ink); font-size: clamp(.95rem, 1.4vw, 1.24rem); letter-spacing: .02em;
 }
 .cx-arc__list p { margin: 0; font-size: .85rem; line-height: 1.6; color: var(--cx-soft); max-width: 26ch; }
+/* An arch-topped photo at the foot of the dome, echoing the panel's own shape.
+   assets/img/scenes/arc.jpg shipped with the build for this spot and was never
+   wired up. */
+.cx-arc__photo {
+  margin: clamp(30px, 5.5vh, 60px) auto 0; width: min(430px, 76%);
+  aspect-ratio: 3 / 4; border-radius: 999px 999px 0 0; overflow: hidden;
+  box-shadow: 0 24px 60px -30px rgba(0, 35, 82, .45);
+}
+.cx-arc__photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
+.cx-arc__panel { will-change: translate; }
 /* The curve reads at desktop width and nowhere else: its font-size is in
    viewBox units, so on a phone the SVG scales the line down to about 10px, and
    forty characters will not fit the arc legibly at any size that narrow. Below
@@ -818,6 +828,7 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
   }
   .cx-arc__list > div:first-child { border-top: 0; padding-top: 4px; }
   .cx-arc__list > div:last-child { padding-bottom: 0; }
+  .cx-arc__photo { width: 100%; margin-top: 26px; aspect-ratio: 4 / 5; }
   .cx-arc__num { grid-row: span 2; font-size: 1.35rem; }
   .cx-arc__list h3 { font-size: 1rem; }
   .cx-arc__list p { grid-column: 2; max-width: none; }
