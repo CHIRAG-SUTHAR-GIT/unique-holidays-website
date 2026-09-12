@@ -467,6 +467,31 @@
     };
   }
 
+  /* ------------------------------------- mehndi flowers, turned by scroll -- */
+  function mehndiScene() {
+    var items = $$("[data-cx-spin]").map(function (el) {
+      return {
+        art: el,
+        turn: parseFloat(el.getAttribute("data-cx-spin")) || 140,
+        box: el.parentElement,
+        f: new Follow(.09)
+      };
+    });
+    if (!items.length) return null;
+    return {
+      measure: function () { items.forEach(function (it) { it.f.snap(); }); },
+      update: function (dt) {
+        if (reduced) return;
+        items.forEach(function (it) {
+          var r = it.box.getBoundingClientRect();
+          if (r.bottom < -vh * .3 || r.top > vh * 1.3) return;
+          var p = it.f.step(clamp((vh - r.top) / (vh + r.height), 0, 1), dt);
+          it.art.style.rotate = (p * it.turn).toFixed(2) + "deg";
+        });
+      }
+    };
+  }
+
   /* ---------------------------------------- scroll meter and header tint -- */
   function chromeScene() {
     var meter = $("#uhMeter"), numEl = $("#uhMeterNum"), header = $("#siteHeader");
@@ -818,7 +843,7 @@
     $$("[data-cx-part]").forEach(prepare);
     initReveals();
     [heroScene(), journeyScene(), routeScene(), vistaScene(), arcScene(), dayNightScene(), galleryScene(),
-     includedScene(), windowsScene(), finaleScene(), driftScene(), sealScene(), chromeScene()]
+     includedScene(), windowsScene(), finaleScene(), driftScene(), mehndiScene(), sealScene(), chromeScene()]
       .forEach(function (s) { if (s) scenes.push(s); });
     measureAll();
     initDrag();

@@ -568,6 +568,23 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 .filter-count { margin-left: auto; font-size: .88rem; color: var(--muted); }
 
+/* Services we offer, listed as plain pills (not buttons — nothing to press). */
+.svc-list {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
+}
+.svc-list li {
+  font-family: var(--font-head); font-weight: 500; font-size: .88rem;
+  padding: 9px 19px; border-radius: var(--r-pill);
+  border: 1.5px solid var(--line); background: var(--surface); color: var(--body);
+}
+.svc-note {
+  display: flex; align-items: center; justify-content: center; gap: 9px;
+  margin: 30px 0 0; font-family: var(--font-head); font-weight: 500;
+  font-size: .9rem; color: var(--muted); text-align: center;
+}
+.svc-note svg { width: 18px; height: 18px; color: #8b5cf6; flex: none; }
+
 .is-hidden { display: none !important; }
 
 .empty-state {
