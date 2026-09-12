@@ -19,10 +19,10 @@
 <link rel="manifest" href="site.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/styles.css?v=20260912h">
-<link rel="stylesheet" href="assets/css/motion.css?v=20260912h">
-<link rel="stylesheet" href="assets/css/cinema.css?v=20260912h">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css?v=20260912k">
+<link rel="stylesheet" href="assets/css/motion.css?v=20260912k">
+<link rel="stylesheet" href="assets/css/cinema.css?v=20260912k">
 <noscript><style>
   /* Without JavaScript the intro never lifts and nothing is measured, so fall
      back to plain, readable HTML. */
@@ -37,7 +37,7 @@
   .cx-windows { height: 110vh; }
   .theme-toggle { display: none; }
 </style></noscript>
-<script src="assets/js/boot.js?v=20260912h"></script>
+<script src="assets/js/boot.js?v=20260912k"></script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"TravelAgency","name":"Unique Holidays",
 "slogan":"Let's Explore the World","url":"https://www.uniqueholidays.com/",
@@ -342,14 +342,50 @@
 
         <div class="cx-panel cx-concept">
           <span class="cx-mehndi cx-mehndi--corner-tl" aria-hidden="true"
-                style="--mehndi:clamp(300px, 40vw, 620px)" data-cx-spin="150"></span>
-          <figure class="cx-concept__img cx-concept__img--a" aria-hidden="true" data-cx-drift="8"><img src="assets/img/destinations/kashmir.jpg" alt="" loading="lazy" width="900" height="675"></figure>
-          <figure class="cx-concept__img cx-concept__img--b" aria-hidden="true" data-cx-drift="-8"><img src="assets/img/destinations/singapore.jpg" alt="" loading="lazy" width="1400" height="933"></figure>
+                style="--mehndi:clamp(240px, 26vw, 430px)" data-cx-spin="150"></span>
+          <span class="cx-leaf cx-leaf--br" aria-hidden="true"></span>
+          <p class="cx-concept__hand" aria-hidden="true">Let&rsquo;s<br>Explore<br>the World<span class="cx-concept__hand-mark"><svg class="cx-brush" viewBox="0 0 200 16" preserveAspectRatio="none"><path d="M2 10 Q100 0 198 6 Q100 14 2 10 Z"/></svg></span></p>
+
+          <figure class="cx-concept__photo cx-concept__photo--a" aria-hidden="true" data-cx-drift="5">
+            <img src="assets/img/destinations/thailand-bay.jpg" alt="" loading="lazy" width="1120" height="1400">
+          </figure>
+          <figure class="cx-concept__photo cx-concept__photo--b" aria-hidden="true" data-cx-drift="-5">
+            <img src="assets/img/destinations/maldives.jpg" alt="" loading="lazy" width="1400" height="1050">
+          </figure>
+
           <div class="cx-concept__body" data-cx-group>
             <div data-cx="ctn"><p class="cx-chapter"><b>01</b><i></i>How it starts</p></div>
             <h2 class="cx-statement" data-cx="h" style="--cx-step:.02s">Every holiday starts with one message</h2>
+            <span class="cx-concept__rule" data-cx="ctn" aria-hidden="true"><svg class="cx-brush" viewBox="0 0 200 16" aria-hidden="true" preserveAspectRatio="none"><path d="M2 10 Q100 0 198 6 Q100 14 2 10 Z"/></svg></span>
             <p class="cx-small" data-cx="p">The place, the month, and how many people are coming — that is enough for us to begin. You will hear back the same day, usually with a question or two.</p>
-            <img class="cx-concept__mark" data-cx="ctn" src="assets/img/logo-mark.png" alt="" width="46" height="36">
+
+            <ul class="cx-ask" data-cx="ctn">
+              <li>
+                <span class="cx-ask__chip cx-ask__chip--place"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></span>
+                <b>The place</b><span>Tell us where<br>you want to go.</span>
+              </li>
+              <li>
+                <span class="cx-ask__chip cx-ask__chip--month"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M3 10h18M7.5 3v3.5M16.5 3v3.5"/><circle cx="8" cy="14" r="1.1" fill="currentColor" stroke="none"/><circle cx="12" cy="14" r="1.1" fill="currentColor" stroke="none"/><circle cx="16" cy="14" r="1.1" fill="currentColor" stroke="none"/><circle cx="8" cy="17.6" r="1.1" fill="currentColor" stroke="none"/><circle cx="12" cy="17.6" r="1.1" fill="currentColor" stroke="none"/><circle cx="16" cy="17.6" r="1.1" fill="currentColor" stroke="none"/></svg></span>
+                <b>The month</b><span>Share your<br>preferred dates.</span>
+              </li>
+              <li>
+                <span class="cx-ask__chip cx-ask__chip--people"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="7.2" r="3.1"/><path d="M6.2 20.5v-1.2a5.8 5.8 0 0 1 11.6 0v1.2"/><path d="M17.6 9.4a2.5 2.5 0 1 0 0-4.6M20.8 19.2v-.9a4.6 4.6 0 0 0-2.3-3.9"/><path d="M6.4 9.4a2.5 2.5 0 1 1 0-4.6M3.2 19.2v-.9a4.6 4.6 0 0 1 2.3-3.9"/></svg></span>
+                <b>The people</b><span>Let us know<br>how many are coming.</span>
+              </li>
+            </ul>
+
+            <div class="cx-sign" data-cx="ctn">
+              <p class="cx-sign__hand">And we&rsquo;ll take it from there
+                <span class="cx-sign__mark" aria-hidden="true"><svg class="cx-brush" viewBox="0 0 200 16" aria-hidden="true" preserveAspectRatio="none"><path d="M2 10 Q100 0 198 6 Q100 14 2 10 Z"/></svg></span>
+              </p>
+              <svg class="cx-sign__flight" viewBox="0 0 230 76" aria-hidden="true">
+                <path class="cx-sign__trail" d="M3 66 C38 72 62 60 68 44 C72 32 62 22 53 27 C44 32 50 49 70 56 C100 67 152 47 204 17"/>
+                <g class="cx-sign__plane" transform="translate(200 4) rotate(42) scale(.92)">
+                  <path d="M10 0c1.3 0 2.2 1.1 2.2 3.1V9l10 5.2v2.2L12.2 14v4.6l3 2.2v1.5L10 21l-5.2 1.3v-1.5l3-2.2V14L-2.2 16.4v-2.2L7.8 9V3.1C7.8 1.1 8.7 0 10 0z"/>
+                </g>
+              </svg>
+            </div>
+            <p class="cx-sign__meta cx-spaced" data-cx="a">Plans today &middot; Experiences tomorrow</p>
           </div>
         </div>
 
@@ -714,8 +750,8 @@
 </div>
 
 
-<script src="assets/js/main.js?v=20260912h" defer></script>
-<script src="assets/js/motion.js?v=20260912h" defer></script>
-<script src="assets/js/cinema.js?v=20260912h" defer></script>
+<script src="assets/js/main.js?v=20260912k" defer></script>
+<script src="assets/js/motion.js?v=20260912k" defer></script>
+<script src="assets/js/cinema.js?v=20260912k" defer></script>
 </body>
 </html>
