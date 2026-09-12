@@ -168,9 +168,12 @@ html.cx-lock .cx .site-header { transform: translateY(-120%); }
 
 /* =================================================================== intro */
 .cx-pre {
+  /* The U mark is drawn for a white ground — its plane and the foot of the U
+     are near-navy, so they vanish on a dark field. Keep the intro light. */
+  --cx-pre-bg: #FBFAF7; --cx-pre-ink: var(--navy); --cx-pre-hair: rgba(0, 35, 82, .14);
   --aw: 24vw; --ay: 104vh; --ah: calc(var(--aw) * 4.6);
   position: fixed; inset: 0; z-index: 1000; overflow: hidden;
-  background: var(--navy); color: #fff;
+  background: var(--cx-pre-bg); color: var(--cx-pre-ink);
   -webkit-mask:
     linear-gradient(#000 0 0) left top / calc(50% - var(--aw) / 2 + 1px) 100% no-repeat,
     linear-gradient(#000 0 0) right top / calc(50% - var(--aw) / 2 + 1px) 100% no-repeat,
@@ -184,15 +187,15 @@ html.cx-lock .cx .site-header { transform: translateY(-120%); }
 }
 .cx-pre::before {
   content: ""; position: absolute; inset: 0; pointer-events: none;
-  background: radial-gradient(70% 60% at 50% 115%, rgba(41, 207, 253, .2), transparent 70%);
+  background: radial-gradient(70% 60% at 50% 115%, rgba(41, 207, 253, .16), transparent 70%);
 }
 .cx-pre__frame {
   position: absolute; inset: clamp(12px, 1.7vw, 24px); border-radius: clamp(14px, 2vw, 28px);
-  border: 1px solid rgba(255, 255, 255, .1); pointer-events: none;
+  border: 1px solid var(--cx-pre-hair); pointer-events: none;
 }
 .cx-pre__ring {
   position: absolute; left: 50%; transform: translateX(-50%);
-  background: var(--navy); border: 1px solid rgba(255, 255, 255, .14); border-bottom: 0;
+  background: var(--cx-pre-bg); border: 1px solid var(--cx-pre-hair); border-bottom: 0;
   opacity: 0; transition: opacity var(--cx-l) var(--cx-out);
 }
 .cx-pre.is-decor .cx-pre__ring { opacity: 1; }
@@ -203,7 +206,7 @@ html.cx-lock .cx .site-header { transform: translateY(-120%); }
 .cx-pre__ring--2 {
   z-index: 1; width: calc(var(--aw) * 1.12); height: calc(var(--ah) * 1.03);
   top: calc(var(--ay) - var(--aw) * .1); border-radius: var(--aw) var(--aw) 0 0;
-  border-color: rgba(255, 255, 255, .08);
+  border-color: rgba(0, 35, 82, .07);
 }
 .cx-pre__top {
   position: absolute; z-index: 3; left: 0; right: 0; top: clamp(26px, 4vh, 44px);
@@ -217,19 +220,27 @@ html.cx-lock .cx .site-header { transform: translateY(-120%); }
   padding: clamp(56px, 9vh, 88px) 6vw; box-sizing: border-box;
   text-align: center; pointer-events: none;
 }
-.cx-pre__title { display: flex; flex-direction: column; align-items: center; line-height: .92; }
-.cx-pre__title [data-cx-part="h"] {
-  font-family: var(--cx-serif); font-weight: 500; text-transform: uppercase;
-  font-size: clamp(2.3rem, 4.6vw, 4.6rem); letter-spacing: .02em;
+.cx-pre__script {
+  position: absolute; z-index: -1; margin: 0; display: flex; flex-direction: column;
+  align-items: center; text-align: center; pointer-events: none; user-select: none;
+  font-family: "Great Vibes", "Segoe Script", "Brush Script MT", cursive;
+  font-weight: 400; line-height: 1.45; color: var(--navy); opacity: .14;
+  /* wider than the mark on purpose: the two lines straddle it, so each word
+     still reads at its ends while the U sits over the middle */
+  font-size: clamp(4.2rem, 18vw, 14rem);
 }
-.cx-pre__title em {
-  font-family: var(--cx-serif); font-style: italic; font-weight: 400; color: var(--sand);
-  font-size: clamp(1rem, 1.5vw, 1.5rem); margin-top: .7em; letter-spacing: .01em;
+.cx-pre__script span:first-child { margin-right: .5em; }
+.cx-pre__script span:last-child { margin-left: .5em; }
+.cx-pre__tag {
+  margin: clamp(14px, 2.4vh, 26px) 0 0;
+  font-family: var(--cx-serif); font-style: italic; font-weight: 400;
+  font-size: clamp(1rem, 1.5vw, 1.5rem); letter-spacing: .01em;
+  color: var(--navy-600);
 }
 .cx-pre__meta {
   position: absolute; z-index: 3; left: 0; right: 0; bottom: clamp(134px, 19vh, 178px);
   display: flex; justify-content: center; gap: clamp(18px, 3vw, 44px);
-  color: rgba(255, 255, 255, .62);
+  color: rgba(0, 35, 82, .5);
 }
 .cx-pre__meta .cx-spaced { font-size: .62rem; letter-spacing: .42em; }
 .cx-pre__bottom {
@@ -237,7 +248,7 @@ html.cx-lock .cx .site-header { transform: translateY(-120%); }
   display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center;
 }
 .cx-pre__progress {
-  width: 1px; height: clamp(46px, 7vh, 72px); background: rgba(255, 255, 255, .16);
+  width: 1px; height: clamp(46px, 7vh, 72px); background: rgba(0, 35, 82, .16);
   overflow: hidden; position: relative;
 }
 .cx-pre__progress i {
@@ -252,10 +263,10 @@ html.cx-lock .cx .site-header { transform: translateY(-120%); }
 }
 .cx-pre__bottom p {
   margin: 0; font-family: var(--font-head); font-weight: 600; font-size: .62rem;
-  letter-spacing: .2em; text-transform: uppercase; line-height: 1.7; color: #fff;
+  letter-spacing: .2em; text-transform: uppercase; line-height: 1.7; color: var(--navy);
 }
 /* The short intro still shows the logo — only the wordmark block below it goes. */
-.cx-pre.is-short .cx-pre__title,
+.cx-pre.is-short .cx-pre__tag,
 .cx-pre.is-short .cx-pre__meta,
 .cx-pre.is-short .cx-pre__bottom { display: none; }
 .cx-pre.is-short .cx-pre__logo {
@@ -711,8 +722,8 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
 
 /* ------------------------------------------------- logo-first intro ----- */
 .cx-pre__logo {
-  width: min(420px, 62vw); height: auto; margin: 0 auto clamp(20px, 3.5vh, 40px);
-  max-height: min(34vh, 318px); object-fit: contain;
+  width: min(340px, 52vw); height: auto; margin: 0 auto;
+  max-height: min(34vh, 330px); object-fit: contain;
   clip-path: inset(0 0 100% 0); transform: scale(1.06); transform-origin: 50% 100%;
   transition: clip-path calc(var(--cx-l) * 1.2) var(--cx-out), transform calc(var(--cx-l) * 1.4) var(--cx-out);
 }
@@ -723,7 +734,7 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
   .cx-pre__logo { width: min(300px, 48vw); max-height: 30vh; }
 }
 @media (max-height: 440px) {
-  .cx-pre__title, .cx-pre__meta { display: none; }
+  .cx-pre__tag, .cx-pre__meta { display: none; }
   .cx-pre__logo { margin-bottom: 0; }
 }
 
@@ -915,7 +926,7 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
 .cx-mehndi {
   position: absolute; z-index: 0; display: block; pointer-events: none;
   width: var(--mehndi, clamp(280px, 36vw, 560px)); aspect-ratio: 1;
-  opacity: var(--mehndi-op, .22);
+  opacity: var(--mehndi-op, .3);
 }
 .cx-mehndi__art { display: block; width: 100%; height: auto; will-change: rotate; }
 /* a quarter of it — centre on the corner */
@@ -927,7 +938,7 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
 .cx-mehndi--edge-r { right: 0; top: var(--mehndi-y, 58%); translate: 50% -50%; }
 .cx-mehndi--edge-l { left: 0; top: var(--mehndi-y, 58%); translate: -50% -50%; }
 /* on the deep sections it sits back so the photo still leads */
-.cx-mehndi--quiet { --mehndi-op: .12; }
+.cx-mehndi--quiet { --mehndi-op: .16; }
 @media (max-width: 760px) {
   .cx-mehndi { width: var(--mehndi-m, clamp(220px, 58vw, 340px)); }
 }

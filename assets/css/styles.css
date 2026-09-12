@@ -5,6 +5,15 @@
    ========================================================================== */
 
 /* ---------------------------------------------------------------- tokens -- */
+/* The name on the intro is written in Great Vibes, self-hosted so it always
+   renders — a fallback serif would read as a heading, not handwriting. */
+@font-face {
+  font-family: "Great Vibes";
+  src: url("../fonts/great-vibes-latin.woff2") format("woff2");
+  font-weight: 400; font-style: normal; font-display: swap;
+  unicode-range: U+0000-00FF, U+2018-201E, U+2039-203A;
+}
+
 :root {
   --navy:        #002352;
   --navy-800:    #04264F;
@@ -81,7 +90,7 @@ h3 { font-size: clamp(1.16rem, 1.8vw, 1.42rem); letter-spacing: -.014em; }
 p  { margin: 0 0 1rem; }
 a  { color: var(--blue); text-decoration: none; transition: color .2s var(--ease); }
 a:hover { color: var(--orange-600); }
-img, svg { max-width: 100%; display: block; }
+img, svg { max-width: 100%; height: auto; display: block; }
 ul { margin: 0; padding: 0; list-style: none; }
 
 :focus-visible {
@@ -717,10 +726,21 @@ ul { margin: 0; padding: 0; list-style: none; }
 .team-card p { font-size: .86rem; color: var(--muted); margin: 0; }
 
 .logo-showcase {
-  display: grid; place-items: center; padding: clamp(26px, 4vw, 44px);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: clamp(26px, 4vw, 44px);
   background: var(--surface-2); border-radius: var(--r-xl); border: 1px solid var(--line);
 }
-.logo-showcase img { max-width: 340px; }
+.logo-showcase img { width: auto; max-width: 280px; height: auto; border-radius: 0; box-shadow: none; }
+/* the name written under the mark — the card is too narrow to read it behind */
+.logo-showcase__script {
+  margin: clamp(6px, 1.6vw, 16px) 0 0; display: flex; flex-direction: column;
+  align-items: center; text-align: center;
+  font-family: "Great Vibes", "Segoe Script", "Brush Script MT", cursive;
+  font-weight: 400; line-height: 1.04; font-size: clamp(2.2rem, 6vw, 3.8rem);
+  color: var(--navy); opacity: .32; pointer-events: none; user-select: none;
+}
+.logo-showcase__script span:first-child { margin-right: .5em; }
+.logo-showcase__script span:last-child { margin-left: .5em; }
 
 /* ---------------------------------------------------------------- footer -- */
 .site-footer { background: var(--navy); color: rgba(255, 255, 255, .74); margin-top: 0; }
