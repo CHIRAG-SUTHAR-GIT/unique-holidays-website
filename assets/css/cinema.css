@@ -430,6 +430,9 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
   scrollbar-width: none; -webkit-overflow-scrolling: touch; cursor: grab;
 }
 .cx-route__scroller::-webkit-scrollbar { display: none; }
+/* While the vertical scroll drives the map, its own sideways scroll is off. */
+.cx-route__scroller.is-scrubbed { overflow-x: hidden; cursor: default; }
+.cx-route__scroller.is-scrubbed .cx-route__map { will-change: transform; }
 .cx-route__map { position: relative; width: 1180px; height: 230px; margin-inline: 24px; }
 .cx-route__line { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: visible; }
 .cx-route__line path { fill: none; stroke: var(--cx-ink); stroke-width: 2.2; stroke-linecap: round; vector-effect: non-scaling-stroke; }
@@ -458,6 +461,7 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
   font-family: var(--font-head); font-size: .6rem; letter-spacing: .24em; text-transform: uppercase; color: var(--cx-soft);
 }
 .cx-route__hint svg { width: 14px; height: 14px; }
+.cx-route__hint b { font-weight: inherit; }
 
 /* desktop: one long horizontal scene */
 @media (min-width: 992px) {
