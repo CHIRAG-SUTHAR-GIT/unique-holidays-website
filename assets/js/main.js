@@ -9,8 +9,36 @@
   /* ------------------------------------------------------------- header -- */
   var header = $("#siteHeader");
   if (header) {
+    /* The bar gets out of the way as you move down the page and comes back the
+       moment you head up, from wherever you happen to be. Direction is taken
+       from the delta, not the position, so it behaves the same at any depth.
+       A run of ~10px down hides it; ~40px up — about its own height — brings
+       it back, which is what makes the return feel immediate. */
+    var HIDE_AFTER = 10, SHOW_AFTER = 40;
+    var lastY = window.scrollY, run = 0, hidden = false;
+
+    var setHidden = function (v) {
+      if (v === hidden) return;
+      hidden = v;
+      header.classList.toggle("is-tucked", v);
+    };
+
     var onScroll = function () {
-      header.classList.toggle("is-stuck", window.scrollY > 8);
+      var y = window.scrollY < 0 ? 0 : window.scrollY;
+      header.classList.toggle("is-stuck", y > 8);
+
+      var dy = y - lastY;
+      lastY = y;
+      if (!dy) return;
+
+      // never hide over an open menu, and never within the bar's own depth
+      if (header.querySelector('[aria-expanded="true"]') || y <= header.offsetHeight) {
+        setHidden(false); run = 0; return;
+      }
+      // accumulate in the current direction, reset when it flips
+      run = (dy > 0) === (run > 0) ? run + dy : dy;
+      if (run > HIDE_AFTER) setHidden(true);
+      else if (-run > SHOW_AFTER) setHidden(false);
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });

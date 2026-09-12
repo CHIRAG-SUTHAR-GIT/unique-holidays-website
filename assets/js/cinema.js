@@ -495,6 +495,7 @@
   /* ---------------------------------------- scroll meter and header tint -- */
   function chromeScene() {
     var meter = $("#uhMeter"), numEl = $("#uhMeterNum"), header = $("#siteHeader");
+    var badge = $(".cx-badge");
     var zones = $$("[data-bg]");
     function toneAt(py) {
       for (var i = 0; i < zones.length; i++) {
@@ -522,6 +523,11 @@
           var dark = toneAt(38) === "dark";
           header.classList.toggle("on-dark", dark);
           header.classList.toggle("on-light", !dark);
+          /* the badge sits outside the header now, so it is toned here too */
+          if (badge) {
+            badge.classList.toggle("on-dark", dark);
+            badge.classList.toggle("on-light", !dark);
+          }
         }
       }
     };
@@ -761,28 +767,6 @@
     };
   }
 
-  /* --------------------------------------------- rotating header seal -- */
-  function sealScene() {
-    var rings = $$(".cx-seal circle");
-    if (!rings.length) return null;
-    var angle = 0, speed = 14, dir = 1, prevY = window.scrollY;
-    return {
-      measure: function () {},
-      update: function (dt) {
-        if (reduced) return;
-        var delta = y - prevY;
-        prevY = y;
-        if (delta) dir = delta > 0 ? 1 : -1;
-        var want = dir * (14 + Math.min(260, Math.abs(delta) * 7));
-        speed += (want - speed) * Math.min(1, dt * 4);
-        angle = (angle + speed * dt) % 360;
-        var t = "rotate(" + angle.toFixed(2) + "deg)";
-        rings.forEach(function (r, i) { r.style.transform = i ? "rotate(" + (-angle).toFixed(2) + "deg)" : t; });
-        if (Math.abs(speed) > 15.5) busy = true;
-      }
-    };
-  }
-
   /* ------------------------------------------------- magnetic buttons -- */
   function initMagnets() {
     if (reduced || !window.matchMedia("(hover: hover)").matches) return;
@@ -829,7 +813,7 @@
     $$("[data-cx-part]").forEach(prepare);
     initReveals();
     [heroScene(), journeyScene(), routeScene(), vistaScene(), dayNightScene(), galleryScene(),
-     includedScene(), windowsScene(), finaleScene(), driftScene(), mehndiScene(), sealScene(), chromeScene()]
+     includedScene(), windowsScene(), finaleScene(), driftScene(), mehndiScene(), chromeScene()]
       .forEach(function (s) { if (s) scenes.push(s); });
     measureAll();
     initDrag();

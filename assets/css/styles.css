@@ -197,9 +197,12 @@ ul { margin: 0; padding: 0; list-style: none; }
   background: var(--header-bg);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid transparent;
-  transition: box-shadow .25s var(--ease), border-color .25s var(--ease);
+  transition: box-shadow .25s var(--ease), border-color .25s var(--ease), transform .34s var(--ease);
 }
 .site-header.is-stuck { box-shadow: var(--sh-sm); border-bottom-color: var(--line); }
+/* Out of the way on the way down the page, back on the way up. Not named
+   is-hidden: that is already a display:none utility further down this sheet. */
+.site-header.is-tucked { transform: translateY(-100%); }
 
 .header-inner {
   display: flex; align-items: center; gap: 20px;
