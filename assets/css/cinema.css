@@ -713,6 +713,10 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
 .cx-pre__logo {
   width: min(340px, 52vw); height: auto; margin: 0 auto;
   max-height: min(34vh, 330px); object-fit: contain;
+  /* Nudged right so it reads as centred: the U carries the weight on the left
+     while the plane's trail only thins out to the right. Its own property, so
+     the reveal's transform: scale() below is untouched. */
+  translate: .5cm 0;
   clip-path: inset(0 0 100% 0); transform: scale(1.06); transform-origin: 50% 100%;
   transition: clip-path calc(var(--cx-l) * 1.2) var(--cx-out), transform calc(var(--cx-l) * 1.4) var(--cx-out);
 }
