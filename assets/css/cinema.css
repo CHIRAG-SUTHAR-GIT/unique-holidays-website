@@ -779,85 +779,6 @@ html.cx-lock .cx-badge { opacity: 0; }
 .cx .nav-list a:hover .cx-swap i { transform: translateY(-105%); }
 .cx .nav-list a:hover .cx-swap i + i { transform: translateY(0); }
 
-/* ===================================== arch panel with text on the curve = */
-.cx-arc { position: relative; background: var(--cx-paper); padding: 0 0 clamp(56px, 9vh, 120px); overflow: hidden; }
-.cx-arc__panel {
-  position: relative; width: min(1180px, calc(100% - 2 * clamp(16px, 4vw, 60px))); margin-inline: auto;
-  min-height: clamp(430px, 76vh, 780px); border-radius: 999px 999px 0 0;
-  background: linear-gradient(180deg, var(--sky-100) 0%, var(--cx-paper-2) 100%);
-  border: 1px solid var(--cx-hair); border-bottom: 0; overflow: hidden;
-  display: flex; flex-direction: column; align-items: center;
-  padding: clamp(22px, 4.5vh, 54px) clamp(18px, 4vw, 60px) clamp(36px, 7vh, 80px);
-}
-:root[data-theme="night"] .cx-arc__panel { background: linear-gradient(180deg, #0C2B4C 0%, var(--cx-paper-2) 100%); }
-.cx-arc__curve { width: 100%; max-width: 900px; overflow: visible; }
-.cx-arc__curve text {
-  fill: var(--cx-ink); font-family: var(--font-head); font-weight: 600;
-  font-size: 21px; letter-spacing: .12em; text-transform: uppercase;
-}
-.cx-arc__mark { width: 38px; height: auto; margin: clamp(10px, 2.4vh, 28px) auto clamp(16px, 3vh, 28px); }
-.cx-arc__list {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(18px, 3vw, 50px);
-  width: 100%; max-width: 860px; margin-top: auto; text-align: center;
-}
-.cx-arc__list > div { display: flex; flex-direction: column; align-items: center; gap: 8px; }
-.cx-arc__num {
-  font-family: var(--cx-serif); font-weight: 500; font-size: clamp(1.4rem, 2.4vw, 2.2rem);
-  color: var(--orange-600); line-height: 1;
-}
-.cx-arc__list h3 {
-  margin: 0; font-family: var(--cx-serif); font-weight: 500; text-transform: uppercase;
-  color: var(--cx-ink); font-size: clamp(.95rem, 1.4vw, 1.24rem); letter-spacing: .02em;
-}
-.cx-arc__list p { margin: 0; font-size: .85rem; line-height: 1.6; color: var(--cx-soft); max-width: 26ch; }
-/* An arch-topped photo at the foot of the dome, echoing the panel's own shape.
-   assets/img/scenes/arc.jpg shipped with the build for this spot and was never
-   wired up. */
-.cx-arc__photo {
-  margin: clamp(30px, 5.5vh, 60px) auto 0; width: min(430px, 76%);
-  aspect-ratio: 3 / 4; border-radius: 999px 999px 0 0; overflow: hidden;
-  box-shadow: 0 24px 60px -30px rgba(0, 35, 82, .45);
-}
-.cx-arc__photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
-.cx-arc__panel { will-change: translate; }
-/* The curve reads at desktop width and nowhere else: its font-size is in
-   viewBox units, so on a phone the SVG scales the line down to about 10px, and
-   forty characters will not fit the arc legibly at any size that narrow. Below
-   the breakpoint the line is set straight instead, the dome is opened out so
-   its top is not a dead zone, and the three reasons become a divided list. */
-.cx-arc__line { display: none; }
-@media (max-width: 760px) {
-  .cx-arc { padding-bottom: 0; }
-  .cx-arc__panel {
-    min-height: 0;
-    border-radius: clamp(130px, 44vw, 260px) clamp(130px, 44vw, 260px) 0 0;
-    /* start the line below the dome's shoulder: at 34px in only ~209px of the
-       331px panel is usable, at 56px it is ~253px */
-    padding: clamp(52px, 15vw, 74px) 22px 42px;
-  }
-  .cx-arc__curve { display: none; }
-  .cx-arc__line {
-    display: block; margin: 0; max-width: 22ch; text-align: center;
-    font-family: var(--font-head); font-weight: 600; font-size: .82rem;
-    letter-spacing: .14em; text-transform: uppercase; line-height: 1.7;
-    color: var(--cx-ink);
-  }
-  .cx-arc__chapter { margin: 18px 0 0; }
-  .cx-arc__mark { width: 30px; margin: 20px auto 4px; }
-  .cx-arc__list { grid-template-columns: 1fr; gap: 0; margin-top: 18px; text-align: left; }
-  .cx-arc__list > div {
-    display: grid; grid-template-columns: auto 1fr; align-items: baseline;
-    column-gap: 14px; row-gap: 4px; padding: 18px 0;
-    border-top: 1px solid var(--cx-hair); text-align: left;
-  }
-  .cx-arc__list > div:first-child { border-top: 0; padding-top: 4px; }
-  .cx-arc__list > div:last-child { padding-bottom: 0; }
-  .cx-arc__photo { width: 100%; margin-top: 26px; aspect-ratio: 4 / 5; }
-  .cx-arc__num { grid-row: span 2; font-size: 1.35rem; }
-  .cx-arc__list h3 { font-size: 1rem; }
-  .cx-arc__list p { grid-column: 2; max-width: none; }
-}
-
 /* ================================================ day / night set-piece == */
 .cx-dn { position: relative; height: 260vh; background: var(--deep); color: #fff; }
 .cx-dn__stage { position: sticky; top: 0; height: 100vh; overflow: hidden; display: grid; place-items: center; isolation: isolate; }
@@ -1036,7 +957,6 @@ html.cx-lock .cx-badge { opacity: 0; }
 .cx-vista__card .cx-chapter,
 .cx-vista__card .cx-chapter i { color: rgba(255, 255, 255, .85); }
 
-.cx-arc__chapter { margin-bottom: 6px; }
 
 /* the route beat centres its chapter mark above the headline */
 .cx-route__chapter { text-align: center; padding-inline: 24px; margin-bottom: 6px; }
