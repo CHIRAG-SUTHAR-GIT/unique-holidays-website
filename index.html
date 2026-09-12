@@ -20,9 +20,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/styles.css?v=20260912k">
-<link rel="stylesheet" href="assets/css/motion.css?v=20260912k">
-<link rel="stylesheet" href="assets/css/cinema.css?v=20260912k">
+<link rel="stylesheet" href="assets/css/styles.css?v=20260912m">
+<link rel="stylesheet" href="assets/css/motion.css?v=20260912m">
+<link rel="stylesheet" href="assets/css/cinema.css?v=20260912m">
 <noscript><style>
   /* Without JavaScript the intro never lifts and nothing is measured, so fall
      back to plain, readable HTML. */
@@ -37,7 +37,7 @@
   .cx-windows { height: 110vh; }
   .theme-toggle { display: none; }
 </style></noscript>
-<script src="assets/js/boot.js?v=20260912k"></script>
+<script src="assets/js/boot.js?v=20260912m"></script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"TravelAgency","name":"Unique Holidays",
 "slogan":"Let's Explore the World","url":"https://www.uniqueholidays.com/",
@@ -336,6 +336,17 @@
   </section>
 
   <!-- ================================================ journey (pinned) -->
+  <svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+    <defs>
+      <clipPath id="cxBlobStay" clipPathUnits="objectBoundingBox">
+        <path d="M1 0 L.42 0 C.20 .06 .06 .20 .05 .36 C.04 .52 .18 .62 .26 .70 C.36 .80 .42 .90 .56 .95 C.72 1 .88 .97 1 .93 Z"/>
+      </clipPath>
+      <clipPath id="cxBlobPrice" clipPathUnits="objectBoundingBox">
+        <path d="M0 .04 C.18 0 .40 .08 .56 .22 C.72 .36 .86 .52 .80 .68 C.74 .84 .50 .95 .26 1 L0 1 Z"/>
+      </clipPath>
+    </defs>
+  </svg>
+
   <section class="cx-journey" id="cxJourney" data-bg="light" aria-labelledby="cxJourneyTitle">
     <div class="cx-journey__screen">
       <div class="cx-journey__track">
@@ -389,32 +400,77 @@
           </div>
         </div>
 
-        <div class="cx-panel cx-intro" data-cx-group>
+        <!-- 02 + 03 — one screen on the desktop, stacked on the phone -->
+        <div class="cx-panel cx-pair" data-cx-group>
+          <span class="cx-mehndi cx-mehndi--corner-tl" aria-hidden="true"
+                style="--mehndi:clamp(150px, 22vw, 300px); --mehndi-op:.12" data-cx-spin="120"></span>
           <span class="cx-mehndi cx-mehndi--corner-br" aria-hidden="true"
-                style="--mehndi:clamp(260px, 34vw, 520px)" data-cx-spin="-140"></span>
-          <span class="cx-intro__aside cx-spaced" data-cx="a">40+ countries</span>
-          <h2 class="cx-intro__lines" id="cxJourneyTitle">
-            <span class="cx-intro__line">India</span>
-            <span class="cx-intro__line"><em>&amp;</em> the</span>
-            <span class="cx-intro__line">World</span>
-          </h2>
-          <figure class="cx-intro__photo" data-cx="slide"><img src="assets/img/destinations/dubai.jpg" alt="The Burj Al Arab and the Dubai coastline from above" loading="lazy" width="933" height="1400"></figure>
-          <div class="cx-intro__text">
-            <div data-cx="ctn"><p class="cx-chapter"><b>02</b><i></i>Finding your stay</p></div>
-            <h3 data-cx="h">Then we start looking</h3>
-            <p data-cx="p">Houseboats on Dal Lake, backwaters in Kerala, desert camps outside Dubai, villas over Maldivian water. We pick out the few that match the way you like to travel.</p>
-          </div>
-        </div>
+                style="--mehndi:clamp(170px, 24vw, 330px); --mehndi-op:.12" data-cx-spin="-120"></span>
+          <span class="cx-leaf cx-leaf--pair" aria-hidden="true"></span>
 
-        <div class="cx-panel cx-cta-panel">
-          <span class="cx-mehndi cx-mehndi--corner-tr" aria-hidden="true"
-                style="--mehndi:clamp(240px, 32vw, 470px)" data-cx-spin="130"></span>
-          <a class="cx-circle" href="packages.html" data-cx="ctn" data-cx-magnet=".28"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="cx-circle__base" cx="50" cy="50" r="49"/><circle class="cx-circle__arc" cx="50" cy="50" r="49" pathLength="314"/></svg><span>View all<br>packages</span></a>
-          <div class="cx-cta-panel__note" data-cx-group>
-            <div data-cx="ctn"><p class="cx-chapter"><b>03</b><i></i>The price</p></div>
-            <b data-cx="h">You get one clear price</b>
-            <p class="cx-small" data-cx="p">Flights, hotels, transfers and taxes in one total price, with the hotel names written down. Change anything and we will send a new price, as many times as you need.</p>
+          <!-- ---- 02 · finding your stay ---- -->
+          <figure class="cx-blob cx-blob--stay" data-cx-drift="5">
+            <span class="cx-blob__clip">
+              <img src="assets/img/destinations/vietnam.jpg" alt="" loading="lazy" width="1400" height="1050">
+            </span>
+            <figcaption class="cx-quill cx-quill--stay">Stays<br>that feel<br>like you
+              <svg class="cx-quill__heart" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.4C6.8 16.9 3.4 13.9 3.4 10.2A4.6 4.6 0 0 1 12 7.8a4.6 4.6 0 0 1 8.6 2.4c0 3.7-3.4 6.7-8.6 10.2z"/></svg>
+              <span class="cx-quill__mark" aria-hidden="true"><svg class="cx-brush" viewBox="0 0 200 16" preserveAspectRatio="none"><path d="M2 10 Q100 0 198 6 Q100 14 2 10 Z"/></svg></span>
+            </figcaption>
+          </figure>
+
+          <div class="cx-pair__stay" data-cx-group>
+            <p class="cx-mark" data-cx="ctn"><b>02</b><span>Finding your stay</span><i aria-hidden="true"></i></p>
+            <h2 class="cx-statement" id="cxJourneyTitle" data-cx="h" style="--cx-step:.02s">Then we start looking</h2>
+            <p class="cx-small" data-cx="p">Houseboats on Dal Lake, backwaters in Kerala, desert camps outside Dubai, villas over Maldivian water. We pick out the few that match the way you like to travel.</p>
           </div>
+
+          <div class="cx-pair__cta" data-cx-group>
+            <svg class="cx-pair__flight" viewBox="0 0 240 74" aria-hidden="true">
+              <path class="cx-sign__trail" d="M2 58 C40 64 66 52 72 36 C76 24 66 15 57 20 C48 25 54 42 74 49 C106 60 150 48 196 22"/>
+              <g class="cx-sign__plane" transform="translate(196 6) rotate(38) scale(1.05)">
+                <path d="M10 0c1.3 0 2.2 1.1 2.2 3.1V9l10 5.2v2.2L12.2 14v4.6l3 2.2v1.5L10 21l-5.2 1.3v-1.5l3-2.2V14L-2.2 16.4v-2.2L7.8 9V3.1C7.8 1.1 8.7 0 10 0z"/>
+              </g>
+            </svg>
+            <a class="cx-circle" href="packages.html" data-cx="ctn" data-cx-magnet=".28"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="cx-circle__base" cx="50" cy="50" r="49"/><circle class="cx-circle__arc" cx="50" cy="50" r="49" pathLength="314"/></svg><span>View all<br>packages</span><svg class="cx-circle__arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+          </div>
+
+          <!-- ---- 03 · the price ---- -->
+          <figure class="cx-blob cx-blob--price" data-cx-drift="-5">
+            <span class="cx-blob__clip">
+              <img src="assets/img/destinations/andaman.jpg" alt="" loading="lazy" width="1400" height="1050">
+            </span>
+            <figcaption class="cx-quill cx-quill--price">Clear Places<br>Brighter Journeys
+              <span class="cx-quill__mark" aria-hidden="true"><svg class="cx-brush" viewBox="0 0 200 16" preserveAspectRatio="none"><path d="M2 10 Q100 0 198 6 Q100 14 2 10 Z"/></svg></span>
+            </figcaption>
+          </figure>
+
+          <div class="cx-pair__price" data-cx-group>
+            <p class="cx-mark" data-cx="ctn"><b>03</b><span>The price</span><i aria-hidden="true"></i></p>
+            <h3 class="cx-statement" data-cx="h" style="--cx-step:.02s">You get one clear price</h3>
+            <p class="cx-small" data-cx="p">Flights, hotels, transfers and taxes in one total price, with the hotel names written down. Change anything and we will send a new price, as many times as you need.</p>
+
+            <ul class="cx-ask cx-ask--price" data-cx="ctn">
+              <li>
+                <span class="cx-ask__chip cx-ask__chip--place"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.6 3H20a1 1 0 0 1 1 1v7.4a2 2 0 0 1-.6 1.4l-7.6 7.6a2 2 0 0 1-2.8 0l-6-6a2 2 0 0 1 0-2.8l7.6-7.6A2 2 0 0 1 12.6 3z"/><circle cx="16.6" cy="7.4" r="1.5"/></svg></span>
+                <b>One<br>total price</b>
+              </li>
+              <li>
+                <span class="cx-ask__chip cx-ask__chip--month"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2.2"/><path d="M8 8.2h4M8 12h8M8 15.6h8M8 19h5"/><circle cx="16" cy="8.2" r="1.6"/></svg></span>
+                <b>Hotel names<br>included</b>
+              </li>
+              <li>
+                <span class="cx-ask__chip cx-ask__chip--people"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11.6a8 8 0 0 0-13.7-4.9L3.4 9.5"/><path d="M3.4 4.6v4.9h4.9"/><path d="M4 12.4a8 8 0 0 0 13.7 4.9l2.9-2.8"/><path d="M20.6 19.4v-4.9h-4.9"/></svg></span>
+                <b>Flexible<br>changes</b>
+              </li>
+            </ul>
+
+            <p class="cx-quill cx-quill--sign" data-cx="ctn">Travel with Clarity<br>Travel with Confidence
+              <span class="cx-quill__mark" aria-hidden="true"><svg class="cx-brush" viewBox="0 0 200 16" preserveAspectRatio="none"><path d="M2 10 Q100 0 198 6 Q100 14 2 10 Z"/></svg></span>
+            </p>
+          </div>
+
+          <p class="cx-pair__meta cx-spaced" data-cx="ctn"><i aria-hidden="true"></i><span>Your journey, our planning<br>Let&rsquo;s explore the world</span><i aria-hidden="true"></i></p>
         </div>
 
         <div class="cx-panel cx-route">
@@ -750,8 +806,8 @@
 </div>
 
 
-<script src="assets/js/main.js?v=20260912k" defer></script>
-<script src="assets/js/motion.js?v=20260912k" defer></script>
-<script src="assets/js/cinema.js?v=20260912k" defer></script>
+<script src="assets/js/main.js?v=20260912m" defer></script>
+<script src="assets/js/motion.js?v=20260912m" defer></script>
+<script src="assets/js/cinema.js?v=20260912m" defer></script>
 </body>
 </html>
