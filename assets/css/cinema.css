@@ -214,7 +214,10 @@ html.cx-lock .cx .site-header { transform: translateY(-120%); }
 }
 .cx-pre__top img { width: 42px; height: auto; }
 .cx-pre__center {
-  position: absolute; z-index: 3; inset: 0; display: grid; place-items: center;
+  position: absolute; z-index: 3; inset: 0;
+  /* one centred stack: grid rows used to stretch and split the screen in half */
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: clamp(56px, 9vh, 88px) 6vw; box-sizing: border-box;
   text-align: center; pointer-events: none;
 }
 .cx-pre__title { display: flex; flex-direction: column; align-items: center; line-height: .92; }
@@ -227,7 +230,7 @@ html.cx-lock .cx .site-header { transform: translateY(-120%); }
   font-size: clamp(1rem, 1.5vw, 1.5rem); margin-top: .7em; letter-spacing: .01em;
 }
 .cx-pre__meta {
-  position: absolute; z-index: 3; left: 0; right: 0; top: calc(50% + clamp(90px, 11vw, 150px));
+  position: absolute; z-index: 3; left: 0; right: 0; bottom: clamp(134px, 19vh, 178px);
   display: flex; justify-content: center; gap: clamp(18px, 3vw, 44px);
   color: rgba(255, 255, 255, .62);
 }
@@ -697,6 +700,7 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
 /* ------------------------------------------------- logo-first intro ----- */
 .cx-pre__logo {
   width: min(420px, 62vw); height: auto; margin: 0 auto clamp(20px, 3.5vh, 40px);
+  max-height: min(34vh, 318px); object-fit: contain;
   clip-path: inset(0 0 100% 0); transform: scale(1.06); transform-origin: 50% 100%;
   transition: clip-path calc(var(--cx-l) * 1.2) var(--cx-out), transform calc(var(--cx-l) * 1.4) var(--cx-out);
 }
@@ -712,7 +716,15 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
   stroke-dasharray: 2 6; transform-origin: 50% 50%; animation: cx-spin 26s linear infinite;
 }
 .cx-pre__seal circle + circle { stroke-dasharray: 1 10; animation-duration: 40s; animation-direction: reverse; }
-.cx-pre__center { flex-direction: column; }
+
+/* Short viewports: keep the centred stack clear of the intro furniture. */
+@media (max-height: 620px) {
+  .cx-pre__logo { width: min(300px, 48vw); max-height: 30vh; }
+}
+@media (max-height: 440px) {
+  .cx-pre__title, .cx-pre__meta { display: none; }
+  .cx-pre__logo { margin-bottom: 0; }
+}
 
 /* ------------------------------------------------- header logo seal ----- */
 .cx-seal { position: relative; display: grid; place-items: center; flex: none; }
