@@ -366,8 +366,8 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
   box-shadow: 0 30px 60px -30px rgba(0, 35, 82, .45);
 }
 .cx-concept__img img { width: 100%; height: 100%; object-fit: cover; }
-.cx-concept__img--a { left: -2vw; top: 6vh; width: clamp(150px, 17vw, 290px); aspect-ratio: 4 / 5; border-radius: 0 0 999px 999px; }
-.cx-concept__img--b { right: -1vw; bottom: 4vh; width: clamp(140px, 15vw, 250px); aspect-ratio: 3 / 4; border-radius: 999px 999px 0 0; }
+.cx-concept__img--a { right: -2vw; top: 6vh; width: clamp(150px, 17vw, 290px); aspect-ratio: 4 / 5; border-radius: 0 0 999px 999px; }
+.cx-concept__img--b { left: -1vw; bottom: 4vh; width: clamp(140px, 15vw, 250px); aspect-ratio: 3 / 4; border-radius: 999px 999px 0 0; }
 
 /* 2 · big lines + photo */
 .cx-intro { display: flex; flex-direction: column; gap: 40px; padding: 60px 24px 80px; overflow: hidden; }
@@ -411,7 +411,7 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
 @keyframes cx-spin { to { transform: rotate(360deg); } }
 .cx-circle--light { color: #fff; }
 .cx-circle--light:hover { color: var(--sand); }
-.cx-cta-panel { display: grid; place-items: center; padding: 20px 24px 70px; }
+.cx-cta-panel { display: grid; place-items: center; padding: 20px 24px 70px; overflow: hidden; }
 
 /* 4 · route */
 .cx-route { padding: 60px 0 90px; overflow: hidden; }
@@ -469,8 +469,8 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
   .cx-journey__track { flex-direction: row; height: 100vh; width: max-content; will-change: transform; }
   .cx-panel { height: 100vh; flex: none; }
   .cx-concept { width: 100vw; min-height: 0; padding: 0 12vw; }
-  .cx-concept__img--a { left: 3vw; top: 12vh; }
-  .cx-concept__img--b { right: 4vw; bottom: 8vh; }
+  .cx-concept__img--a { right: 3vw; top: 12vh; }
+  .cx-concept__img--b { left: 4vw; bottom: 8vh; }
 
   .cx-intro { width: 118vw; display: block; padding: 0; gap: 0; }
   .cx-intro__lines { position: absolute; left: 0; top: 50%; transform: translateY(-50%); font-size: 12.4vw; width: 76vw; z-index: 2; }
@@ -670,8 +670,8 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
   .cx-hero { height: 190vh; }
   .cx-hero__bg { height: 100vh; }
   .cx-hero__content .cx-label { font-size: .58rem; letter-spacing: .14em; }
-  .cx-concept__img--a { width: 34vw; top: 70px; left: -6vw; }
-  .cx-concept__img--b { width: 30vw; right: -6vw; bottom: 30px; }
+  .cx-concept__img--a { width: 34vw; top: 70px; right: -6vw; }
+  .cx-concept__img--b { width: 30vw; left: -6vw; bottom: 30px; }
   .cx-concept { padding-top: 45vw; padding-bottom: 42vw; }
   .cx-intro__lines { font-size: 21vw; }
   .cx-intro__photo { align-self: center; }
@@ -932,6 +932,9 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
 .cx-mehndi--edge-l { left: 0; top: var(--mehndi-y, 58%); translate: -50% -50%; }
 /* on the deep sections it sits back so the photo still leads */
 .cx-mehndi--quiet { --mehndi-op: .16; }
+/* On a dark ground: invert flips the navy linework to white, and the white
+   petal fills go dark and sink into the photo, leaving just the lines. */
+.cx-mehndi--on-dark { filter: invert(1); --mehndi-op: .26; }
 @media (max-width: 760px) {
   .cx-mehndi { width: var(--mehndi-m, clamp(220px, 58vw, 340px)); }
 }
