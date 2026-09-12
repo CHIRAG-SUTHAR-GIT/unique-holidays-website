@@ -186,13 +186,6 @@ html.cx-lock .cx .site-header { transform: translateY(-120%); }
   position: absolute; inset: clamp(12px, 1.7vw, 24px); border-radius: clamp(14px, 2vw, 28px);
   border: 1px solid rgba(255, 255, 255, .1); pointer-events: none;
 }
-.cx-pre__globe {
-  position: absolute; left: 50%; top: 50%; width: 118vmax; height: 118vmax;
-  transform: translate(-50%, -50%); opacity: 0; pointer-events: none;
-  transition: opacity var(--cx-l) var(--cx-out);
-}
-.cx-pre__globe circle, .cx-pre__globe ellipse, .cx-pre__globe path { fill: none; stroke: #fff; stroke-width: .6; }
-.cx-pre.is-decor .cx-pre__globe { opacity: .07; }
 .cx-pre__ring {
   position: absolute; left: 50%; transform: translateX(-50%);
   background: var(--navy); border: 1px solid rgba(255, 255, 255, .14); border-bottom: 0;
@@ -705,17 +698,6 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
   transition: clip-path calc(var(--cx-l) * 1.2) var(--cx-out), transform calc(var(--cx-l) * 1.4) var(--cx-out);
 }
 .cx-pre.is-logo .cx-pre__logo { clip-path: inset(0 0 0 0); transform: scale(1); }
-.cx-pre__seal {
-  position: absolute; left: 50%; top: 50%; width: min(560px, 86vw); aspect-ratio: 1;
-  transform: translate(-50%, -50%); opacity: 0; pointer-events: none;
-  transition: opacity calc(var(--cx-l) * 1.5) var(--cx-out);
-}
-.cx-pre.is-logo .cx-pre__seal { opacity: .45; }
-.cx-pre__seal circle {
-  fill: none; stroke: rgba(255, 255, 255, .55); stroke-width: .4;
-  stroke-dasharray: 2 6; transform-origin: 50% 50%; animation: cx-spin 26s linear infinite;
-}
-.cx-pre__seal circle + circle { stroke-dasharray: 1 10; animation-duration: 40s; animation-direction: reverse; }
 
 /* Short viewports: keep the centred stack clear of the intro furniture. */
 @media (max-height: 620px) {
@@ -899,7 +881,7 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
   .cx-dn__stage, .cx-included__stage { position: static; height: auto; padding-block: 80px; }
   .cx-included__list span { color: #fff; }
   .cx-pre__logo { clip-path: none !important; transform: none !important; }
-  .cx-seal circle, .cx-pre__seal circle { animation: none !important; }
+  .cx-seal circle { animation: none !important; }
 }
 
 /* ==========================================================================
