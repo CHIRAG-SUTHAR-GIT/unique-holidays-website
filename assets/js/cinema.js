@@ -288,11 +288,8 @@
     var sec = $("#cxJourney");
     if (!sec) return null;
     var track = $(".cx-journey__track", sec);
-    var linesBox = $(".cx-intro__lines", sec);
-    var lines = $$(".cx-intro__line", sec);
-    var from = [-6, 24, -12], to = [6, -22, 22];
-    var top = 0, H = 0, travel = 0, linesTop = 0, linesH = 0, pinned = false;
-    var f = new Follow(.07), g = new Follow(.07);
+    var top = 0, H = 0, travel = 0, pinned = false;
+    var f = new Follow(.07);
     return {
       measure: function () {
         sec.style.height = "";
@@ -305,27 +302,13 @@
           sec.style.height = H + "px";
         }
         top = absTop(sec);
-        if (linesBox) {
-          lines.forEach(function (l) { l.style.transform = ""; });
-          linesTop = absTop(linesBox);
-          linesH = linesBox.offsetHeight;
-        }
-        f.snap(); g.snap();
+        f.snap();
       },
       update: function (dt) {
-        if (reduced) return;
-        var q;
-        if (pinned) {
-          var a = top + .025 * H, b = top + .975 * H - vh;
-          var p = f.step(clamp((y - a) / Math.max(1, b - a), 0, 1), dt);
-          track.style.transform = "translate3d(" + (-travel * ease.glide(p)).toFixed(1) + "px,0,0)";
-          q = g.step(clamp((y - top) / Math.max(1, H - vh), 0, 1), dt);
-        } else {
-          q = g.step(clamp((y - (linesTop - vh)) / (vh + linesH), 0, 1), dt);
-        }
-        lines.forEach(function (l, i) {
-          l.style.transform = "translate3d(" + lerp(from[i], to[i], q).toFixed(2) + "%,0,0)";
-        });
+        if (reduced || !pinned) return;
+        var a = top + .025 * H, b = top + .975 * H - vh;
+        var p = f.step(clamp((y - a) / Math.max(1, b - a), 0, 1), dt);
+        track.style.transform = "translate3d(" + (-travel * ease.glide(p)).toFixed(1) + "px,0,0)";
       }
     };
   }
@@ -335,13 +318,23 @@
     var sec = $("#cxVista");
     if (!sec) return null;
     var media = $(".cx-vista__media", sec), clouds = $(".cx-vista__clouds", sec), card = $(".cx-vista__card", sec);
-    var top = 0, h = 1, f = new Follow(.07);
+    var top = 0, h = 1, sideways = false, f = new Follow(.07);
     return {
-      measure: function () { top = absTop(sec); h = sec.offsetHeight; f.snap(); },
+      measure: function () { top = absTop(sec); h = sec.offsetHeight; sideways = desk && !reduced; f.snap(); },
       update: function (dt) {
         if (reduced) return;
-        if (y < top - vh * 1.2 || y > top + h + vh * .2) return;
-        var p = f.step(clamp((y - (top - vh)) / h, 0, 1), dt);
+        var q;
+        if (sideways) {
+          /* It is the last panel of the horizontal run: it slides in from the
+             right, so its own left edge is the progress. */
+          var r = sec.getBoundingClientRect();
+          if (r.right <= 0 || r.left >= vw) return;
+          q = clamp(1 - r.left / vw, 0, 1);
+        } else {
+          if (y < top - vh * 1.2 || y > top + h + vh * .2) return;
+          q = clamp((y - (top - vh)) / h, 0, 1);
+        }
+        var p = f.step(q, dt);
         media.style.transform = "scale(" + (1.15 - .15 * ease.std(p)).toFixed(4) + ")";
         if (clouds) clouds.style.transform = "translate3d(0," + (-p * 34).toFixed(2) + "vh,0)";
         if (card) {
@@ -498,16 +491,19 @@
     var badge = $(".cx-badge");
     var zones = $$("[data-bg]");
     function toneAt(py) {
+      /* Zones nest now that 05 is a panel inside the journey, so keep going
+         and let the innermost one — the last in document order — decide. */
+      var found = "light";
       for (var i = 0; i < zones.length; i++) {
         var r = zones[i].getBoundingClientRect();
-        if (r.top <= py && r.bottom > py) {
+        if (r.top <= py && r.bottom > py && r.right > 0 && r.left < vw) {
           var split = parseFloat(zones[i].getAttribute("data-bg-split"));
           var tone = zones[i].getAttribute("data-bg");
           if (split && py - r.top < r.height * split) tone = tone === "dark" ? "light" : "dark";
-          return tone;
+          found = tone;
         }
       }
-      return "light";
+      return found;
     }
     return {
       measure: function () { zones = $$("[data-bg]"); },
@@ -544,21 +540,6 @@
   }
 
   /* ------------------------------------------------- draggable route map -- */
-  function initDrag() {
-    $$(".cx-route__scroller").forEach(function (box) {
-      var down = false, sx = 0, sl = 0;
-      box.addEventListener("pointerdown", function (e) {
-        if (e.pointerType !== "mouse" || box.classList.contains("is-scrubbed")) return;
-        if (box.scrollWidth <= box.clientWidth) return;
-        down = true; sx = e.clientX; sl = box.scrollLeft; box.style.cursor = "grabbing";
-      });
-      window.addEventListener("pointermove", function (e) {
-        if (down) box.scrollLeft = sl - (e.clientX - sx);
-      });
-      window.addEventListener("pointerup", function () { down = false; box.style.cursor = ""; });
-    });
-  }
-
   /* ============================================================== intro == */
   function runIntro(onReveal) {
     var pre = $("#cxPre");
@@ -651,37 +632,6 @@
   /* The desktop journey is one long horizontal track, so the route already
      slides past on its own. Below the breakpoint the map is wider than the
      screen and used to need a drag; here the vertical scroll moves it. */
-  function routeScene() {
-    var box = $(".cx-route__scroller");
-    if (!box) return null;
-    var map = $(".cx-route__map", box);
-    var label = $(".cx-route__hint b");
-    var top = 0, H = 1, travel = 0, live = false;
-    var f = new Follow(.09);
-    return {
-      measure: function () {
-        map.style.transform = "";
-        box.scrollLeft = 0;
-        live = !desk && !reduced;
-        box.classList.toggle("is-scrubbed", live);
-        if (label) label.textContent = live ? "Keep scrolling to see more" : "Drag to see more";
-        travel = live ? Math.max(0, map.scrollWidth - box.clientWidth) : 0;
-        top = absTop(box);
-        H = box.offsetHeight || 1;
-        f.snap();
-      },
-      update: function (dt) {
-        if (!live || !travel) return;
-        /* The strip is shorter than the screen, so pace the pan off its centre:
-           it starts as the strip comes up from the bottom and ends while it is
-           still in view near the top. */
-        var mid = top + H / 2, a = mid - vh * .88, b = mid - vh * .12;
-        var p = f.step(clamp((y - a) / Math.max(1, b - a), 0, 1), dt);
-        map.style.transform = "translate3d(" + (-travel * p).toFixed(1) + "px,0,0)";
-      }
-    };
-  }
-
   /* ------------------------------------------------ day / night piece -- */
   function dayNightScene() {
     var sec = $("#cxDayNight");
@@ -812,11 +762,10 @@
     fitText();
     $$("[data-cx-part]").forEach(prepare);
     initReveals();
-    [heroScene(), journeyScene(), routeScene(), vistaScene(), dayNightScene(), galleryScene(),
+    [heroScene(), journeyScene(), vistaScene(), dayNightScene(), galleryScene(),
      includedScene(), windowsScene(), finaleScene(), driftScene(), mehndiScene(), chromeScene()]
       .forEach(function (s) { if (s) scenes.push(s); });
     measureAll();
-    initDrag();
     initMagnets();
     initNavSwap();
 

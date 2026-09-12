@@ -20,9 +20,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/styles.css?v=20260912m">
-<link rel="stylesheet" href="assets/css/motion.css?v=20260912m">
-<link rel="stylesheet" href="assets/css/cinema.css?v=20260912m">
+<link rel="stylesheet" href="assets/css/styles.css?v=20260912n">
+<link rel="stylesheet" href="assets/css/motion.css?v=20260912n">
+<link rel="stylesheet" href="assets/css/cinema.css?v=20260912n">
 <noscript><style>
   /* Without JavaScript the intro never lifts and nothing is measured, so fall
      back to plain, readable HTML. */
@@ -30,14 +30,15 @@
   [data-anim] { opacity: 1 !important; transform: none !important; }
   .uh-word > i { transform: none !important; }
   html.cx-intro .cx-hero__zoom img { transform: none !important; }
-  [data-cx], [data-cx] .cx-c, .cx-pin, .cx-route__draw { opacity: 1 !important; transform: none !important; clip-path: none !important; translate: none !important; }
+  [data-cx], [data-cx] .cx-c, .cx-stop__dot, .cx-stop__photo, .cx-stop__label { opacity: 1 !important; transform: none !important; translate: none !important; }
+  [data-cx], [data-cx] .cx-c, .cx-trail__line { clip-path: none !important; }
   .cx-hero { height: 100vh; }
   .cx-journey__screen { position: relative !important; overflow-x: auto !important; }
   .cx-windows__covers { display: none !important; }
   .cx-windows { height: 110vh; }
   .theme-toggle { display: none; }
 </style></noscript>
-<script src="assets/js/boot.js?v=20260912m"></script>
+<script src="assets/js/boot.js?v=20260912n"></script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"TravelAgency","name":"Unique Holidays",
 "slogan":"Let's Explore the World","url":"https://www.uniqueholidays.com/",
@@ -581,25 +582,25 @@
           </p>
         </div>
 
+
+        <!-- 05 - the last screen of the run -->
+      <section class="cx-panel cx-vista" id="cxVista" data-bg="dark" data-bg-split="0.3" aria-labelledby="cxVistaTitle">
+        <span class="cx-mehndi cx-mehndi--corner-tr cx-mehndi--on-dark" aria-hidden="true"
+              style="--mehndi:clamp(260px, 34vw, 520px)" data-cx-spin="145"></span>
+        <div class="cx-vista__media" aria-hidden="true"><img src="assets/img/scenes/vista.jpg" alt="" loading="lazy" width="2400" height="1597"></div>
+        <div class="cx-vista__shade" aria-hidden="true"></div>
+        <div class="cx-vista__sky" aria-hidden="true"></div>
+        <div class="cx-vista__clouds" aria-hidden="true"><span></span><span></span></div>
+        <div class="cx-vista__card" data-cx-manual>
+          <div data-cx="ctn"><p class="cx-mark cx-mark--light"><b>05</b><span>You are there</span><i aria-hidden="true"></i></p></div>
+          <h2 id="cxVistaTitle" data-cx="h">And one morning, you wake up here</h2>
+          <a class="cx-underline" href="packages.html" data-cx="ctn">See this season's packages <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </section>
+
       </div>
     </div>
   </section>
-
-  <!-- ============================================================ vista -->
-  <section class="cx-vista" id="cxVista" data-bg="dark" data-bg-split="0.3" aria-labelledby="cxVistaTitle">
-    <span class="cx-mehndi cx-mehndi--corner-tr cx-mehndi--on-dark" aria-hidden="true"
-          style="--mehndi:clamp(260px, 34vw, 520px)" data-cx-spin="145"></span>
-    <div class="cx-vista__media" aria-hidden="true"><img src="assets/img/scenes/vista.jpg" alt="" loading="lazy" width="2400" height="1597"></div>
-    <div class="cx-vista__shade" aria-hidden="true"></div>
-    <div class="cx-vista__sky" aria-hidden="true"></div>
-    <div class="cx-vista__clouds" aria-hidden="true"><span></span><span></span></div>
-    <div class="cx-vista__card" data-cx-manual>
-      <div data-cx="ctn"><p class="cx-mark cx-mark--light"><b>05</b><span>You are there</span><i aria-hidden="true"></i></p></div>
-      <h2 id="cxVistaTitle" data-cx="h">And one morning, you wake up here</h2>
-      <a class="cx-underline" href="packages.html" data-cx="ctn">See this season's packages <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-    </div>
-  </section>
-
 
   <!-- ========================================================= why us -->
   <section class="section">
@@ -889,8 +890,8 @@
 </div>
 
 
-<script src="assets/js/main.js?v=20260912m" defer></script>
-<script src="assets/js/motion.js?v=20260912m" defer></script>
-<script src="assets/js/cinema.js?v=20260912m" defer></script>
+<script src="assets/js/main.js?v=20260912n" defer></script>
+<script src="assets/js/motion.js?v=20260912n" defer></script>
+<script src="assets/js/cinema.js?v=20260912n" defer></script>
 </body>
 </html>

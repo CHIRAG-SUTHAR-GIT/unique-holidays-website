@@ -792,6 +792,7 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
   .cx-trail__end { right: 1.4%; top: 72%; bottom: auto; }
   .cx-route .cx-compass { left: 7%; bottom: 3%; right: auto; }
   .cx-route__cue { margin-top: clamp(6px, 1.4vh, 20px); }
+
   .cx-leaf--route-l { --leaf: clamp(200px, 15vw, 300px); left: -5%; top: 46%; }
   .cx-leaf--route-r { --leaf: clamp(200px, 15vw, 300px); right: -3%; bottom: 6%; }
 }
@@ -852,6 +853,14 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
 }
 .cx-underline:hover { color: inherit; background-size: 0 1px; background-position: 100% 100%; }
 .cx-underline svg { width: 14px; height: 14px; }
+
+/* 05 is the last screen of the sideways run, so it is a panel like the rest */
+@media (min-width: 992px) {
+  .cx-vista { width: 100vw; height: 100vh; }
+  .cx-vista__sky { height: 26vh; }
+  .cx-vista__clouds { top: -4vh; height: 46vh; }
+  .cx-vista__card { bottom: 16vh; }
+}
 
 /* ================================================================= windows */
 .cx-windows { position: relative; height: 150vh; background: var(--cx-paper); color: #fff; }
