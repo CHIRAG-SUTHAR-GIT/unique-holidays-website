@@ -467,28 +467,6 @@
     };
   }
 
-  /* ------------------------------------------- panels that rise on scroll -- */
-  /* The reference's cream arch slides up over the section before it. Same move,
-     translate only, so nothing reflows while it runs. */
-  function riseScene() {
-    var items = $$("[data-cx-rise]").map(function (el) {
-      return { el: el, amt: parseFloat(el.getAttribute("data-cx-rise")) || 40, f: new Follow(.08) };
-    });
-    if (!items.length) return null;
-    return {
-      measure: function () { items.forEach(function (it) { it.f.snap(); }); },
-      update: function (dt) {
-        if (reduced) return;
-        items.forEach(function (it) {
-          var r = it.el.getBoundingClientRect();
-          if (r.bottom < -vh * .25 || r.top > vh * 1.25) return;
-          var p = it.f.step(clamp((vh - r.top) / (vh * .92), 0, 1), dt);
-          it.el.style.translate = "0 " + ((1 - ease.glide(p)) * it.amt).toFixed(1) + "px";
-        });
-      }
-    };
-  }
-
   /* ------------------------------------- mehndi flowers, turned by scroll -- */
   function mehndiScene() {
     var items = $$("[data-cx-spin]").map(function (el) {
@@ -698,25 +676,6 @@
     };
   }
 
-  /* ------------------------------------------- arch with curved text -- */
-  function arcScene() {
-    var sec = $(".cx-arc");
-    if (!sec) return null;
-    var txt = $(".cx-arc__curve text", sec);
-    var panel = $(".cx-arc__panel", sec);
-    var top = 0, h = 1, f = new Follow(.08);
-    return {
-      measure: function () { top = absTop(sec); h = sec.offsetHeight; f.snap(); },
-      update: function (dt) {
-        if (reduced || !txt) return;
-        if (y < top - vh * 1.2 || y > top + h + vh * .2) return;
-        var p = f.step(clamp((y - (top - vh)) / (h + vh), 0, 1), dt);
-        txt.style.wordSpacing = (p * (desk ? 90 : 40)).toFixed(1) + "px";
-        if (panel) panel.style.setProperty("--arc-p", p.toFixed(3));
-      }
-    };
-  }
-
   /* ------------------------------------------------ day / night piece -- */
   function dayNightScene() {
     var sec = $("#cxDayNight");
@@ -869,8 +828,8 @@
     fitText();
     $$("[data-cx-part]").forEach(prepare);
     initReveals();
-    [heroScene(), journeyScene(), routeScene(), vistaScene(), arcScene(), dayNightScene(), galleryScene(),
-     includedScene(), windowsScene(), finaleScene(), driftScene(), mehndiScene(), riseScene(), sealScene(), chromeScene()]
+    [heroScene(), journeyScene(), routeScene(), vistaScene(), dayNightScene(), galleryScene(),
+     includedScene(), windowsScene(), finaleScene(), driftScene(), mehndiScene(), sealScene(), chromeScene()]
       .forEach(function (s) { if (s) scenes.push(s); });
     measureAll();
     initDrag();
