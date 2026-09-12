@@ -197,7 +197,7 @@
 
     var draws = $$("[data-cx-draw]");
     draws.forEach(function (map) {
-      $$(".cx-pin", map).forEach(function (pin, i) { pin.style.setProperty("--i", i); });
+      $$(".cx-pin, .cx-stop", map).forEach(function (pin, i) { pin.style.setProperty("--i", i); });
     });
 
     if (reduced || !("IntersectionObserver" in window)) {
