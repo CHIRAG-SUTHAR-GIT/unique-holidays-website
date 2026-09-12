@@ -280,43 +280,52 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
 .cx-hero__zoom img.is-settling { transition: transform calc(var(--cx-l) * 1.25) var(--cx-inout); transform: none; }
 .cx-hero__shade {
   position: absolute; inset: 0; z-index: -2; pointer-events: none;
-  /* Two scrims: a soft pool behind the headline so white type keeps its
-     contrast over the bright sky, plus the top/bottom bands for the header
-     and the scroll cue. */
+  /* Light touch, so the photograph reads as a photograph. The type holds up
+     on its own now: an orange stroke separates every glyph from whatever is
+     behind it, and the shadows below carry the rest. Only the top and bottom
+     keep a band, for the header and the scroll cue. */
   background:
-    radial-gradient(118% 72% at 50% 46%,
-      rgba(0, 16, 40, .60) 0%, rgba(0, 16, 40, .46) 44%, rgba(0, 16, 40, .14) 74%, rgba(0, 16, 40, 0) 100%),
-    linear-gradient(180deg, rgba(0, 20, 48, .72) 0%, rgba(0, 20, 48, .34) 30%, rgba(0, 20, 48, .32) 62%, rgba(0, 20, 48, .66) 100%);
+    radial-gradient(112% 62% at 50% 47%,
+      rgba(0, 16, 40, .30) 0%, rgba(0, 16, 40, .20) 46%, rgba(0, 16, 40, .05) 76%, rgba(0, 16, 40, 0) 100%),
+    linear-gradient(180deg, rgba(0, 20, 48, .46) 0%, rgba(0, 20, 48, .10) 26%, rgba(0, 20, 48, .08) 66%, rgba(0, 20, 48, .40) 100%);
 }
 .cx-hero__content {
   position: absolute; inset: 0; z-index: 2; color: #fff; text-align: center;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   padding: 110px 24px 80px; will-change: transform;
 }
+/* A hairline orange outline on everything in the hero. It is what lets the
+   scrim come off: the stroke holds each glyph away from the picture behind
+   it, and paint-order keeps the stroke outside the letterform instead of
+   eating into it. */
+.cx-hero__content .cx-label,
+.cx-hero__title,
+.cx-hero__script,
+.cx-hero__cue span {
+  -webkit-text-stroke: .6px var(--orange);
+  paint-order: stroke fill;
+}
+@media (min-width: 992px) {
+  .cx-hero__content .cx-label,
+  .cx-hero__title,
+  .cx-hero__script,
+  .cx-hero__cue span { -webkit-text-stroke-width: .9px; }
+}
 .cx-hero__content .cx-label {
   color: #fff; margin-bottom: clamp(16px, 2.2vh, 28px);
-  text-shadow: 0 1px 3px rgba(0, 14, 36, .6), 0 2px 16px rgba(0, 14, 36, .45);
+  text-shadow: 0 0 4px rgba(0, 14, 36, .9), 0 0 10px rgba(0, 14, 36, .75), 0 2px 16px rgba(0, 14, 36, .5);
 }
 .cx-hero__title {
   margin: 0; color: #fff; font-family: var(--cx-serif); font-weight: 500;
   text-transform: uppercase; letter-spacing: .01em; line-height: .9;
   font-size: clamp(3.2rem, 11.2vw, 11.5rem); display: flex; flex-direction: column; align-items: center;
-  text-shadow: 0 2px 10px rgba(0, 14, 36, .45), 0 8px 44px rgba(0, 14, 36, .5);
+  text-shadow: 0 0 8px rgba(0, 14, 36, .55), 0 2px 14px rgba(0, 14, 36, .6), 0 8px 44px rgba(0, 14, 36, .5);
 }
 .cx-hero__script {
   font-family: var(--cx-script); font-weight: 400;
   font-size: clamp(2.1rem, 4.4vw, 4.2rem); line-height: 1.15; color: var(--sand); margin: .18em 0 0;
-  text-shadow: 0 2px 8px rgba(0, 14, 36, .55), 0 6px 30px rgba(0, 14, 36, .4);
+  text-shadow: 0 0 6px rgba(0, 14, 36, .7), 0 2px 10px rgba(0, 14, 36, .65), 0 6px 30px rgba(0, 14, 36, .4);
 }
-.cx-hero__row {
-  display: flex; align-items: center; justify-content: center; gap: clamp(14px, 2.4vw, 36px);
-  margin-top: clamp(20px, 3.4vh, 38px); color: #fff;
-  text-shadow: 0 1px 3px rgba(0, 14, 36, .6), 0 2px 16px rgba(0, 14, 36, .45);
-}
-.cx-hero__row .cx-spaced { font-size: .66rem; letter-spacing: .38em; }
-.cx-hero__rule { width: clamp(40px, 7vw, 110px); height: 1px; background: rgba(255, 255, 255, .85); }
-.cx-hero__rule[data-cx="line"] { clip-path: inset(0 100% 0 0); }
-.cx-hero__rule[data-cx="line"].is-in { clip-path: inset(0 0 0 0); }
 .cx-hero__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: clamp(24px, 4vh, 42px); }
 .cx-hero__cue {
   position: absolute; z-index: 2; left: 50%; bottom: clamp(18px, 3.4vh, 34px); transform: translateX(-50%);
