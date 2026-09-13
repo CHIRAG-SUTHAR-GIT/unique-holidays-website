@@ -171,6 +171,27 @@ Then open <http://localhost:8080>.
 Deploying is a straight file copy — GitHub Pages, Netlify, Vercel, Cloudflare Pages or
 any shared host will serve it as-is.
 
+### Build stamps — run this before every deploy
+
+Stylesheets and scripts are linked with a `?v=` build stamp so browsers fetch the new
+file instead of the one they already hold. That only works once the browser has a fresh
+copy of the *page*, though, and a phone holding yesterday's HTML keeps asking for
+yesterday's stamp — so refreshing shows the old site with the old CSS, sometimes for
+hours. `assets/js/boot.js` closes that gap: it reads `version.json` past every cache and,
+if the page it came in on is behind, pulls a fresh copy and reloads once.
+
+The stamps in the pages, the `BUILD` constant in `boot.js`, and `version.json` all have
+to agree, so change them together:
+
+```bash
+python3 tools/bump-build.py            # today's date, next free letter
+python3 tools/bump-build.py 20260914a  # or name the id yourself
+```
+
+Run it after any change to the CSS or JS and commit the result with the change. If you
+forget, the site still deploys — visitors just keep the old look until their cache
+expires on its own.
+
 ## Before you go live
 
 Everything below is **placeholder content** and should be replaced with the real thing.
@@ -224,12 +245,14 @@ The newsletter form in the footer works the same way (`#newsletterForm` in `main
 ```
 index.html  destinations.html  packages.html  about.html  contact.html
 site.webmanifest
+version.json            the published build id, read by the cache guard
 tools/
   fetch-photos.py       swap the illustrations for real licensed photos
+  bump-build.py         stamp a new build id across the pages, boot.js and version.json
 assets/
   css/styles.css        design tokens + all components
   css/motion.css        loader, scroll meter, reveals, pinned gallery, night mode
-  js/boot.js            pre-paint theme + scroll lock (loaded synchronously)
+  js/boot.js            pre-paint theme + scroll lock + cache guard (loaded synchronously)
   js/main.js            nav, counters, slider, filters, accordion, forms
   js/motion.js          intro, scroll meter, splits, parallax, pinning, day/night
   img/
