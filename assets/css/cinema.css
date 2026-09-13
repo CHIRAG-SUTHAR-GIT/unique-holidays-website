@@ -415,13 +415,57 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
 .cx-sign__meta { margin: clamp(10px, 1.8vh, 18px) 0 0; font-size: .6rem; letter-spacing: .3em; color: var(--cx-soft); }
 
 /* ---- the two photographs, each a disc the panel edge crops ---- */
-.cx-concept__photo {
-  position: absolute; margin: 0; z-index: 1; overflow: hidden; border-radius: 50%;
-  aspect-ratio: 1; box-shadow: 0 34px 70px -40px rgba(0, 35, 82, .5);
+/* Each photograph on the page gets a shape of its own, and none of them is a
+   circle. The shape is set twice: clip-path cuts the picture, shape-outside
+   gives the same outline to the text beside it, so the copy follows the real
+   edge instead of stopping at a rectangle. Both take the same value, so the
+   two can never drift apart.
+   --- 01a, the arch: a doorway, straight sides and a domed top. */
+.cx-shape-arch {
+  --shape: inset(0 round 50% 50% 3% 3% / 42% 42% 2% 2%);
+  clip-path: var(--shape); shape-outside: var(--shape);
 }
-.cx-concept__photo img { width: 100%; height: 100%; object-fit: cover; }
-.cx-concept__photo--a { width: 72vw; top: -22vw; right: -24vw; }
-.cx-concept__photo--b { width: 62vw; bottom: -26vw; left: -30vw; }
+/* --- 01b, the leaf: two opposite corners drawn right in, two left square. */
+.cx-shape-leaf {
+  --shape: inset(0 round 54% 8px 54% 8px);
+  clip-path: var(--shape); shape-outside: var(--shape);
+}
+/* --- 02, the cut: straight diagonals off two corners, like a torn ticket. */
+.cx-shape-cut {
+  --shape: polygon(16% 0, 100% 0, 100% 84%, 84% 100%, 0 100%, 0 16%);
+  clip-path: var(--shape); shape-outside: var(--shape);
+}
+/* --- 03, the dome: the arch turned over, so the weight falls to the base. */
+.cx-shape-dome {
+  --shape: inset(0 round 4% 4% 50% 50% / 3% 3% 44% 44%);
+  clip-path: var(--shape); shape-outside: var(--shape);
+}
+
+.cx-concept__photo { margin: 0; z-index: 1; }
+.cx-concept__photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* 01a floats inside the copy, so the chapter mark, the statement and the
+   paragraph all wrap round the arch rather than leaving the panel half empty.
+   It still runs off the right edge, which the panel crops. */
+.cx-concept__photo--a {
+  float: right; width: 40vw; max-width: 300px; aspect-ratio: 3 / 4;
+  margin: 4px -12vw 12px 18px; shape-margin: 16px;
+  filter: drop-shadow(0 26px 40px rgba(0, 35, 82, .34));
+}
+/* 01b keeps its old job: a shape bleeding off the bottom-left corner. */
+.cx-concept__photo--b {
+  position: absolute; width: 62vw; bottom: -26vw; left: -30vw; aspect-ratio: 1;
+  filter: drop-shadow(0 26px 40px rgba(0, 35, 82, .3));
+}
+/* the float needs a block box to sit in; the body itself is a flex column */
+/* The copy in this block ranges left so the wrap round the arch reads as
+   deliberate; centred text either side of a float just looks broken. The
+   statement also comes down a size, or only one word fits beside the arch. */
+.cx-concept__lead { align-self: stretch; display: block; text-align: left; }
+.cx-concept__lead::after { content: ""; display: block; clear: both; }
+.cx-concept .cx-concept__lead .cx-small { max-width: none; margin-inline: 0; text-align: left; }
+.cx-concept__lead .cx-statement { font-size: clamp(2rem, 8.4vw, 4.6rem); }
+.cx-concept__lead .cx-chapter { justify-content: flex-start; }
 
 /* ---- leaves, from the uploaded collection, used as a sprite sheet ---- */
 .cx-leaf {
@@ -477,6 +521,14 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
 .cx-blob__clip {
   display: block; width: 100%; height: 100%; overflow: hidden; border-radius: 50%;
   box-shadow: 0 34px 70px -40px rgba(0, 35, 82, .5);
+}
+/* Chapter 02 and 03 take shapes of their own. A clip-path cannot be softened
+   by a box-shadow, so the shadow moves to a drop-shadow filter, which follows
+   the cut edge. Chapter 04's vista photograph keeps its circle, untouched. */
+.cx-blob--stay .cx-blob__clip,
+.cx-blob--price .cx-blob__clip {
+  border-radius: 0; box-shadow: none;
+  filter: drop-shadow(0 26px 40px rgba(0, 35, 82, .34));
 }
 .cx-blob img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .cx-blob--stay  { grid-area: photoA; aspect-ratio: 1; width: 62vw; justify-self: end; margin: -13vw -19vw 0 0; }
