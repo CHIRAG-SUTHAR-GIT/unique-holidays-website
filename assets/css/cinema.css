@@ -299,23 +299,10 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   padding: 110px 24px 80px;
 }
-/* A hairline orange outline on everything in the hero. It is what lets the
-   scrim come off: the stroke holds each glyph away from the picture behind
-   it, and paint-order keeps the stroke outside the letterform instead of
-   eating into it. */
-.cx-hero__content .cx-label,
-.cx-hero__title,
-.cx-hero__script,
-.cx-hero__cue span {
-  -webkit-text-stroke: .6px var(--orange);
-  paint-order: stroke fill;
-}
-@media (min-width: 992px) {
-  .cx-hero__content .cx-label,
-  .cx-hero__title,
-  .cx-hero__script,
-  .cx-hero__cue span { -webkit-text-stroke-width: .9px; }
-}
+/* The hero type used to carry a hairline orange stroke around every glyph, to
+   hold it off a busy photograph. Against the Ladakh sky that read as a border
+   drawn round the letters rather than as separation, so it is gone; the
+   shadows below do the job on their own. */
 .cx-hero__content .cx-label {
   color: #fff; margin-bottom: clamp(16px, 2.2vh, 28px);
   text-shadow: 0 0 4px rgba(0, 14, 36, .9), 0 0 10px rgba(0, 14, 36, .75), 0 2px 16px rgba(0, 14, 36, .5);
