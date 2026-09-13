@@ -479,8 +479,22 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
   box-shadow: 0 34px 70px -40px rgba(0, 35, 82, .5);
 }
 .cx-blob img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.cx-blob--stay  { grid-area: photoA; aspect-ratio: 1; width: 62vw; justify-self: end; margin: -13vw -19vw 0 0; }
-.cx-blob--price { grid-area: photoB; aspect-ratio: 1; width: 54vw; justify-self: start; margin: 3vw 0 0 -20vw; }
+
+/* Chapters 02 and 03 wear a smooth curve, not a circle — the shape the panel
+   was drawn for. The curve is an SVG bezier path (see the clipPath defs in the
+   markup), so the edge is exact at any size. A clip-path cannot be softened by
+   box-shadow, so the shadow becomes a drop-shadow filter on the figure, which
+   follows the cut. Chapter 04's vista disc is left as a circle. */
+.cx-blob--stay .cx-blob__clip, .cx-blob--price .cx-blob__clip {
+  border-radius: 0; box-shadow: none; height: 100%;
+}
+.cx-blob--stay  .cx-blob__clip { clip-path: url(#cxCurveStay); }
+.cx-blob--price .cx-blob__clip { clip-path: url(#cxCurvePrice); }
+.cx-blob--stay, .cx-blob--price { filter: drop-shadow(0 28px 44px rgba(0, 35, 82, .34)); }
+
+/* on the phone the two are tall full-bleed bands, curve on one long edge */
+.cx-blob--stay  { grid-area: photoA; aspect-ratio: 4 / 5; width: 78vw; justify-self: end; margin: -13vw -22vw 0 0; }
+.cx-blob--price { grid-area: photoB; aspect-ratio: 4 / 5; width: 74vw; justify-self: start; margin: 3vw 0 0 -22vw; }
 
 /* ---- the calligraphy, over a photo or under a block ---- */
 .cx-quill {
@@ -737,12 +751,12 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
      sit beside: the stay disc stops above the price block, the price disc
      starts below the packages ring. */
   .cx-blob--stay {
-    position: absolute; aspect-ratio: 1; margin: 0; justify-self: auto;
-    width: min(52vh, 39vw); top: -13vh; right: -5vw;
+    position: absolute; aspect-ratio: 3 / 4; margin: 0; justify-self: auto;
+    width: min(40vh, 34vw); top: -16vh; right: -6vw;
   }
   .cx-blob--price {
-    position: absolute; aspect-ratio: 1; margin: 0; justify-self: auto; z-index: 2;
-    width: min(44vh, 33vw); bottom: -12vh; left: -6vw;
+    position: absolute; aspect-ratio: 3 / 4; margin: 0; justify-self: auto; z-index: 2;
+    width: min(40vh, 32vw); bottom: -16vh; left: -7vw;
   }
   .cx-quill--stay  { left: 16%; top: 30%; font-size: clamp(1.1rem, 1.5vw, 1.5rem); }
   .cx-quill--price { left: 30%; top: 26%; font-size: clamp(1rem, 1.4vw, 1.4rem); }

@@ -20,9 +20,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/styles.css?v=20260913h">
-<link rel="stylesheet" href="assets/css/motion.css?v=20260913h">
-<link rel="stylesheet" href="assets/css/cinema.css?v=20260913h">
+<link rel="stylesheet" href="assets/css/styles.css?v=20260913i">
+<link rel="stylesheet" href="assets/css/motion.css?v=20260913i">
+<link rel="stylesheet" href="assets/css/cinema.css?v=20260913i">
 <noscript><style>
   /* Without JavaScript the intro never lifts and nothing is measured, so fall
      back to plain, readable HTML. */
@@ -36,7 +36,7 @@
   .cx-journey__screen { position: relative !important; overflow-x: auto !important; }
   .theme-toggle { display: none; }
 </style></noscript>
-<script src="assets/js/boot.js?v=20260913h"></script>
+<script src="assets/js/boot.js?v=20260913i"></script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"TravelAgency","name":"Unique Holidays",
 "slogan":"Let's Explore the World","url":"https://www.uniqueholidays.com/",
@@ -387,13 +387,25 @@
         </div>
 
         <!-- 02 + 03 — one screen on the desktop, stacked on the phone -->
+        <svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+          <defs>
+            <!-- 02 photo: smooth S down the left edge; top and right bleed off -->
+            <clipPath id="cxCurveStay" clipPathUnits="objectBoundingBox">
+              <path d="M0.34 0 C0.13 0.18, 0.20 0.40, 0.34 0.56 C0.48 0.72, 0.41 0.90, 0.27 1 L1 1 L1 0 Z"/>
+            </clipPath>
+            <!-- 03 photo: the mirror, curve up the right edge, so the two interlock -->
+            <clipPath id="cxCurvePrice" clipPathUnits="objectBoundingBox">
+              <path d="M0 0 L0.66 0 C0.87 0.18, 0.80 0.40, 0.66 0.56 C0.52 0.72, 0.59 0.90, 0.73 1 L0 1 Z"/>
+            </clipPath>
+          </defs>
+        </svg>
         <div class="cx-panel cx-pair" data-cx-group>
           <span class="cx-leaf cx-leaf--pair" aria-hidden="true"></span>
 
           <!-- ---- 02 · finding your stay ---- -->
           <figure class="cx-blob cx-blob--stay" data-cx-drift="5">
             <span class="cx-blob__clip">
-              <img src="assets/img/destinations/vietnam.jpg" alt="" loading="lazy" width="1400" height="1050">
+              <img src="assets/img/destinations/maldives.jpg" alt="" loading="lazy" width="1400" height="1050">
             </span>
             <figcaption class="cx-quill cx-quill--stay">Stays<br>that feel<br>like you
               <svg class="cx-quill__heart" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.4C6.8 16.9 3.4 13.9 3.4 10.2A4.6 4.6 0 0 1 12 7.8a4.6 4.6 0 0 1 8.6 2.4c0 3.7-3.4 6.7-8.6 10.2z"/></svg>
@@ -793,8 +805,8 @@
 </div>
 
 
-<script src="assets/js/main.js?v=20260913h" defer></script>
-<script src="assets/js/motion.js?v=20260913h" defer></script>
-<script src="assets/js/cinema.js?v=20260913h" defer></script>
+<script src="assets/js/main.js?v=20260913i" defer></script>
+<script src="assets/js/motion.js?v=20260913i" defer></script>
+<script src="assets/js/cinema.js?v=20260913i" defer></script>
 </body>
 </html>
