@@ -165,6 +165,7 @@
     }
 
     updateProgress();
+    updateStacks();
     hscrolls.forEach(function (h) { h.update(); });
     scheduleSweep();
   }
@@ -187,6 +188,58 @@
       var total = el.offsetHeight - vh;
       var p = total > 0 ? clamp(-rect.top / total, 0, 1) : clamp((vh - rect.top) / (vh + rect.height), 0, 1);
       el.style.setProperty("--p", p.toFixed(4));
+    });
+  }
+
+  /* ------------------------------------------------------- stacking decks -- */
+  /* Phone and tablet stack the marked grids into a deck: CSS sticks each card
+     a little lower than the one before, and this reports how far each card is
+     buried behind the next so the ones underneath shrink and dim. Every card
+     is measured first and written afterwards, so a frame costs one layout pass
+     rather than one per card. offsetHeight is the untransformed height, and
+     the shrink pins its origin to the top edge, so neither reading is skewed
+     by the scale this very function sets. */
+  var stacks = [];
+  var stackWide = window.matchMedia("(min-width: 981px)");
+  var stacksCleared = false;
+
+  function collectStacks() {
+    stacks = $$(".grid--stack").map(function (grid) {
+      var cards = Array.prototype.slice.call(grid.children);
+      cards.forEach(function (card, i) { card.style.setProperty("--i", i); });
+      return { grid: grid, cards: cards };
+    });
+  }
+
+  function updateStacks() {
+    if (!stacks.length) return;
+
+    if (reduced || stackWide.matches) {
+      if (stacksCleared) return;             /* only worth doing once */
+      stacks.forEach(function (s) {
+        s.cards.forEach(function (c) { c.style.removeProperty("--cover"); });
+      });
+      stacksCleared = true;
+      return;
+    }
+    stacksCleared = false;
+
+    var vh = window.innerHeight;
+    stacks.forEach(function (s) {
+      var box = s.grid.getBoundingClientRect();
+      if (box.bottom < 0 || box.top > vh) return;
+
+      var tops = s.cards.map(function (c) { return c.getBoundingClientRect().top; });
+      var heights = s.cards.map(function (c) { return c.offsetHeight; });
+
+      s.cards.forEach(function (card, i) {
+        var h = heights[i];
+        var cover = 0;
+        /* how much of this card the next one has slid over: 0 while the next
+           card is still below it, 1 once it has caught up to this card's top */
+        if (h && i + 1 < tops.length) cover = clamp((tops[i] + h - tops[i + 1]) / h, 0, 1);
+        card.style.setProperty("--cover", cover.toFixed(3));
+      });
     });
   }
 
@@ -223,6 +276,7 @@
 
   collect();
   collectProgress();
+  collectStacks();
   window.addEventListener("scroll", requestFrame, { passive: true });
 
   var resizeTimer = null;
