@@ -46,24 +46,29 @@ html.cx-lock, html.cx-lock body { overflow: hidden; }
 .cx-serif { font-family: var(--cx-serif); font-weight: 500; letter-spacing: -.01em; }
 
 /* ------------------------------------------------------------ text reveals */
-/* h — characters turn in on their vertical axis */
+/* h — characters turn in on their vertical axis.
+   scaleX rather than rotateY: no perspective is set anywhere on this page, so
+   a rotateY is already drawn as a flat horizontal squash and the two look the
+   same — but the 3D rotation promoted every one of the four hundred-odd
+   character spans to its own compositor layer, which is what made scrolling
+   stutter on a phone. */
 .cx-w { display: inline-block; white-space: nowrap; }
 [data-cx="h"] .cx-c, [data-cx-part="h"] .cx-c {
   display: inline-block; opacity: 0;
-  transform: translateY(50%) rotateY(90deg);
+  transform: translateY(50%) scaleX(0);
   transition: opacity var(--cx-l) var(--cx-out), transform var(--cx-l) var(--cx-out);
   transition-delay: calc(var(--cx-d, .3s) + var(--i, 0) * var(--cx-step, .05s));
 }
 /* a — spaced labels flip up from below */
 [data-cx="a"] .cx-c, [data-cx-part="a"] .cx-c {
   display: inline-block; opacity: 0; transform-origin: 50% 100%;
-  transform: translateX(.8em) rotateX(90deg);
+  transform: translateX(.8em) scaleY(0);
   transition: opacity var(--cx-l) var(--cx-out), transform var(--cx-l) var(--cx-out);
   transition-delay: calc(var(--cx-d, .3s) + var(--i, 0) * .06s);
 }
 .is-in > .cx-w > .cx-c, .is-in > * > .cx-w > .cx-c, .is-in .cx-c { opacity: 1; transform: none; }
 .is-out .cx-c {
-  opacity: 0; transform: translateY(-50%) rotateY(-90deg);
+  opacity: 0; transform: translateY(-50%) scaleX(0);
   transition-duration: var(--cx-s); transition-timing-function: var(--cx-in);
   transition-delay: calc(var(--i, 0) * .012s);
 }
@@ -269,8 +274,8 @@ html.cx-lock .cx .site-header { transform: translateY(-120%); }
 /* ==================================================================== hero */
 .cx-hero { position: relative; height: 270vh; background: var(--deep); }
 .cx-hero__stage { position: sticky; top: 0; height: 100vh; overflow: hidden; isolation: isolate; }
-.cx-hero__bg { position: absolute; left: 0; right: 0; top: 0; height: 150vh; z-index: -3; will-change: transform; }
-.cx-hero__zoom { position: absolute; inset: 0; transform-origin: 50% 75%; will-change: transform; }
+.cx-hero__bg { position: absolute; left: 0; right: 0; top: 0; height: 150vh; z-index: -3; }
+.cx-hero__zoom { position: absolute; inset: 0; transform-origin: 50% 75%; }
 .cx-hero__zoom img {
   width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%;
   transform-origin: 50% 0;
@@ -292,7 +297,7 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
 .cx-hero__content {
   position: absolute; inset: 0; z-index: 2; color: #fff; text-align: center;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  padding: 110px 24px 80px; will-change: transform;
+  padding: 110px 24px 80px;
 }
 /* A hairline orange outline on everything in the hero. It is what lets the
    scrim come off: the stroke holds each glyph away from the picture behind
@@ -722,7 +727,7 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
 /* desktop: one long horizontal scene */
 @media (min-width: 992px) {
   .cx-journey__screen { position: sticky; top: 0; height: 100vh; overflow: hidden; }
-  .cx-journey__track { flex-direction: row; height: 100vh; width: max-content; will-change: transform; }
+  .cx-journey__track { flex-direction: row; height: 100vh; width: max-content; }
   .cx-panel { height: 100vh; flex: none; }
   .cx-concept { width: 100vw; min-height: 0; padding: 0 12vw; }
 
@@ -822,7 +827,7 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
   position: relative; height: 140vh; overflow: hidden; isolation: isolate;
   background: var(--cx-paper); color: #fff;
 }
-.cx-vista__media { position: absolute; inset: 0; z-index: -2; transform-origin: 50% 100%; will-change: transform; }
+.cx-vista__media { position: absolute; inset: 0; z-index: -2; transform-origin: 50% 100%; }
 .cx-vista__media img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 38%; }
 .cx-vista__sky {
   position: absolute; left: 0; right: 0; top: 0; height: 44vh; z-index: -1; pointer-events: none;
@@ -835,7 +840,7 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
 }
 /* Haze, not cloud shapes: soft wide bands that lift with the scroll and read as
    atmosphere over the photograph instead of pasted-on cut-outs. */
-.cx-vista__clouds { position: absolute; left: -10%; right: -10%; top: 2vh; height: 52vh; z-index: -1; pointer-events: none; will-change: transform; }
+.cx-vista__clouds { position: absolute; left: -10%; right: -10%; top: 2vh; height: 52vh; z-index: -1; pointer-events: none; }
 .cx-vista__clouds span {
   position: absolute; left: 0; right: 0; top: 0; height: 60%;
   background: radial-gradient(58% 100% at 22% 34%, rgba(255, 255, 255, .5), rgba(255, 255, 255, 0) 72%),
@@ -856,7 +861,7 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
 }
 .cx-vista__card {
   position: absolute; left: 50%; bottom: 12vh; transform: translateX(-50%);
-  width: min(560px, calc(100% - 48px)); text-align: center; will-change: transform, opacity;
+  width: min(560px, calc(100% - 48px)); text-align: center;
 }
 .cx-vista__card .cx-label { color: #fff; opacity: .85; margin-bottom: 14px; }
 .cx-vista__card .cx-mark { justify-content: center; justify-items: center; margin-bottom: clamp(14px, 2.4vh, 22px); }
@@ -885,7 +890,7 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
 /* ================================================================= windows */
 .cx-windows { position: relative; height: 150vh; background: var(--cx-paper); color: #fff; }
 .cx-windows__stage { position: relative; height: 100%; overflow: hidden; isolation: isolate; }
-.cx-windows__img { position: absolute; inset: -12% 0; z-index: -2; will-change: transform; }
+.cx-windows__img { position: absolute; inset: -12% 0; z-index: -2; }
 .cx-windows__img img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 55%; }
 .cx-windows__img::after {
   content: ""; position: absolute; inset: 0;
@@ -896,7 +901,7 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
   margin: 0; color: #fff; font-family: var(--cx-serif); font-weight: 500; text-transform: uppercase;
   line-height: .9; letter-spacing: -.01em; white-space: nowrap; font-size: 15vw;
 }
-.cx-windows__covers { position: absolute; inset: 0; z-index: 2; pointer-events: none; display: none; will-change: transform; }
+.cx-windows__covers { position: absolute; inset: 0; z-index: 2; pointer-events: none; display: none; }
 .cx-windows__cover { position: absolute; top: 0; bottom: 0; width: 50%; background: var(--cx-paper); }
 .cx-windows__cover--l { left: 0; }
 .cx-windows__cover--r { right: 0; }
@@ -936,7 +941,7 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
 }
 .cx-promise__note { position: relative; z-index: 2; margin: clamp(30px, 6vh, 56px) auto 0; max-width: 44ch; color: var(--cx-soft); font-size: .92rem; }
 .cx-promise__img {
-  position: absolute; z-index: 1; margin: 0; overflow: hidden; will-change: transform;
+  position: absolute; z-index: 1; margin: 0; overflow: hidden;
   width: clamp(220px, 24vw, 380px); aspect-ratio: 1; right: -6vw; top: 8vh; transform: rotate(45deg);
   box-shadow: 0 40px 80px -40px rgba(0, 35, 82, .5);
 }
@@ -945,8 +950,8 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
 
 /* ========================================================== views + footer */
 .cx-views { position: relative; min-height: 170vh; color: #fff; background: var(--deep); isolation: isolate; }
-.cx-views__clip { position: absolute; inset: 0; z-index: -1; overflow: hidden; clip-path: inset(0 0 0 0); will-change: clip-path; }
-.cx-views__media { position: absolute; inset: -6% 0 -14%; will-change: transform; }
+.cx-views__clip { position: absolute; inset: 0; z-index: -1; overflow: hidden; clip-path: inset(0 0 0 0); }
+.cx-views__media { position: absolute; inset: -6% 0 -14%; }
 .cx-views__media img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 58%; }
 .cx-views__clip::after {
   content: ""; position: absolute; inset: 0;
@@ -954,7 +959,7 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
 }
 .cx-views__inner { position: relative; min-height: 170vh; display: flex; flex-direction: column; align-items: center; padding: 16vh 24px 12vh; text-align: center; }
 .cx-views__top { max-width: 52ch; font-family: var(--font-head); font-weight: 600; font-size: .66rem; letter-spacing: .14em; text-transform: uppercase; line-height: 1.8; color: #fff; margin: 0; }
-.cx-views__title { margin-top: 26vh; will-change: transform; }
+.cx-views__title { margin-top: 26vh; }
 .cx-views__title h2 {
   margin: 0; color: #fff; font-family: var(--cx-serif); font-weight: 500; text-transform: uppercase;
   font-size: clamp(3rem, 9.4vw, 9.4rem); line-height: .9; letter-spacing: -.005em;
@@ -970,7 +975,7 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
 .cx .site-footer.cx-footer::before, .cx .site-footer.cx-footer::after { display: none; }
 .cx-footer__main {
   flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
-  text-align: center; padding: 16vh 24px 6vh; transform-origin: 50% 50%; will-change: transform, opacity;
+  text-align: center; padding: 16vh 24px 6vh; transform-origin: 50% 50%;
 }
 .cx-footer__main > img { width: 44px; height: auto; margin-bottom: 26px; }
 .cx-footer__phone {
@@ -1082,7 +1087,7 @@ html.cx-lock .cx-badge { opacity: 0; }
 @media (max-width: 991px) { .cx-badge { display: none; } }
 
 /* --------------------------------------------- magnetic + nav labels ---- */
-[data-cx-magnet] { will-change: transform; }
+[data-cx-magnet] { }
 .cx .nav-list a .cx-swap { display: inline-block; overflow: hidden; vertical-align: bottom; position: relative; }
 .cx .nav-list a .cx-swap i { display: block; font-style: normal; transition: transform var(--cx-m) var(--cx-inout); }
 .cx .nav-list a .cx-swap i + i { position: absolute; inset: 0; transform: translateY(105%); }
@@ -1164,7 +1169,7 @@ html.cx-lock .cx-badge { opacity: 0; }
   display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(12px, 1.6vw, 26px);
   width: min(1320px, calc(100% - 2 * clamp(16px, 4vw, 48px))); margin-inline: auto; align-items: start;
 }
-.cx-gallery__col { display: grid; gap: clamp(12px, 1.6vw, 26px); will-change: transform; }
+.cx-gallery__col { display: grid; gap: clamp(12px, 1.6vw, 26px); }
 .cx-gallery figure { position: relative; margin: 0; overflow: hidden; border-radius: 4px; }
 .cx-gallery img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 1.2s var(--cx-out); }
 .cx-gallery figure:hover img { transform: scale(1.05); }
@@ -1182,14 +1187,14 @@ html.cx-lock .cx-badge { opacity: 0; }
 /* ============================================ zoom-out all-included ===== */
 .cx-included { position: relative; height: 240vh; background: var(--deep); color: #fff; }
 .cx-included__stage { position: sticky; top: 0; height: 100vh; overflow: hidden; display: grid; place-items: center; isolation: isolate; }
-.cx-included__bg { position: absolute; inset: 0; z-index: -2; will-change: transform; }
+.cx-included__bg { position: absolute; inset: 0; z-index: -2; }
 .cx-included__bg img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 55%; }
 .cx-included__stage::after {
   content: ""; position: absolute; inset: 0; z-index: -1;
   background: linear-gradient(180deg, rgba(0, 18, 42, .62) 0%, rgba(0, 18, 42, .38) 50%, rgba(0, 18, 42, .72) 100%);
 }
 .cx-included__list {
-  text-align: center; will-change: transform, opacity; padding-inline: 24px;
+  text-align: center; padding-inline: 24px;
   display: flex; flex-direction: column; align-items: center; gap: clamp(5px, 1vh, 13px);
 }
 .cx-included__list .cx-label { color: rgba(255, 255, 255, .8); margin-bottom: clamp(12px, 3vh, 30px); }
@@ -1220,7 +1225,7 @@ html.cx-lock .cx-badge { opacity: 0; }
 .cx-mehndi {
   position: absolute; z-index: 0; display: block; pointer-events: none;
   width: var(--mehndi, clamp(280px, 36vw, 560px)); aspect-ratio: 1;
-  opacity: var(--mehndi-op, .3); will-change: rotate;
+  opacity: var(--mehndi-op, .3);
   background: url("../img/deco/mehndi-flower.svg") center / contain no-repeat;
 }
 /* a quarter of it — centre on the corner */
@@ -1270,3 +1275,25 @@ html.cx-lock .cx-badge { opacity: 0; }
 @media (min-width: 992px) {
 }
 
+/* ------------------------------------------------------ compositor budget -- */
+/* will-change used to sit on twenty-odd elements, which pinned a GPU layer for
+   each of them for the life of the page: 148 layers and about 78MB of layer
+   memory on a phone, which is what made the scroll stutter. Only the handful
+   of large elements that move for the whole length of a pin earn a permanent
+   layer now, and only on desktop, where there is memory to spare. Everything
+   else is promoted by the browser for the moment it actually animates. */
+@media (min-width: 981px) {
+  .cx-hero__zoom, .cx-journey__track, .cx-vista__media { will-change: transform; }
+}
+
+/* backdrop-filter re-reads everything behind the element every single frame.
+   On a phone that cost lands on the header, which is on screen the whole way
+   down the page, so below the desktop breakpoint the bar goes opaque instead:
+   without the blur a translucent bar would just smear the content behind it. */
+@media (max-width: 980px) {
+  .site-header { backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .cx .site-header.on-light {
+    background: var(--cx-paper);
+    backdrop-filter: none; -webkit-backdrop-filter: none;
+  }
+}

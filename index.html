@@ -20,9 +20,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/styles.css?v=20260913d">
-<link rel="stylesheet" href="assets/css/motion.css?v=20260913d">
-<link rel="stylesheet" href="assets/css/cinema.css?v=20260913d">
+<link rel="stylesheet" href="assets/css/styles.css?v=20260913e">
+<link rel="stylesheet" href="assets/css/motion.css?v=20260913e">
+<link rel="stylesheet" href="assets/css/cinema.css?v=20260913e">
 <noscript><style>
   /* Without JavaScript the intro never lifts and nothing is measured, so fall
      back to plain, readable HTML. */
@@ -38,7 +38,7 @@
   .cx-windows { height: 110vh; }
   .theme-toggle { display: none; }
 </style></noscript>
-<script src="assets/js/boot.js?v=20260913d"></script>
+<script src="assets/js/boot.js?v=20260913e"></script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"TravelAgency","name":"Unique Holidays",
 "slogan":"Let's Explore the World","url":"https://www.uniqueholidays.com/",
@@ -132,7 +132,7 @@
   <section class="cx-hero" id="cxHero" data-bg="dark" data-cx-manual aria-labelledby="cxHeroTitle">
     <div class="cx-hero__stage">
       <div class="cx-hero__bg" aria-hidden="true">
-        <div class="cx-hero__zoom"><img src="assets/img/scenes/hero.jpg" alt="" width="2400" height="1600" fetchpriority="high"></div>
+        <div class="cx-hero__zoom"><img src="assets/img/scenes/hero.jpg" srcset="assets/img/scenes/hero-sm.jpg 1000w, assets/img/scenes/hero.jpg 2400w" sizes="100vw" alt="" width="2400" height="1600" fetchpriority="high"></div>
       </div>
       <div class="cx-hero__shade" aria-hidden="true"></div>
       <div class="cx-hero__content">
@@ -342,8 +342,6 @@
       <div class="cx-journey__track">
 
         <div class="cx-panel cx-concept">
-          <span class="cx-mehndi cx-mehndi--corner-tl" aria-hidden="true"
-                style="--mehndi:clamp(240px, 26vw, 430px)" data-cx-spin="150"></span>
           <span class="cx-leaf cx-leaf--br" aria-hidden="true"></span>
           <p class="cx-concept__hand" aria-hidden="true">Let&rsquo;s<br>Explore<br>the World<span class="cx-concept__hand-mark"><svg class="cx-brush" viewBox="0 0 200 16" preserveAspectRatio="none"><path d="M2 10 Q100 0 198 6 Q100 14 2 10 Z"/></svg></span></p>
 
@@ -392,10 +390,6 @@
 
         <!-- 02 + 03 — one screen on the desktop, stacked on the phone -->
         <div class="cx-panel cx-pair" data-cx-group>
-          <span class="cx-mehndi cx-mehndi--corner-tl" aria-hidden="true"
-                style="--mehndi:clamp(150px, 22vw, 300px); --mehndi-op:.12" data-cx-spin="120"></span>
-          <span class="cx-mehndi cx-mehndi--corner-br" aria-hidden="true"
-                style="--mehndi:clamp(170px, 24vw, 330px); --mehndi-op:.12" data-cx-spin="-120"></span>
           <span class="cx-leaf cx-leaf--pair" aria-hidden="true"></span>
 
           <!-- ---- 02 · finding your stay ---- -->
@@ -564,7 +558,7 @@
       <section class="cx-panel cx-vista" id="cxVista" data-bg="dark" data-bg-split="0.3" aria-labelledby="cxVistaTitle">
         <span class="cx-mehndi cx-mehndi--corner-tr cx-mehndi--on-dark" aria-hidden="true"
               style="--mehndi:clamp(260px, 34vw, 520px)" data-cx-spin="145"></span>
-        <div class="cx-vista__media" aria-hidden="true"><img src="assets/img/scenes/vista.jpg" alt="" loading="lazy" width="2400" height="1597"></div>
+        <div class="cx-vista__media" aria-hidden="true"><img src="assets/img/scenes/vista.jpg" srcset="assets/img/scenes/vista-sm.jpg 1000w, assets/img/scenes/vista.jpg 2400w" sizes="100vw" alt="" loading="lazy" width="2400" height="1597"></div>
         <div class="cx-vista__shade" aria-hidden="true"></div>
         <div class="cx-vista__sky" aria-hidden="true"></div>
         <div class="cx-vista__clouds" aria-hidden="true"><span></span><span></span></div>
@@ -599,7 +593,7 @@
   </section>
 
   <!-- ======================================================= services -->
-  <section class="section" aria-labelledby="svcTitle">
+  <section class="section section--services" aria-labelledby="svcTitle">
     <div class="container">
       <div class="section-head section-head--center">
         <span class="eyebrow">What we can arrange</span>
@@ -625,7 +619,6 @@
         <li>Tours</li>
         <li>Travel insurance</li>
       </ul>
-      <p class="svc-note reveal"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-8-4.7-8-10.4A4.6 4.6 0 0 1 12 7a4.6 4.6 0 0 1 8 3.6C20 16.3 12 21 12 21z"/></svg> Identifies as women-owned</p>
     </div>
   </section>
 
@@ -767,7 +760,7 @@
   <!-- ================================================= what is included -->
   <section class="cx-included" id="cxIncluded" data-bg="dark" aria-labelledby="cxIncTitle">
     <div class="cx-included__stage">
-      <div class="cx-included__bg" aria-hidden="true"><img src="assets/img/scenes/included.jpg" alt="" loading="lazy" width="2400" height="1597"></div>
+      <div class="cx-included__bg" aria-hidden="true"><img src="assets/img/scenes/included.jpg" srcset="assets/img/scenes/included-sm.jpg 1000w, assets/img/scenes/included.jpg 2400w" sizes="100vw" alt="" loading="lazy" width="2400" height="1597"></div>
       <h2 id="cxIncTitle" class="visually-hidden">What every price includes</h2>
       <div class="cx-included__list" data-cx-manual>
         <p class="cx-label" data-cx="a">In every price</p>
@@ -784,7 +777,7 @@
   <!-- ====================================================== windows -->
   <section class="cx-windows" id="cxWindows" data-bg="dark" aria-labelledby="cxWindowsTitle">
     <div class="cx-windows__stage">
-      <div class="cx-windows__img" aria-hidden="true"><img src="assets/img/scenes/windows.jpg" alt="" loading="lazy" width="2400" height="1600"></div>
+      <div class="cx-windows__img" aria-hidden="true"><img src="assets/img/scenes/windows.jpg" srcset="assets/img/scenes/windows-sm.jpg 1000w, assets/img/scenes/windows.jpg 2400w" sizes="100vw" alt="" loading="lazy" width="2400" height="1600"></div>
       <div class="cx-windows__head"><h2 class="cx-giant" id="cxWindowsTitle" data-cx-fit="95">No rush</h2></div>
       <div class="cx-windows__covers" aria-hidden="true">
         <div class="cx-windows__cover cx-windows__cover--l"></div>
@@ -800,8 +793,6 @@
 
   <!-- ====================================================== promise -->
   <section class="cx-promise" data-bg="light" aria-labelledby="cxPromiseTitle">
-    <span class="cx-mehndi cx-mehndi--edge-r" aria-hidden="true"
-          style="--mehndi:clamp(280px, 36vw, 560px);--mehndi-y:68%" data-cx-spin="-170"></span>
     <figure class="cx-promise__img" aria-hidden="true" data-cx-drift="12" data-cx-rot="45"><img src="assets/img/destinations/kerala.jpg" alt="" loading="lazy" width="1400" height="788"></figure>
     <figure class="cx-promise__img cx-promise__img--b" aria-hidden="true" data-cx-drift="-10" data-cx-rot="45"><img src="assets/img/destinations/ladakh.jpg" alt="" loading="lazy" width="1400" height="933"></figure>
     <p class="cx-label" data-cx="ctn">Plan once, then travel with us again</p>
@@ -817,7 +808,7 @@
 
   <!-- ======================================================== views -->
   <section class="cx-views" id="cxViews" data-bg="dark" aria-labelledby="cxViewsTitle">
-    <div class="cx-views__clip" aria-hidden="true"><div class="cx-views__media"><img src="assets/img/scenes/views.jpg" alt="" loading="lazy" width="2400" height="1529"></div></div>
+    <div class="cx-views__clip" aria-hidden="true"><div class="cx-views__media"><img src="assets/img/scenes/views.jpg" srcset="assets/img/scenes/views-sm.jpg 1000w, assets/img/scenes/views.jpg 2400w" sizes="100vw" alt="" loading="lazy" width="2400" height="1529"></div></div>
     <div class="cx-views__inner">
       <p class="cx-views__top" data-cx="p">A short call is usually enough to plan the whole trip: who is travelling, what you enjoy, and what you would rather skip.</p>
       <div class="cx-views__title" data-cx-group>
@@ -867,8 +858,8 @@
 </div>
 
 
-<script src="assets/js/main.js?v=20260913d" defer></script>
-<script src="assets/js/motion.js?v=20260913d" defer></script>
-<script src="assets/js/cinema.js?v=20260913d" defer></script>
+<script src="assets/js/main.js?v=20260913e" defer></script>
+<script src="assets/js/motion.js?v=20260913e" defer></script>
+<script src="assets/js/cinema.js?v=20260913e" defer></script>
 </body>
 </html>

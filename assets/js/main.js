@@ -15,7 +15,15 @@
        A run of ~10px down hides it; ~40px up — about its own height — brings
        it back, which is what makes the return feel immediate. */
     var HIDE_AFTER = 10, SHOW_AFTER = 40;
-    var lastY = window.scrollY, run = 0, hidden = false;
+    var lastY = window.scrollY, run = 0, hidden = false, stuck = null;
+    /* Scroll events outnumber frames, and this used to do a class write, a
+       querySelector and an offsetHeight read on every one of them — the
+       offsetHeight forcing a layout each time. It runs once per frame now, off
+       a measurement taken at rest, and only touches the DOM when something
+       actually changes. */
+    var depth = header.offsetHeight;
+    var expander = header.querySelector("[aria-expanded]");
+    var queued = false;
 
     var setHidden = function (v) {
       if (v === hidden) return;
@@ -23,16 +31,19 @@
       header.classList.toggle("is-tucked", v);
     };
 
-    var onScroll = function () {
+    var read = function () {
+      queued = false;
       var y = window.scrollY < 0 ? 0 : window.scrollY;
-      header.classList.toggle("is-stuck", y > 8);
+
+      var nowStuck = y > 8;
+      if (nowStuck !== stuck) { stuck = nowStuck; header.classList.toggle("is-stuck", nowStuck); }
 
       var dy = y - lastY;
       lastY = y;
       if (!dy) return;
 
       // never hide over an open menu, and never within the bar's own depth
-      if (header.querySelector('[aria-expanded="true"]') || y <= header.offsetHeight) {
+      if (y <= depth || (expander && expander.getAttribute("aria-expanded") === "true")) {
         setHidden(false); run = 0; return;
       }
       // accumulate in the current direction, reset when it flips
@@ -40,8 +51,15 @@
       if (run > HIDE_AFTER) setHidden(true);
       else if (-run > SHOW_AFTER) setHidden(false);
     };
-    onScroll();
+
+    var onScroll = function () {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(read);
+    };
+    read();
     window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", function () { depth = header.offsetHeight; }, { passive: true });
   }
 
   /* --------------------------------------------------------- mobile nav -- */

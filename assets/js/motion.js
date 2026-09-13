@@ -185,6 +185,9 @@
     var vh = window.innerHeight;
     progressEls.forEach(function (el) {
       var rect = el.getBoundingClientRect();
+      /* Nothing reads --p while the section is nowhere near the screen, and
+         writing it anyway costs a style recalc per element per frame. */
+      if (rect.bottom < -vh * 0.5 || rect.top > vh * 1.5) return;
       var total = el.offsetHeight - vh;
       var p = total > 0 ? clamp(-rect.top / total, 0, 1) : clamp((vh - rect.top) / (vh + rect.height), 0, 1);
       el.style.setProperty("--p", p.toFixed(4));

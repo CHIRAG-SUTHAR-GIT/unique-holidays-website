@@ -122,7 +122,6 @@ html.is-ready .uh-meter { opacity: 1; }
 [data-anim] {
   opacity: 0;
   transition: opacity .85s var(--ease), transform .85s var(--ease);
-  will-change: opacity, transform;
 }
 [data-anim="fade-up"]    { transform: translateY(34px); }
 [data-anim="fade-down"]  { transform: translateY(-26px); }
@@ -172,7 +171,6 @@ html.is-ready .uh-meter { opacity: 1; }
 .hscroll__track {
   display: flex; gap: clamp(16px, 2vw, 28px);
   padding-inline: clamp(22px, 6vw, 90px);
-  will-change: transform;
 }
 .hscroll__item {
   flex: none; height: min(54vh, 460px); width: auto; aspect-ratio: 3 / 4;
