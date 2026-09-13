@@ -579,15 +579,15 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
 
 /* the big photograph, torn at the edges, running off the corner */
 .cx-blob--vista {
-  position: absolute; top: calc(-1 * clamp(6px, 1vh, 16px)); right: -13vw;
-  width: 58vw; aspect-ratio: 5 / 4; z-index: 1;
+  position: absolute; top: calc(-1 * clamp(24px, 4vh, 46px)); right: -12vw;
+  width: 58vw; aspect-ratio: 4 / 5; z-index: 1;
 }
 .cx-blob--vista .cx-blob__clip { clip-path: url(#cxTornBig); }
-.cx-quill--vista { position: absolute; left: 7%; top: 18%; rotate: -6deg; z-index: 3; font-size: clamp(.9rem, 3.8vw, 1.2rem); }
+.cx-quill--vista { position: absolute; left: 8%; top: 22%; rotate: -6deg; z-index: 3; font-size: clamp(.92rem, 3.9vw, 1.2rem); }
 .cx-quill--vista .cx-quill__mark { left: 10%; width: 72%; bottom: -.62em; }
 
 /* ---- the line and its stops ---- */
-.cx-trail { position: relative; margin: clamp(34px, 6vh, 70px) 0 0; height: 1020px; z-index: 2; }
+.cx-trail { position: relative; margin: clamp(18px, 3vh, 44px) 0 0; height: 1020px; z-index: 2; }
 .cx-trail__line { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
 .cx-trail__line path { fill: none; stroke: var(--cx-ink); stroke-width: 1.8; stroke-linecap: round; vector-effect: non-scaling-stroke; }
 .cx-trail__dash { stroke-dasharray: 4 7; opacity: .6; }
@@ -598,16 +598,6 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
 
 .cx-stops { list-style: none; margin: 0; padding: 0; position: absolute; inset: 0; }
 .cx-stop { position: absolute; left: var(--x); top: var(--y); width: 0; height: 0; }
-/* the inline coordinates trace the wide line; on a phone the same five
-   stops run down the tall one instead */
-@media (max-width: 991px) {
-  .cx-stop { --pw: 42vw; }
-  .cx-stop:nth-child(1) { left: 26%; top: 8%; }
-  .cx-stop:nth-child(2) { left: 74%; top: 28%; }
-  .cx-stop:nth-child(3) { left: 26%; top: 48%; }
-  .cx-stop:nth-child(4) { left: 74%; top: 68%; }
-  .cx-stop:nth-child(5) { left: 26%; top: 88%; }
-}
 .cx-stop__dot {
   position: absolute; left: 0; top: 0; translate: -50% -50%;
   width: 13px; height: 13px; border-radius: 50%; background: var(--cx-ink);
@@ -635,13 +625,36 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
   text-transform: uppercase; color: var(--cx-ink);
 }
 .cx-stop__label span { display: block; margin-top: 3px; font-size: clamp(.72rem, 3vw, .84rem); color: var(--cx-soft); }
-.cx-stop__label i { display: block; width: 38px; height: 2px; margin-top: 7px; background: var(--orange-600); border-radius: 2px; opacity: .85; }
+.cx-stop__label i { display: block; width: 30px; height: 2px; margin-top: 5px; background: var(--orange-600); border-radius: 2px; opacity: .85; }
 /* photo on the near side of the line, label on the far side */
 .cx-stop--l .cx-stop__photo { right: 14px; }
 .cx-stop--l .cx-stop__label { left: 20px; }
 .cx-stop--r .cx-stop__photo { left: 14px; }
 .cx-stop--r .cx-stop__label { right: 20px; text-align: right; translate: 0 4%; }
 .cx-stop--r .cx-stop__label i { margin-left: auto; }
+
+/* the inline coordinates trace the wide line; on a phone the same five
+   stops run down the tall one instead */
+@media (max-width: 991px) {
+  /* Five equal rows, 26vw tall with a 6vw gap, so the geometry is exact: the
+     dots land at 8.44/29.22/50/70.78/91.56% and the drawn line passes through
+     all five. The photographs sit fully on screen either side of the line
+     rather than hanging off the edge. */
+  .cx-trail { height: auto; padding-bottom: 15vw; }
+  .cx-trail__line--tall { inset: 0 auto auto 0; height: 154vw; }
+  .cx-stops { position: static; display: flex; flex-direction: column; gap: 6vw; }
+  .cx-stop { position: relative; left: auto; top: auto; width: auto; height: 26vw; --pw: 34vw; }
+  .cx-stop__dot { left: auto; top: 50%; translate: -50% -50%; }
+  .cx-stop__label { top: 50%; translate: 0 -50%; }
+  .cx-stop--l .cx-stop__dot   { left: 38%; }
+  .cx-stop--l .cx-stop__photo { right: 66%; }
+  .cx-stop--l .cx-stop__label { left: 43%; }
+  .cx-stop--r .cx-stop__dot   { left: 62%; }
+  .cx-stop--r .cx-stop__photo { left: 66%; right: auto; }
+  .cx-stop--r .cx-stop__label { right: 43%; left: auto; translate: 0 -50%; }
+  .cx-trail__more { right: 6%; bottom: 1.5vw; }
+  .cx-trail__end  { right: 1.5%; bottom: 6.5vw; }
+}
 
 .cx-trail__more {
   position: absolute; right: 4%; bottom: -8px; display: flex; align-items: center; gap: 10px;
@@ -656,7 +669,7 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
 
 .cx-compass { position: absolute; z-index: 0; width: clamp(88px, 22vw, 130px); height: auto; color: var(--cx-soft); opacity: .34; }
 .cx-compass text { fill: currentColor; font-family: var(--font-head); font-weight: 500; font-size: 11px; letter-spacing: .1em; }
-.cx-route .cx-compass { right: 3%; bottom: 15%; }
+.cx-route .cx-compass { left: 6%; bottom: 11%; right: auto; opacity: .24; }
 
 .cx-route__cue {
   margin: clamp(26px, 5vh, 54px) 0 0; display: flex; flex-direction: column; align-items: center; gap: 8px;
@@ -666,8 +679,8 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
   font-family: var(--font-head); font-weight: 600; font-size: .6rem;
   letter-spacing: .26em; text-transform: uppercase;
 }
-.cx-leaf--route-l { left: -22%; top: 34%; rotate: 14deg; --leaf-op: .3; --leaf: clamp(180px, 46vw, 320px); }
-.cx-leaf--route-r { right: -20%; bottom: 16%; rotate: -12deg; --leaf-op: .3; --leaf: clamp(180px, 46vw, 320px); }
+.cx-leaf--route-l { left: -34%; top: 2%; rotate: 14deg; --leaf-op: .16; --leaf: clamp(170px, 40vw, 320px); }
+.cx-leaf--route-r { right: -30%; bottom: 9%; rotate: -12deg; --leaf-op: .18; --leaf: clamp(170px, 40vw, 320px); }
 
 /* ---- the block at desk width, laid out from the supplied prototype ----
    Text in a left column, the coastal disc filling the right, the overwater
@@ -788,8 +801,8 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
   .cx-stop--l .cx-stop__label { left: 22px; }
   .cx-stop--r .cx-stop__photo { left: 16px; top: 0; translate: 0 -16%; }
   .cx-stop--r .cx-stop__label { right: 22px; translate: 0 4%; }
-  .cx-trail__more { right: 5%; bottom: 14%; }
-  .cx-trail__end { right: 1.4%; top: 72%; bottom: auto; }
+  .cx-trail__more { right: 2.5%; bottom: 8%; }
+  .cx-trail__end { right: 0.4%; top: 74%; bottom: auto; }
   .cx-route .cx-compass { left: 7%; bottom: 3%; right: auto; }
   .cx-route__cue { margin-top: clamp(6px, 1.4vh, 20px); }
 
