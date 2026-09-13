@@ -348,90 +348,25 @@
     };
   }
 
-  /* ---------------------------------------------------------- windows -- */
-  function windowsScene() {
-    var sec = $("#cxWindows");
-    if (!sec) return null;
-    var img = $(".cx-windows__img", sec), covers = $(".cx-windows__covers", sec);
-    var coverL = $(".cx-windows__cover--l", sec), coverR = $(".cx-windows__cover--r", sec);
-    var head = $(".cx-windows__head", sec);
-    var copy = $$(".cx-windows__copy [data-cx], .cx-windows__cta[data-cx]", sec);
-    var top = 0, H = 1, f = new Follow(0), copyOn = false;
-
-    function hole(el, offset, x0, x1, y0, y1) {
-      var W = vw / 2;
-      var X0 = ((x0 - offset) / 100 * vw).toFixed(1), X1 = ((x1 - offset) / 100 * vw).toFixed(1);
-      var Y0 = (y0 / 100 * vh).toFixed(1), Y1 = (y1 / 100 * vh).toFixed(1);
-      el.style.clipPath = 'path(evenodd, "M0 0H' + W + "V" + vh + "H0Z M" + X0 + " " + Y0 + "H" + X1 + "V" + Y1 + "H" + X0 + 'Z")';
-    }
-
-    return {
-      measure: function () {
-        top = absTop(sec);
-        H = sec.offsetHeight;
-        f.snap();
-        if (!desk || reduced) {
-          coverL.style.clipPath = coverR.style.clipPath = "";
-          covers.style.transform = head.style.transform = "";
-        }
-      },
-      update: function (dt) {
-        if (reduced) return;
-        var on;
-        if (desk) {
-          if (y < top - vh * 1.3 || y > top + H + vh * .3) return;
-          var p = f.step(clamp((y - (top - vh)) / (3 * vh), 0, 1), dt);
-          var a = ease.std(seg(p, 0, .5)), b = seg(p, .5, .6), c = ease.inOut(seg(p, .6, 1));
-          hole(coverL, 0,  lerp(25, 22, a), lerp(49.2, 50, b), lerp(44, 18, a), lerp(104, 82, a));
-          hole(coverR, 50, lerp(50.8, 50, b), lerp(75, 78, a), lerp(16, 18, a), lerp(78, 82, a));
-          covers.style.transform = "scale(" + (1 + .84 * c).toFixed(4) + ")";
-          covers.style.visibility = c >= 1 ? "hidden" : "";
-          head.style.transform = "scale(" + (.75 + .25 * c).toFixed(4) + ")";
-          sec.setAttribute("data-bg", p < .82 ? "light" : "dark");
-          var q = clamp((y - (top + .55 * H)) / (.45 * H), 0, 1);
-          img.style.transform = "translate3d(0," + (q * 25).toFixed(2) + "%,0)";
-          on = y > top + 1.9 * vh;   // once the windows have opened fully
-        } else {
-          if (y < top - vh * 1.3 || y > top + H + vh * .3) return;
-          var m = clamp((y - (top - vh)) / (H + vh), 0, 1);
-          img.style.transform = "translate3d(0," + lerp(-8, 8, m).toFixed(2) + "%,0)";
-          sec.setAttribute("data-bg", "dark");
-          on = y > top + H * .45 - vh;
-        }
-        if (on && !copyOn) { copyOn = true; showAll(copy, .1); }
-        else if (!on && copyOn) { copyOn = false; copy.forEach(hide); }
-      }
-    };
-  }
-
-  /* ------------------------------------------------- views and footer -- */
-  function finaleScene() {
-    var views = $("#cxViews"), footer = $("#cxFooter");
-    if (!views || !footer) return null;
-    var clip = $(".cx-views__clip", views), media = $(".cx-views__media", views), title = $(".cx-views__title", views);
+  /* ------------------------------------------------------------ footer -- */
+  /* This used to be finaleScene, which drove the "Evenings by the sea" panel
+     and the footer together and bailed out if either was missing. That panel
+     is gone, so the footer half stands on its own — otherwise the footer text,
+     which is marked data-cx-manual and is revealed from here and nowhere else,
+     would never appear at all. */
+  function footerScene() {
+    var footer = $("#cxFooter");
+    if (!footer) return null;
     var main = $(".cx-footer__main", footer);
+    if (!main) return null;
     var footText = $$("[data-cx]", footer);
-    var vTop = 0, vH = 1, tTop = 0, tH = 1, fTop = 0, fH = 1, f = new Follow(.08), shown = false;
+    var fTop = 0, fH = 1, f = new Follow(.08), shown = false;
     return {
-      measure: function () {
-        title.style.transform = "";
-        vTop = absTop(views); vH = views.offsetHeight;
-        tTop = absTop(title); tH = title.offsetHeight;
-        fTop = absTop(footer); fH = footer.offsetHeight;
-        f.snap();
-      },
+      measure: function () { fTop = absTop(footer); fH = footer.offsetHeight; f.snap(); },
       update: function (dt) {
         if (reduced) return;
-        if (y < vTop - vh * 1.2) return;
-        var m = clamp((y - (vTop + vH - vh)) / vh, 0, 1);
-        media.style.transform = "translate3d(0," + (m * 16).toFixed(2) + "%,0)";
-        var t = clamp((y - (tTop - vh * 1.25)) / (tH + vh * 1.5), 0, 1);
-        title.style.transform = "translate3d(0," + lerp(10, -10, t).toFixed(2) + "%,0)";
-
         var a = fTop - .3 * vh, b = Math.max(a + 1, fTop + fH - vh);
         var p = f.step(clamp((y - a) / (b - a), 0, 1), dt);
-        var ix = desk ? 22 : 32, iy = desk ? 8 : 4;
-        clip.style.clipPath = "inset(" + (iy * p).toFixed(3) + "% " + (ix * p).toFixed(3) + "%)";
         main.style.opacity = p.toFixed(3);
         main.style.transform = "scale(" + (.75 + .25 * p).toFixed(4) + ")";
         if (y >= a && !shown) { shown = true; showAll(footText, .1); }
@@ -694,29 +629,6 @@
     };
   }
 
-  /* ------------------------------------- everything-included zoom out -- */
-  function includedScene() {
-    var sec = $("#cxIncluded");
-    if (!sec) return null;
-    var list = $(".cx-included__list", sec), bg = $(".cx-included__bg", sec);
-    var lines = $$(".cx-included__list span", sec);
-    var top = 0, h = 1, f = new Follow(0);
-    return {
-      measure: function () { top = absTop(sec); h = sec.offsetHeight; f.snap(); },
-      update: function (dt) {
-        if (reduced) return;
-        if (y < top - vh * .3 || y > top + h + vh * .2) return;
-        var p = f.step(clamp((y - top) / Math.max(1, h - vh), 0, 1), dt);
-        var z = ease.inn(seg(p, .25, 1));
-        list.style.transform = "scale(" + (1 + z).toFixed(4) + ")";
-        list.style.opacity = (1 - seg(p, .45, .95)).toFixed(3);
-        bg.style.transform = "scale(" + (1 + .12 * p).toFixed(4) + ")";
-        var lit = Math.floor(seg(p, .05, .5) * lines.length);
-        lines.forEach(function (l, i) { l.classList.toggle("is-lit", i <= lit); });
-      }
-    };
-  }
-
   /* ------------------------------------------------- magnetic buttons -- */
   function initMagnets() {
     if (reduced || !window.matchMedia("(hover: hover)").matches) return;
@@ -763,7 +675,7 @@
     $$("[data-cx-part]").forEach(prepare);
     initReveals();
     [heroScene(), journeyScene(), vistaScene(), dayNightScene(), galleryScene(),
-     includedScene(), windowsScene(), finaleScene(), driftScene(), mehndiScene(), chromeScene()]
+     footerScene(), driftScene(), mehndiScene(), chromeScene()]
       .forEach(function (s) { if (s) scenes.push(s); });
     measureAll();
     initMagnets();

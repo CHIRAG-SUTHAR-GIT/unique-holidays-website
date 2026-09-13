@@ -24,7 +24,7 @@
    reload somehow lands on the same old copy again the guard stands down rather
    than looping. */
 (function () {
-  var BUILD = "20260913g";        /* keep in step with the ?v= stamps in the pages */
+  var BUILD = "20260913h";        /* keep in step with the ?v= stamps in the pages */
   var KEY = "uh-stale-build";
 
   if (location.protocol === "file:" || !window.fetch) return;
