@@ -360,72 +360,6 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
 .cx-hero__deco { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
 .cx-hero__deco > * { pointer-events: auto; }
 
-/* -- the marker, its dashed run, and the note it opens ------------------- */
-.cx-hero__spot {
-  position: absolute; right: var(--hpad);
-  top: 46%; width: min(310px, 30vw); height: 118px;
-}
-.cx-hero__pin {
-  position: absolute; left: 0; bottom: 0; transform: translate(-50%, 50%);
-  width: 30px; height: 30px; border-radius: 50%; border: 0; cursor: pointer;
-  background: var(--orange); color: #16243a; display: grid; place-items: center;
-  box-shadow: 0 8px 20px rgba(0, 10, 26, .4);
-  transition: transform .34s var(--cx-out), background-color .3s var(--cx-out);
-}
-.cx-hero__pin:hover { transform: translate(-50%, 50%) scale(1.12); }
-.cx-hero__pin svg { width: 15px; height: 15px; }
-.cx-hero__pinRing {
-  position: absolute; inset: 0; border-radius: 50%;
-  border: 1px solid var(--orange); opacity: 0;
-}
-.cx-hero__spot.is-in .cx-hero__pinRing { animation: uh-hero-ring 2.9s var(--cx-out) 1.1s infinite; }
-@keyframes uh-hero-ring {
-  0%   { transform: scale(.62); opacity: .8; }
-  70%  { opacity: 0; }
-  100% { transform: scale(2.6); opacity: 0; }
-}
-.cx-hero__wire { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-.cx-hero__wire path {
-  fill: none; stroke: rgba(255, 255, 255, .8); stroke-width: 1;
-  stroke-dasharray: 3 4; vector-effect: non-scaling-stroke;
-}
-.cx-hero__spot.is-in .cx-hero__wire { animation: uh-hero-wire .74s var(--cx-out) .5s both; }
-@keyframes uh-hero-wire {
-  from { clip-path: inset(0 100% 0 0); }
-  to   { clip-path: inset(0 0 0 0); }
-}
-/* the note sits on the horizontal run of the wire, opening to the right */
-.cx-hero__tip {
-  position: absolute; left: 28.3%; right: 0; top: 43.3%; transform: translateY(-50%);
-  border: 1px dashed rgba(255, 255, 255, .72); border-radius: 7px;
-  background: rgba(4, 14, 28, .48);
-  padding: 13px 15px; color: #fff;
-}
-.cx-hero__spot.is-in .cx-hero__tip { animation: uh-hero-tip .6s var(--cx-out) .95s both; }
-@keyframes uh-hero-tip {
-  from { opacity: 0; transform: translate(-16px, -50%) scale(.95); }
-  to   { opacity: 1; transform: translate(0, -50%) scale(1); }
-}
-.cx-hero__tipLabel {
-  margin: 0 0 6px; font-family: var(--hface); font-weight: 600;
-  font-size: .64rem; letter-spacing: .06em; color: #fff;
-}
-.cx-hero__tipText {
-  margin: 0; font-family: var(--hface); font-weight: 300;
-  font-size: .68rem; line-height: 1.5; color: rgba(255, 255, 255, .84);
-}
-.cx-hero__tipClose {
-  position: absolute; top: -11px; right: -11px; width: 22px; height: 22px;
-  border-radius: 50%; border: 0; cursor: pointer;
-  background: var(--orange); color: #16243a; display: grid; place-items: center; padding: 0;
-  transition: transform .3s var(--cx-out), background-color .3s var(--cx-out);
-}
-.cx-hero__tipClose:hover { background: #fff; transform: rotate(90deg); }
-.cx-hero__tipClose svg { width: 11px; height: 11px; }
-/* closed: the note and its run go, the marker stays and keeps pulsing */
-.cx-hero__spot.is-shut .cx-hero__tip,
-.cx-hero__spot.is-shut .cx-hero__wire { opacity: 0; visibility: hidden; transition: opacity .34s var(--cx-out), visibility 0s .34s; }
-
 /* -- bottom rail: socials one side, the reel link the other -------------- */
 .cx-hero__social {
   position: absolute; left: var(--hpad); bottom: clamp(30px, 8vh, 96px);
@@ -451,11 +385,6 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
 .cx-hero__reel:hover .cx-hero__reelPlay { background: var(--orange); color: #16243a; }
 .cx-hero__reelPlay svg { width: 17px; height: 17px; margin-left: 1px; }
 
-@media (prefers-reduced-motion: reduce) {
-  .cx-hero__spot.is-in .cx-hero__pinRing,
-  .cx-hero__spot.is-in .cx-hero__wire,
-  .cx-hero__spot.is-in .cx-hero__tip { animation: none; }
-}
 
 /* ================================================================== search */
 .cx-search { position: relative; z-index: 3; background: var(--cx-paper); padding-block: clamp(46px, 6vw, 84px) clamp(30px, 4vw, 54px); }
@@ -1048,11 +977,6 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
 }
 
 /* ============================================================ small screens */
-@media (max-width: 1200px) {
-  /* the headline fills the left half well before the layout breaks, so the
-     note drops clear of it — still on the right, but low, above the rail */
-  .cx-hero__spot { top: auto; bottom: clamp(104px, 16vh, 168px); width: min(300px, 38vw); height: 112px; }
-}
 @media (min-width: 700px) {
   .cx-hero__stage { --hintop: 90px; }
 }
@@ -1069,8 +993,7 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
 }
 @media (max-width: 760px) {
   /* a phone screen carries the headline, the sentence and the two buttons —
-     the marker and the reel link stand down, the socials stay */
-  .cx-hero__spot { display: none; }
+     the reel link stands down, the socials stay */
   .cx-hero__content { padding-top: clamp(28px, 5vh, 52px); padding-bottom: clamp(84px, 14vh, 120px); }
   .cx-hero__lede p { max-width: none; }
   .cx-hero__cta, .cx-hero__ghost { width: calc(50% - 7px); min-width: 138px; padding: 14px 12px; }

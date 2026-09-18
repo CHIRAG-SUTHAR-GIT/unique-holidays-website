@@ -257,22 +257,9 @@
     if (!sec) return null;
     var bg = $(".cx-hero__bg", sec), zoom = $(".cx-hero__zoom", sec);
     var content = $(".cx-hero__content", sec);
-    var deco = $(".cx-hero__deco", sec), spot = $(".cx-hero__spot", sec);
+    var deco = $(".cx-hero__deco", sec);
     var meter = $(".uh-meter");
     var top = 0, dist = 1, bgH = 0, f = new Follow(0);
-
-    /* The marker opens its note by itself on the way in; the close button and
-       the marker toggle it after that. Nothing here measures anything, so it
-       stays out of the scroll loop. */
-    if (spot) {
-      var pin = $(".cx-hero__pin", spot), shut = $(".cx-hero__tipClose", spot);
-      var setShut = function (on) {
-        spot.classList.toggle("is-shut", on);
-        if (pin) pin.setAttribute("aria-expanded", String(!on));
-      };
-      if (shut) shut.addEventListener("click", function () { setShut(true); });
-      if (pin) pin.addEventListener("click", function () { setShut(!spot.classList.contains("is-shut")); });
-    }
 
     return {
       measure: function () {
@@ -294,7 +281,7 @@
           bg.style.transform = "";
           zoom.style.transform = "scale(" + (1 + ease.inn(p)).toFixed(4) + ")";
         }
-        /* the marker, the socials and the reel link clear out before the
+        /* the socials and the reel link clear out before the
            picture starts travelling up the screen */
         if (deco) deco.style.opacity = (1 - seg(p, .05, .45)).toFixed(3);
         if (meter) meter.classList.toggle("is-off", p < .1);
