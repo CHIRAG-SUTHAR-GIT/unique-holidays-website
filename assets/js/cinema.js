@@ -442,7 +442,6 @@
   /* ---------------------------------------- scroll meter and header tint -- */
   function chromeScene() {
     var meter = $("#uhMeter"), numEl = $("#uhMeterNum"), header = $("#siteHeader");
-    var badge = $(".cx-badge");
     var zones = $$("[data-bg]");
     function toneAt(py) {
       /* Zones nest now that 05 is a panel inside the journey, so keep going
@@ -473,11 +472,6 @@
           var dark = toneAt(38) === "dark";
           header.classList.toggle("on-dark", dark);
           header.classList.toggle("on-light", !dark);
-          /* the badge sits outside the header now, so it is toned here too */
-          if (badge) {
-            badge.classList.toggle("on-dark", dark);
-            badge.classList.toggle("on-light", !dark);
-          }
         }
       }
     };
