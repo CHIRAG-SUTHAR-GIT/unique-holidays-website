@@ -273,11 +273,22 @@ html.cx-lock .cx .site-header { transform: translateY(-120%); }
 
 /* ==================================================================== hero */
 .cx-hero { position: relative; height: 270vh; background: var(--deep); }
-.cx-hero__stage { position: sticky; top: 0; height: 100vh; overflow: hidden; isolation: isolate; }
-.cx-hero__bg { position: absolute; left: 0; right: 0; top: 0; height: 150vh; z-index: -3; }
+.cx-hero__stage {
+  position: sticky; top: 0; height: 100vh; overflow: hidden; isolation: isolate;
+  /* one set of insets drives the frame and everything that lines up with it,
+     so the border, the copy, the socials and the reel link share an edge */
+  --hx: clamp(16px, 3.4vw, 60px);
+  --ht: clamp(78px, 12vh, 122px);
+  --hb: clamp(16px, 3.2vh, 44px);
+  --hgap: clamp(18px, 3vw, 52px);
+}
+/* 150vh used to hang below the fold for the parallax to travel through; the
+   layered ridge line in this photograph sits low, so the travel is shorter now
+   and the whole scene reads on the first screen. */
+.cx-hero__bg { position: absolute; left: 0; right: 0; top: 0; height: 118vh; z-index: -3; }
 .cx-hero__zoom { position: absolute; inset: 0; transform-origin: 50% 75%; }
 .cx-hero__zoom img {
-  width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%;
+  width: 100%; height: 100%; object-fit: cover; object-position: 50% 52%;
   transform-origin: 50% 0;
 }
 html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
@@ -285,42 +296,166 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
 .cx-hero__zoom img.is-settling { transition: transform calc(var(--cx-l) * 1.25) var(--cx-inout); transform: none; }
 .cx-hero__shade {
   position: absolute; inset: 0; z-index: -2; pointer-events: none;
-  /* Light touch, so the photograph reads as a photograph. The type holds up
-     on its own now: an orange stroke separates every glyph from whatever is
-     behind it, and the shadows below carry the rest. Only the top and bottom
-     keep a band, for the header and the scroll cue. */
+  /* the headline sits left now, so the weight of the wash goes left with it
+     and the ridge line on the right stays open */
   background:
-    radial-gradient(112% 62% at 50% 47%,
-      rgba(0, 16, 40, .30) 0%, rgba(0, 16, 40, .20) 46%, rgba(0, 16, 40, .05) 76%, rgba(0, 16, 40, 0) 100%),
-    linear-gradient(180deg, rgba(0, 20, 48, .46) 0%, rgba(0, 20, 48, .10) 26%, rgba(0, 20, 48, .08) 66%, rgba(0, 20, 48, .40) 100%);
+    linear-gradient(100deg, rgba(0, 14, 34, .62) 0%, rgba(0, 14, 34, .42) 34%, rgba(0, 14, 34, .12) 62%, rgba(0, 14, 34, .06) 100%),
+    linear-gradient(180deg, rgba(0, 18, 42, .46) 0%, rgba(0, 18, 42, .06) 24%, rgba(0, 18, 42, .12) 62%, rgba(0, 18, 42, .52) 100%);
+}
+/* the hairline rectangle set in from every edge, with the photograph running
+   on past it — the frame is drawn on the picture, not round it */
+.cx-hero__frame {
+  position: absolute; z-index: 1; pointer-events: none;
+  inset: var(--ht) var(--hx) var(--hb);
+  border: 1px solid rgba(255, 255, 255, .34);
 }
 .cx-hero__content {
-  position: absolute; inset: 0; z-index: 2; color: #fff; text-align: center;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  padding: 110px 24px 80px;
+  position: absolute; inset: 0; z-index: 2; color: #fff; text-align: left;
+  display: flex; flex-direction: column; align-items: flex-start; justify-content: center;
+  padding: calc(var(--ht) + var(--hgap)) var(--hx) calc(var(--hb) + var(--hgap) + 44px);
+  padding-left: calc(var(--hx) + var(--hgap));
 }
 /* The hero type used to carry a hairline orange stroke around every glyph, to
-   hold it off a busy photograph. Against the Ladakh sky that read as a border
-   drawn round the letters rather than as separation, so it is gone; the
-   shadows below do the job on their own. */
+   hold it off a busy photograph. Against the sky that read as a border drawn
+   round the letters rather than as separation, so it is gone; the shadows
+   below do the job on their own. */
 .cx-hero__content .cx-label {
-  color: #fff; margin-bottom: clamp(16px, 2.2vh, 28px);
+  color: #fff; margin-bottom: clamp(14px, 2vh, 24px);
   text-shadow: 0 0 4px rgba(0, 14, 36, .9), 0 0 10px rgba(0, 14, 36, .75), 0 2px 16px rgba(0, 14, 36, .5);
 }
 .cx-hero__title {
   margin: 0; color: #fff; font-family: var(--cx-serif); font-weight: 500;
-  text-transform: uppercase; letter-spacing: .01em; line-height: .9;
-  font-size: clamp(3.2rem, 11.2vw, 11.5rem); display: flex; flex-direction: column; align-items: center;
+  text-transform: uppercase; letter-spacing: .01em; line-height: .88;
+  font-size: clamp(2.9rem, 8.6vw, 8.6rem); display: flex; flex-direction: column; align-items: flex-start;
   text-shadow: 0 0 8px rgba(0, 14, 36, .55), 0 2px 14px rgba(0, 14, 36, .6), 0 8px 44px rgba(0, 14, 36, .5);
 }
-.cx-hero__script {
-  font-family: var(--cx-script); font-weight: 400;
-  font-size: clamp(2.1rem, 4.4vw, 4.2rem); line-height: 1.15; color: var(--sand); margin: .18em 0 0;
-  text-shadow: 0 0 6px rgba(0, 14, 36, .7), 0 2px 10px rgba(0, 14, 36, .65), 0 6px 30px rgba(0, 14, 36, .4);
+/* short rule, then the sentence — the pair reads as one line of furniture */
+.cx-hero__lede {
+  display: flex; align-items: flex-start; gap: clamp(12px, 1.6vw, 22px);
+  margin-top: clamp(18px, 3vh, 34px); max-width: 44rem;
 }
-.cx-hero__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: clamp(24px, 4vh, 42px); }
+.cx-hero__rule {
+  flex: none; width: clamp(28px, 4.4vw, 62px); height: 1px; margin-top: .72em;
+  background: var(--orange);
+}
+.cx-hero__lede p {
+  margin: 0; max-width: 40ch; color: rgba(255, 255, 255, .9);
+  font-size: clamp(.94rem, 1.15vw, 1.08rem); line-height: 1.62;
+  text-shadow: 0 1px 3px rgba(0, 14, 36, .7), 0 2px 14px rgba(0, 14, 36, .5);
+}
+.cx-hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; margin-top: clamp(22px, 3.6vh, 40px); }
+/* the outlined half of the pair: a pill drawn in a hairline, nothing filled */
+.cx-hero__ghost {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 14px 30px; border-radius: var(--r-pill);
+  border: 1px solid rgba(255, 255, 255, .55); color: #fff;
+  font-family: var(--font-head); font-weight: 600; font-size: .92rem; letter-spacing: .01em;
+  text-decoration: none; transition: border-color .3s var(--cx-out), background-color .3s var(--cx-out), transform .3s var(--cx-out);
+}
+.cx-hero__ghost:hover { color: #fff; border-color: #fff; background: rgba(255, 255, 255, .12); transform: translateY(-2px); }
+
+/* -- the furniture layer: it fades out as the parallax takes the picture up */
+.cx-hero__deco { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+.cx-hero__deco > * { pointer-events: auto; }
+
+/* -- the marker, its dashed run, and the note it opens ------------------- */
+.cx-hero__spot {
+  position: absolute; right: calc(var(--hx) + var(--hgap));
+  top: 40%; width: min(408px, 36vw); height: 186px;
+}
+.cx-hero__pin {
+  position: absolute; left: 0; bottom: 0; transform: translate(-50%, 50%);
+  width: 44px; height: 44px; border-radius: 50%; border: 0; cursor: pointer;
+  background: var(--orange); color: #05182f; display: grid; place-items: center;
+  box-shadow: 0 10px 26px rgba(0, 14, 36, .42);
+  transition: transform .34s var(--cx-out), background-color .3s var(--cx-out);
+}
+.cx-hero__pin:hover { transform: translate(-50%, 50%) scale(1.08); }
+.cx-hero__pin svg { width: 20px; height: 20px; }
+.cx-hero__pinRing {
+  position: absolute; inset: 0; border-radius: 50%;
+  border: 1px solid var(--orange); opacity: 0;
+}
+.cx-hero__spot.is-in .cx-hero__pinRing { animation: uh-hero-ring 2.9s var(--cx-out) 1.1s infinite; }
+@keyframes uh-hero-ring {
+  0%   { transform: scale(.62); opacity: .8; }
+  70%  { opacity: 0; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+.cx-hero__wire { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.cx-hero__wire path {
+  fill: none; stroke: rgba(255, 255, 255, .72); stroke-width: 1;
+  stroke-dasharray: 4 5; vector-effect: non-scaling-stroke;
+}
+.cx-hero__spot.is-in .cx-hero__wire { animation: uh-hero-wire .74s var(--cx-out) .5s both; }
+@keyframes uh-hero-wire {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0 0 0); }
+}
+/* the note sits on the horizontal run of the wire, opening to the right */
+.cx-hero__tip {
+  position: absolute; left: 43.3%; right: 0; top: 42.2%; transform: translateY(-50%);
+  border: 1px dashed rgba(255, 255, 255, .82); border-radius: 6px;
+  background: rgba(3, 16, 34, .52);
+  box-shadow: 0 18px 40px rgba(0, 12, 30, .3);
+  padding: 16px 18px; color: #fff;
+}
+.cx-hero__spot.is-in .cx-hero__tip { animation: uh-hero-tip .6s var(--cx-out) .95s both; }
+@keyframes uh-hero-tip {
+  from { opacity: 0; transform: translate(-16px, -50%) scale(.95); }
+  to   { opacity: 1; transform: translate(0, -50%) scale(1); }
+}
+.cx-hero__tipLabel {
+  margin: 0 0 7px; font-family: var(--font-head); font-weight: 700;
+  font-size: .6rem; letter-spacing: .22em; text-transform: uppercase; color: var(--orange);
+}
+.cx-hero__tipText {
+  margin: 0; font-size: .78rem; line-height: 1.55; color: rgba(255, 255, 255, .88);
+}
+.cx-hero__tipClose {
+  position: absolute; top: -13px; right: -13px; width: 26px; height: 26px;
+  border-radius: 50%; border: 1px solid rgba(255, 255, 255, .55); cursor: pointer;
+  background: rgba(4, 18, 38, .86); color: #fff; display: grid; place-items: center; padding: 0;
+  transition: background-color .3s var(--cx-out), transform .3s var(--cx-out);
+}
+.cx-hero__tipClose:hover { background: var(--orange); color: #05182f; transform: rotate(90deg); }
+.cx-hero__tipClose svg { width: 13px; height: 13px; }
+/* closed: the note and its run go, the marker stays and keeps pulsing */
+.cx-hero__spot.is-shut .cx-hero__tip,
+.cx-hero__spot.is-shut .cx-hero__wire { opacity: 0; visibility: hidden; transition: opacity .34s var(--cx-out), visibility 0s .34s; }
+
+/* -- bottom rail: socials one side, the reel link the other -------------- */
+.cx-hero__social {
+  position: absolute; left: calc(var(--hx) + var(--hgap)); bottom: calc(var(--hb) + clamp(16px, 2.6vh, 32px));
+  display: flex; align-items: center; gap: 14px;
+}
+.cx-hero__social a {
+  width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center;
+  border: 1px solid rgba(255, 255, 255, .34); color: #fff;
+  transition: border-color .3s var(--cx-out), background-color .3s var(--cx-out), transform .3s var(--cx-out);
+}
+.cx-hero__social a:hover { color: #05182f; background: #fff; border-color: #fff; transform: translateY(-2px); }
+.cx-hero__social svg { width: 15px; height: 15px; }
+.cx-hero__reel {
+  position: absolute; right: calc(var(--hx) + var(--hgap)); bottom: calc(var(--hb) + clamp(16px, 2.6vh, 32px));
+  display: flex; align-items: center; gap: 14px; color: #fff; text-decoration: none;
+}
+.cx-hero__reelText {
+  font-family: var(--font-head); font-weight: 600; font-size: .66rem;
+  letter-spacing: .2em; text-transform: uppercase;
+  text-shadow: 0 1px 3px rgba(0, 14, 36, .6);
+}
+.cx-hero__reelPlay {
+  width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center;
+  border: 1px solid rgba(255, 255, 255, .5); color: #fff;
+  transition: background-color .3s var(--cx-out), color .3s var(--cx-out), border-color .3s var(--cx-out);
+}
+.cx-hero__reel:hover { color: #fff; }
+.cx-hero__reel:hover .cx-hero__reelPlay { background: var(--orange); border-color: var(--orange); color: #05182f; }
+.cx-hero__reelPlay svg { width: 20px; height: 20px; margin-left: 1px; }
+
 .cx-hero__cue {
-  position: absolute; z-index: 2; left: 50%; bottom: clamp(18px, 3.4vh, 34px); transform: translateX(-50%);
+  position: absolute; z-index: 3; left: 50%; bottom: calc(var(--hb) + clamp(14px, 2.2vh, 26px)); transform: translateX(-50%);
   display: flex; flex-direction: column; align-items: center; gap: 10px; color: #fff;
   text-shadow: 0 1px 3px rgba(0, 14, 36, .6);
 }
@@ -330,6 +465,11 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
 .cx-hero__cue i::after {
   content: ""; position: absolute; left: 0; top: -50%; width: 100%; height: 50%;
   background: #fff; animation: uh-cue 2.6s var(--cx-inout) infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cx-hero__spot.is-in .cx-hero__pinRing,
+  .cx-hero__spot.is-in .cx-hero__wire,
+  .cx-hero__spot.is-in .cx-hero__tip { animation: none; }
 }
 
 /* ================================================================== search */
@@ -923,13 +1063,31 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
 }
 
 /* ============================================================ small screens */
+@media (max-width: 1200px) {
+  /* the headline fills the left half well before the layout breaks, so the
+     note drops clear of it — still on the right, but low, above the rail */
+  .cx-hero__spot { top: auto; bottom: calc(var(--hb) + clamp(120px, 17vh, 176px)); width: min(340px, 42vw); height: 148px; }
+}
 @media (max-width: 991px) {
   .cx-hero { height: 190vh; }
   .cx-hero__bg { height: 100vh; }
   .cx-hero__content .cx-label { font-size: .58rem; letter-spacing: .14em; }
+  .cx-hero__stage { --hgap: clamp(14px, 3vw, 26px); }
+  .cx-hero__social a { width: 30px; height: 30px; }
+  .cx-hero__social svg { width: 13px; height: 13px; }
+  .cx-hero__reelText { display: none; }
+  .cx-hero__reelPlay { width: 40px; height: 40px; }
   .cx-concept { padding-top: 45vw; padding-bottom: 42vw; }
   .cx-vista { height: 110vh; }
   .cx-vista__card { bottom: 9vh; }
+}
+@media (max-width: 760px) {
+  /* a phone screen has room for the headline, the buttons and the scroll cue
+     and nothing else — the marker, the socials and the reel link stand down */
+  .cx-hero__spot, .cx-hero__social, .cx-hero__reel { display: none; }
+  .cx-hero__stage { --ht: clamp(66px, 10vh, 92px); }
+  .cx-hero__lede p { font-size: .92rem; }
+  .cx-hero__ghost { padding: 12px 24px; font-size: .86rem; }
 }
 
 /* ============================================================ fallbacks ==== */
@@ -981,6 +1139,8 @@ html.cx-intro .cx-hero__zoom img { transform: scale(.75); }
   pointer-events: none; opacity: 0; transition: opacity var(--cx-m) var(--cx-out);
 }
 .is-ready .cx-badge { opacity: 1; }
+/* the hero has its own scroll cue; the page meter waits its turn */
+html.is-ready .uh-meter.is-off { opacity: 0; }
 html.cx-lock .cx-badge { opacity: 0; }
 .cx-badge svg { position: absolute; inset: 0; width: 100%; height: 100%; animation: cx-spin 30s linear infinite; }
 .cx-badge text {
